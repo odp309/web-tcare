@@ -1,0 +1,66 @@
+<label class="form-control w-full max-w-lg">
+  <div class="label">
+    <span class="label-text">{{ inputLabel | titlecase }}</span>
+  </div>
+  <div class="flex flex-col">
+    @if (inputType === "radio" || inputType === "checkbox") { @for (choice of
+    choices; track $index) {
+
+    <div class="flex gap-2 first:mt-0 mt-2">
+      <input
+        [type]="inputType"
+        [name]="inputName"
+        [id]="choice"
+        [class]="inputStyle"
+        [ngClass]="customStyle ? customStyle : ''"
+      />
+      <label [for]="inputId ? inputId : ''">{{ choice | titlecase }}</label>
+    </div>
+
+    } } @else {
+    <input
+      [type]="inputType"
+      [placeholder]="placeholder === undefined ? '' : placeholder"
+      [class]="inputStyle"
+      [ngClass]="customStyle ? customStyle : ''"
+    />
+    }
+  </div>
+  @if (errText !== '' || !errText) {
+  <div class="label">
+    <span class="label-text-alt text-red-500">{{ errText }}</span>
+  </div>
+  }
+</label>
+
+<!-- @if (inputType === "radio" || inputType === "checkbox") { @for (choice of
+choices; track $index) {
+
+<div class="flex gap-1">
+  <input
+    [type]="inputType"
+    [name]="inputName"
+    [id]="choice"
+    [class]="inputStyle"
+    [ngClass]="customStyle"
+  />
+  <label [for]="inputId">{{ choice | titlecase }}</label>
+</div>
+} } @else {
+<label class="form-control w-full max-w-xs">
+  <div class="label">
+    <span class="label-text">{{ inputLabel | titlecase }}</span>
+  </div>
+  <input
+    [type]="inputType"
+    [placeholder]="placeholder === undefined ? '' : placeholder"
+    [class]="inputStyle"
+    [ngClass]="customStyle"
+  />
+  @if (errText !== '' || !errText) {
+  <div class="label">
+    <span class="label-text-alt">{{ errText }}</span>
+  </div>
+  }
+</label>
+} -->

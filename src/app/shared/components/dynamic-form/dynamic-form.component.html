@@ -1,0 +1,14 @@
+<form>
+  @if (formFields.length !== 0) { @for (field of formFields; track $index) {
+  <app-input-field
+    [inputType]="field.inputType"
+    [inputLabel]="field.inputLabel"
+    [inputName]="field.inputName"
+    [inputId]="field.inputId"
+    [errText]="field.errText"
+    [customStyle]="field.customStyle"
+    [placeholder]="field.placeholder"
+    [choices]="field.choices"
+  ></app-input-field>
+  } }
+</form>
