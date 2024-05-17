@@ -1,1 +1,5 @@
-<app-dynamic-form></app-dynamic-form>
+<app-dynamic-form
+  (onSubmit)="printHello()"
+  [fGroup]="form"
+  [formFields]="fields"
+></app-dynamic-form>

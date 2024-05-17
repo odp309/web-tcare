@@ -1,10 +1,11 @@
 import { NgClass, TitleCasePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-input-field',
   standalone: true,
-  imports: [NgClass, TitleCasePipe],
+  imports: [NgClass, TitleCasePipe, ReactiveFormsModule],
   templateUrl: './input-field.component.html',
   styleUrl: './input-field.component.scss',
 })
@@ -22,6 +23,8 @@ export class InputFieldComponent implements OnInit {
   @Input() inputLabel: string | undefined = '';
   @Input() choices: string[] | undefined = [];
   @Input() errText: string | undefined = '';
+  @Input() fGroup!: FormGroup;
+  @Input() fcName: string | number | null = null;
   inputStyle: string = 'input input-bordered w-full max-w-lg';
 
   ngOnInit(): void {

@@ -1,4 +1,4 @@
-<label class="form-control w-full max-w-lg">
+<label class="form-control w-full max-w-lg" [formGroup]="fGroup">
   <div class="label">
     <span class="label-text">{{ inputLabel | titlecase }}</span>
   </div>
@@ -6,23 +6,24 @@
     @if (inputType === "radio" || inputType === "checkbox") { @for (choice of
     choices; track $index) {
 
-    <div class="flex gap-2 first:mt-0 mt-2">
+    <div class="flex gap-1 first:mt-0 mt-2">
       <input
         [type]="inputType"
         [name]="inputName"
         [id]="choice"
         [class]="inputStyle"
-        [ngClass]="customStyle ? customStyle : ''"
+        [ngClass]="customStyle"
+        [formControlName]="fcName"
       />
-      <label [for]="inputId ? inputId : ''">{{ choice | titlecase }}</label>
+      <label [for]="inputId">{{ choice | titlecase }}</label>
     </div>
-
-    } } @else {
+    }} @else {
     <input
       [type]="inputType"
       [placeholder]="placeholder === undefined ? '' : placeholder"
       [class]="inputStyle"
       [ngClass]="customStyle ? customStyle : ''"
+      [formControlName]="fcName"
     />
     }
   </div>
@@ -32,35 +33,3 @@
   </div>
   }
 </label>
-
-<!-- @if (inputType === "radio" || inputType === "checkbox") { @for (choice of
-choices; track $index) {
-
-<div class="flex gap-1">
-  <input
-    [type]="inputType"
-    [name]="inputName"
-    [id]="choice"
-    [class]="inputStyle"
-    [ngClass]="customStyle"
-  />
-  <label [for]="inputId">{{ choice | titlecase }}</label>
-</div>
-} } @else {
-<label class="form-control w-full max-w-xs">
-  <div class="label">
-    <span class="label-text">{{ inputLabel | titlecase }}</span>
-  </div>
-  <input
-    [type]="inputType"
-    [placeholder]="placeholder === undefined ? '' : placeholder"
-    [class]="inputStyle"
-    [ngClass]="customStyle"
-  />
-  @if (errText !== '' || !errText) {
-  <div class="label">
-    <span class="label-text-alt">{{ errText }}</span>
-  </div>
-  }
-</label>
-} -->

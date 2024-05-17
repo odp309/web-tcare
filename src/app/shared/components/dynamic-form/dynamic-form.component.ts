@@ -1,43 +1,30 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { InputFieldComponent } from '../input-field/input-field.component';
-
-export type TInput = {
-  inputType: 'text' | 'password' | 'radio' | 'checkbox' | '';
-  inputName: string;
-  inputId?: string;
-  customStyle?: string;
-  placeholder?: string;
-  inputLabel?: string;
-  choices?: string[] | undefined;
-  errText?: string | undefined;
-};
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { IInputField } from '../../types/input-field';
 
 @Component({
   selector: 'app-dynamic-form',
   standalone: true,
-  imports: [InputFieldComponent],
+  imports: [InputFieldComponent, ReactiveFormsModule],
   templateUrl: './dynamic-form.component.html',
   styleUrl: './dynamic-form.component.scss',
 })
 export class DynamicFormComponent {
-  @Input() formFields: TInput[] = [
-    {
-      inputType: 'text',
-      inputName: 'name',
-      inputLabel: 'Name',
-    },
-    {
-      inputType: 'password',
-      inputName: 'password',
-      inputLabel: 'Password',
-      errText: 'xixix',
-    },
-    {
-      inputType: 'radio',
-      inputName: 'gender',
-      inputLabel: 'Gender',
-      choices: ['Male', 'Female'],
-      errText: 'erorr',
-    },
-  ];
+  @Input({ required: true }) fGroup!: FormGroup;
+  @Input({ required: true }) formFields: IInputField[] = [];
+  @Input() buttonLabel: string = 'Submit';
+  @Input() btnStyle: string = '';
+  @Output() onSubmit = new EventEmitter();
+
+  mySubmit(e: Event) {
+    e.preventDefault();
+    this.onSubmit.emit();
+  }
 }

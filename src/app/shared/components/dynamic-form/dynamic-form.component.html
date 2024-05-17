@@ -1,4 +1,4 @@
-<form>
+<form (submit)="mySubmit($event)">
   @if (formFields.length !== 0) { @for (field of formFields; track $index) {
   <app-input-field
     [inputType]="field.inputType"
@@ -9,6 +9,9 @@
     [customStyle]="field.customStyle"
     [placeholder]="field.placeholder"
     [choices]="field.choices"
+    [fGroup]="fGroup"
+    [fcName]="field.fcName"
   ></app-input-field>
   } }
+  <button [class]="btnStyle" type="submit">{{ buttonLabel }}</button>
 </form>
