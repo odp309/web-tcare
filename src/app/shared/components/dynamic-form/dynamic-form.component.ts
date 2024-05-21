@@ -8,11 +8,12 @@ import {
 import { InputFieldComponent } from '../input-field/input-field.component';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IInputField } from '../../types/input-field';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'app-dynamic-form',
   standalone: true,
-  imports: [InputFieldComponent, ReactiveFormsModule],
+  imports: [InputFieldComponent, ReactiveFormsModule, ButtonComponent],
   templateUrl: './dynamic-form.component.html',
   styleUrl: './dynamic-form.component.scss',
 })

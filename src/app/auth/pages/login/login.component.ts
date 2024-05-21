@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { DynamicFormComponent } from '../../../shared/components/dynamic-form/dynamic-form.component';
 import { IInputField } from '../../../shared/types/input-field';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { colors } from '../../../../theme/colors';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [DynamicFormComponent],
+  imports: [DynamicFormComponent, NgClass],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -17,6 +19,7 @@ export class LoginComponent {
       email: ['', Validators.email],
     });
   }
+  loginTitleColor = `text-[${colors.primary}]`;
   fields: IInputField[] = [
     {
       inputType: 'text',
