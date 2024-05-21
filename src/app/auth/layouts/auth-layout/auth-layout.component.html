@@ -1,17 +1,23 @@
-<div class="min-h-screen bg-gradient-to-br from-[#007DA0] to-[#0092BB]">
-  <img
-    src="/assets/elipseGradientBig.png"
-    alt=""
-    width="358"
-    height="347"
-    class="absolute -top-36 -left-36"
-  />
-  <img
-    src="/assets/elipseGradientBig.png"
-    alt=""
-    width="516"
-    height="497"
-    class="absolute -bottom-36 -left-20"
-  />
-  <router-outlet></router-outlet>
+<div class="min-h-screen bg-gradient-to-br from-[#007DA0] to-[#0092BB] flex">
+  <aside class="w-[30%] overflow-hidden">
+    <img
+      src="/assets/elipseGradientBig.png"
+      alt=""
+      width="358"
+      height="347"
+      class="absolute -top-36 -left-36"
+    />
+    <img
+      src="/assets/elipseGradientBig.png"
+      alt=""
+      width="516"
+      height="497"
+      class="absolute -bottom-0 -left-20 overflow-hidden"
+    />
+  </aside>
+  <aside
+    class="bg-white w-[70%] rounded-l-[35px] flex flex-col justify-center items-center"
+  >
+    <router-outlet></router-outlet>
+  </aside>
 </div>
