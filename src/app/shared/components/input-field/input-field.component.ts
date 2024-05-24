@@ -25,7 +25,7 @@ export class InputFieldComponent implements OnInit {
   @Input() errText: string | undefined;
   @Input() fGroup!: FormGroup;
   @Input() fcName: string | number | null = null;
-  inputStyle: string = 'input input-bordered w-full';
+  inputStyle: string = 'input input-bordered w-full text-sm';
 
   ngOnInit(): void {
     if (this.inputType === 'radio' || this.inputType === 'checkbox') {
