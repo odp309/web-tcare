@@ -1,5 +1,5 @@
-<label class="form-control w-full max-w-lg" [formGroup]="fGroup">
-  <div class="label">
+<label class="form-control w-full" [formGroup]="fGroup">
+  <div [class]="inputLabel ? 'label' : 'hidden'">
     <span class="label-text">{{ inputLabel | titlecase }}</span>
   </div>
   <div class="flex flex-col">

@@ -1,4 +1,4 @@
-<form (submit)="mySubmit($event)">
+<form (submit)="mySubmit($event)" class="w-full flex flex-col gap-5">
   @if (formFields.length !== 0) { @for (field of formFields; track $index) {
   <app-input-field
     [inputType]="field.inputType"
@@ -13,5 +13,7 @@
     [fcName]="field.fcName"
   ></app-input-field>
   } }
-  <app-button [class]="btnStyle" type="submit">{{ buttonLabel }}</app-button>
+  <app-button [customStyle]="btnStyle" type="submit">{{
+    buttonLabel
+  }}</app-button>
 </form>

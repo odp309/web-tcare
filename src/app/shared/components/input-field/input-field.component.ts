@@ -17,15 +17,15 @@ export class InputFieldComponent implements OnInit {
     | 'checkbox'
     | '' = '';
   @Input({ required: true }) inputName: string = '';
-  @Input() inputId: string | undefined = '';
-  @Input() customStyle: string | undefined = '';
-  @Input() placeholder: string | undefined = '';
-  @Input() inputLabel: string | undefined = '';
-  @Input() choices: string[] | undefined = [];
-  @Input() errText: string | undefined = '';
+  @Input() inputId: string | undefined;
+  @Input() customStyle: string | undefined;
+  @Input() placeholder: string | undefined;
+  @Input() inputLabel: string | undefined;
+  @Input() choices: string[] | undefined;
+  @Input() errText: string | undefined;
   @Input() fGroup!: FormGroup;
   @Input() fcName: string | number | null = null;
-  inputStyle: string = 'input input-bordered w-full max-w-lg';
+  inputStyle: string = 'input input-bordered w-full';
 
   ngOnInit(): void {
     if (this.inputType === 'radio' || this.inputType === 'checkbox') {

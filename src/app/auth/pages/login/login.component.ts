@@ -22,7 +22,6 @@ export class LoginComponent {
     {
       inputType: 'text',
       inputName: 'email',
-      inputLabel: 'email',
       fcName: 'email',
       inputId: 'email',
       errText: '',
@@ -31,21 +30,10 @@ export class LoginComponent {
     {
       inputType: 'password',
       inputName: 'password',
-      inputLabel: 'Password',
       fcName: 'email',
       inputId: 'email',
       errText: '',
       placeholder: 'Password',
-    },
-    {
-      inputType: 'checkbox',
-      inputName: 'password',
-      inputLabel: 'Password',
-      fcName: 'email',
-      inputId: 'email',
-      errText: '',
-      placeholder: 'Password',
-      choices: ['sada', 'sadasd'],
     },
   ];
 

@@ -1,9 +1,10 @@
-<div class="w-full">
+<div class="px-36 flex flex-col gap-10">
   <h1 class="text-[32px] font-bold text-center text-greenPrimary">Login</h1>
   <app-dynamic-form
     (onSubmit)="printHello()"
     [fGroup]="form"
     [formFields]="fields"
     buttonLabel="Login"
+    btnStyle="mt-18"
   ></app-dynamic-form>
 </div>
