@@ -18,8 +18,6 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
-
-    this.subscribeToFormControlStatusChanges();
   }
 
   fields: IInputField[] = [
@@ -47,17 +45,6 @@ export class LoginComponent {
 
   get password() {
     return this.form.get('password');
-  }
-
-  subscribeToFormControlStatusChanges() {
-    if (this.email && this.password) {
-      this.email.valueChanges.subscribe(() => {
-        this.fields[0].errText = '';
-      });
-      this.password.statusChanges.subscribe(() => {
-        this.fields[1].errText = '';
-      });
-    }
   }
 
   onSubmit() {
