@@ -10,5 +10,4 @@ export interface IInputField {
   inputLabel?: string;
   choices?: string[] | undefined;
   errText?: string | undefined;
-  inputValue?: any;
 }

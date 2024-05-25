@@ -1,12 +1,7 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { DynamicFormComponent } from '../../../shared/components/dynamic-form/dynamic-form.component';
 import { IInputField } from '../../../shared/types/input-field';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgClass } from '@angular/common';
 
 @Component({
@@ -18,13 +13,14 @@ import { NgClass } from '@angular/common';
 })
 export class LoginComponent {
   form!: FormGroup;
-  constructor(fb: FormBuilder, private changeDetectorRef: ChangeDetectorRef) {
+  constructor(fb: FormBuilder) {
     this.form = fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
+
+    this.subscribeToFormControlStatusChanges();
   }
-  isSubmitted: boolean = false;
 
   fields: IInputField[] = [
     {
@@ -53,36 +49,24 @@ export class LoginComponent {
     return this.form.get('password');
   }
 
+  subscribeToFormControlStatusChanges() {
+    if (this.email && this.password) {
+      this.email.valueChanges.subscribe(() => {
+        this.fields[0].errText = '';
+      });
+      this.password.statusChanges.subscribe(() => {
+        this.fields[1].errText = '';
+      });
+    }
+  }
+
   onSubmit() {
-    if (this.email?.errors) {
-      console.log('masuk');
+    if (this.email && this.email.invalid) {
       this.fields[0].errText = 'Invalid email format.';
     }
-    if (this.password?.errors) {
+    if (this.password && this.password.invalid) {
       this.fields[1].errText =
         'Password must has have a minimum length of 8 characters.';
-    }
-    this.isSubmitted = true;
-  }
-
-  ngDoCheck(): void {
-    // if (this.isSubmitted) {
-    //   console.log('email error', this.fields[0].errText);
-    //   this.fields[0].errText = '';
-    // }
-    // if (this.fields[0].errText !== '') {
-    //   return;
-    // }
-  }
-
-  ngAfterViewChecked(): void {
-    //Called after ngOnInit when the component's or directive's content has been initialized.
-    //Add 'implements AfterContentInit' to the class.
-    console.log('object');
-    if (this.isSubmitted) {
-      console.log('email error', this.fields[0].errText);
-      this.fields[0].errText = '';
-      this.isSubmitted = false;
     }
   }
 }
