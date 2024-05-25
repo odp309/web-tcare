@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { DynamicFormComponent } from '../../../shared/components/dynamic-form/dynamic-form.component';
 import { IInputField } from '../../../shared/types/input-field';
 import {
@@ -18,12 +18,14 @@ import { NgClass } from '@angular/common';
 })
 export class LoginComponent {
   form!: FormGroup;
-  constructor(fb: FormBuilder) {
+  constructor(fb: FormBuilder, private changeDetectorRef: ChangeDetectorRef) {
     this.form = fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
+  isSubmitted: boolean = false;
+
   fields: IInputField[] = [
     {
       inputType: 'text',
@@ -53,11 +55,34 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.email?.errors) {
+      console.log('masuk');
       this.fields[0].errText = 'Invalid email format.';
     }
     if (this.password?.errors) {
       this.fields[1].errText =
         'Password must has have a minimum length of 8 characters.';
+    }
+    this.isSubmitted = true;
+  }
+
+  ngDoCheck(): void {
+    // if (this.isSubmitted) {
+    //   console.log('email error', this.fields[0].errText);
+    //   this.fields[0].errText = '';
+    // }
+    // if (this.fields[0].errText !== '') {
+    //   return;
+    // }
+  }
+
+  ngAfterViewChecked(): void {
+    //Called after ngOnInit when the component's or directive's content has been initialized.
+    //Add 'implements AfterContentInit' to the class.
+    console.log('object');
+    if (this.isSubmitted) {
+      console.log('email error', this.fields[0].errText);
+      this.fields[0].errText = '';
+      this.isSubmitted = false;
     }
   }
 }

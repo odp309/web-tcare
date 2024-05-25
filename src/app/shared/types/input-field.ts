@@ -1,3 +1,5 @@
+import { AbstractControl } from '@angular/forms';
+
 export interface IInputField {
   inputType: 'text' | 'password' | 'radio' | 'checkbox' | '';
   inputName: string;
@@ -8,4 +10,5 @@ export interface IInputField {
   inputLabel?: string;
   choices?: string[] | undefined;
   errText?: string | undefined;
+  inputValue?: any;
 }

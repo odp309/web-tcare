@@ -1,6 +1,18 @@
 import { NgClass, TitleCasePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  AbstractControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { LucideALargeSmall, LucideAngularModule, User } from 'lucide-angular';
 
 @Component({
