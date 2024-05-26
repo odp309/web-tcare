@@ -54,6 +54,7 @@ export class LoginComponent {
     if (this.password && this.password.invalid) {
       this.fields[1].errText =
         'Password must has have a minimum length of 8 characters.';
+      return;
     }
   }
 }
