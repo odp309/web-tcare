@@ -1,2 +1,32 @@
-<p>auth-layout works!</p>
-<router-outlet></router-outlet>
+<div class="min-h-screen bg-gradient-to-br from-[#007DA0] to-[#0092BB] flex">
+  <aside class="w-[25%] overflow-hidden">
+    <img
+      src="/assets/elipseGradientBig.png"
+      alt="Image of white circle"
+      width="358"
+      height="347"
+      class="absolute -top-36 -left-36"
+    />
+    <img
+      src="/assets/elipseGradientBig.png"
+      alt="Image of white circle"
+      width="516"
+      height="497"
+      class="absolute -bottom-0 -left-20 overflow-hidden"
+    />
+    <img
+      src="/assets/authImage.png"
+      alt="A person holding a gadget"
+      width="590"
+      height="680"
+      class="hidden absolute top-0 bottom-0 my-auto mx-auto lg:block lg:-left-16 xl:left-0"
+    />
+  </aside>
+  <aside
+    class="bg-white w-[75%] rounded-l-[35px] flex flex-col justify-center items-end"
+  >
+    <div class="w-full z-0">
+      <router-outlet></router-outlet>
+    </div>
+  </aside>
+</div>
