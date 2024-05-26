@@ -3,6 +3,7 @@ import { DynamicFormComponent } from '../../../shared/components/dynamic-form/dy
 import { IInputField } from '../../../shared/types/input-field';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgClass } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import { NgClass } from '@angular/common';
 })
 export class LoginComponent {
   form!: FormGroup;
-  constructor(fb: FormBuilder) {
+  constructor(fb: FormBuilder, private router: Router) {
     this.form = fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
@@ -54,7 +55,14 @@ export class LoginComponent {
     if (this.password && this.password.invalid) {
       this.fields[1].errText =
         'Password must has have a minimum length of 8 characters.';
-      return;
+    }
+    if (
+      this.email &&
+      this.password &&
+      this.email.valid &&
+      this.password.valid
+    ) {
+      this.router.navigate(['/admin/dashboard']);
     }
   }
 }
