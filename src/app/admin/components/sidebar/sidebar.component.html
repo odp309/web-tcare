@@ -21,8 +21,24 @@
           width="160"
         />
       </div>
-      <li><a>Sidebar Item 1</a></li>
-      <li><a>Sidebar Item 2</a></li>
+      <li class="mt-10">
+        <a
+          class="text-base hover:bg-lightBlue active:!bg-bluePrimary active:!text-black"
+          [routerLink]="['/admin/dashboard']"
+          [routerLinkActive]="['bg-lightBlue']"
+        >
+          <lucide-icon name="home" size="20"></lucide-icon>
+          Dashboard
+        </a>
+      </li>
+      <li class="mt-2">
+        <a
+          class="text-base hover:bg-lightBlue active:!bg-bluePrimary active:!text-black"
+        >
+          <lucide-icon name="bar-chart-2" size="20"></lucide-icon>
+          Laporan Transaksi
+        </a>
+      </li>
     </ul>
   </div>
 </div>
