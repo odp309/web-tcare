@@ -1,0 +1,52 @@
+<label class="form-control w-full relative mb-4" [formGroup]="fGroup">
+  <div [class]="inputLabel ? 'label' : 'hidden'">
+    <span class="label-text">{{ inputLabel | titlecase }}</span>
+  </div>
+  @switch (inputVariants) { @case ('icons') {
+  <label class="input input-bordered flex items-center gap-2">
+    <lucide-icon [name]="placeholderIcon" color="grey" size="20"></lucide-icon>
+
+    <input
+      [type]="inputType"
+      [name]="inputName"
+      [id]="inputId"
+      [formControlName]="fcName"
+      class="grow"
+      [placeholder]="placeholder"
+    />
+  </label>
+  } @case ("noIcons") {
+
+  <div class="flex flex-col">
+    @if (inputType === "radio" || inputType === "checkbox") { @for (choice of
+    choices; track $index) {
+
+    <div class="flex gap-1 first:mt-0 mt-2">
+      <input
+        [type]="inputType"
+        [name]="inputName"
+        [id]="choice"
+        [class]="inputStyle"
+        [ngClass]="customStyle"
+        [formControlName]="fcName"
+      />
+      <label [for]="inputId">{{ choice | titlecase }}</label>
+    </div>
+    }} @else {
+    <input
+      [type]="inputType"
+      [name]="inputName"
+      [id]="inputId"
+      [placeholder]="placeholder === undefined ? '' : placeholder"
+      [class]="inputStyle"
+      [ngClass]="customStyle ? customStyle : ''"
+      [formControlName]="fcName"
+    />
+    }
+  </div>
+  } } @if (errText !== '' || !errText) {
+  <div class="label absolute -bottom-7">
+    <span class="label-text-alt text-red-500">{{ errText }}</span>
+  </div>
+  }
+</label>
