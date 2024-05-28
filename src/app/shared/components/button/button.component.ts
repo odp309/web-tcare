@@ -24,7 +24,8 @@ export class ButtonComponent implements OnInit {
           'border-2 bg-transparent text-bluePrimary border-bluePrimary';
         break;
       case 'danger':
-        this.variantStyle = 'border-0 bg-redDanger text-white';
+        this.variantStyle =
+          'border-0 bg-gradient-to-br from-[#F24538] to-[#F56A60] text-white';
         break;
       default:
         this.variantStyle = '';
