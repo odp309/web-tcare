@@ -1,7 +1,7 @@
 <div class="drawer lg:drawer-open">
   <input id="sidebar" type="checkbox" class="drawer-toggle" />
   <div class="drawer-content flex flex-col items-center justify-center">
-    <!-- Page content here -->
+    <!-- Page content here // sidebar button when screen is small -->
     <label for="sidebar" class="btn bg-white drawer-button lg:hidden">
       <lucide-icon name="menu" size="20"></lucide-icon>
     </label>
@@ -12,8 +12,7 @@
       aria-label="close sidebar"
       class="drawer-overlay"
     ></label>
-    <ul class="menu p-4 w-80 min-h-full bg-white text-base-content">
-      <!-- Sidebar content here -->
+    <ul class="menu p-4 w-80 min-h-screen bg-white text-base-content">
       <div class="flex justify-center pt-4">
         <img
           src="../../../../assets/bni.png"
@@ -23,22 +22,35 @@
       </div>
       <li class="mt-10">
         <a
-          class="text-base hover:bg-lightBlue active:!bg-bluePrimary active:!text-black"
+          class="text-base hover:bg-lightBlue hover:font-semibold active:!bg-bluePrimary active:!text-black"
           [routerLink]="['/admin/dashboard']"
-          [routerLinkActive]="['bg-lightBlue']"
+          [routerLinkActive]="['bg-lightBlue', 'font-semibold']"
         >
-          <lucide-icon name="home" size="20"></lucide-icon>
+          <lucide-icon
+            name="home"
+            size="20"
+            [strokeWidth]="pathname === '/admin/dashboard' ? '3' : '2'"
+          ></lucide-icon>
           Dashboard
         </a>
       </li>
       <li class="mt-2">
         <a
-          class="text-base hover:bg-lightBlue active:!bg-bluePrimary active:!text-black"
+          class="text-base hover:bg-lightBlue hover:font-semibold active:!bg-bluePrimary active:!text-black"
+          [routerLink]=""
+          [routerLinkActive]="['bg-lightBlue', 'font-semibold']"
         >
-          <lucide-icon name="bar-chart-2" size="20"></lucide-icon>
+          <lucide-icon
+            name="bar-chart-2"
+            size="20"
+            [strokeWidth]="pathname === '' ? '3' : '2'"
+          ></lucide-icon>
           Laporan Tiket
         </a>
       </li>
     </ul>
+    <div class="absolute bottom-10 px-4 w-full">
+      <app-button variants="danger" >Logout</app-button>
+    </div>
   </div>
 </div>

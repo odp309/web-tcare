@@ -2,7 +2,11 @@
   <aside class="lg:w-80">
     <app-sidebar />
   </aside>
-  <div class="w-[75%] ml-4">
+  <div class="w-[75%] px-4 py-8">
+    <div class="flex">
+      <h1 class="text-green500Primary text-2xl font-semibold">{{ title }}</h1>
+      <ng-content #dashboardUpper></ng-content>
+    </div>
     <router-outlet></router-outlet>
   </div>
 </div>
