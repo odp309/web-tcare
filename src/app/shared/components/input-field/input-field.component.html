@@ -3,7 +3,10 @@
     <span class="label-text">{{ inputLabel | titlecase }}</span>
   </div>
   @switch (inputVariants) { @case ('icons') {
-  <label class="input input-bordered flex items-center gap-2">
+  <label
+    class="input input-bordered flex items-center gap-2"
+    [ngClass]="errText !== '' ? 'border-redDanger' : ''"
+  >
     <lucide-icon [name]="placeholderIcon" color="grey" size="20"></lucide-icon>
 
     <input

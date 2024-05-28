@@ -16,7 +16,7 @@ export class LoginComponent {
   form!: FormGroup;
   constructor(fb: FormBuilder, private router: Router) {
     this.form = fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required, Validators.minLength(6)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
@@ -24,11 +24,11 @@ export class LoginComponent {
   fields: IInputField[] = [
     {
       inputType: 'text',
-      inputName: 'email',
-      fcName: 'email',
-      inputId: 'email',
+      inputName: 'username',
+      fcName: 'username',
+      inputId: 'username',
       errText: '',
-      placeholder: 'Email',
+      placeholder: 'Username',
     },
     {
       inputType: 'password',
@@ -40,8 +40,8 @@ export class LoginComponent {
     },
   ];
 
-  get email() {
-    return this.form.get('email');
+  get username() {
+    return this.form.get('username');
   }
 
   get password() {
@@ -49,17 +49,18 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    if (this.email && this.email.invalid) {
-      this.fields[0].errText = 'Invalid email format.';
+    if (this.username && this.username.invalid) {
+      this.fields[0].errText =
+        'Username must have a minimum length of 6 characters.';
     }
     if (this.password && this.password.invalid) {
       this.fields[1].errText =
         'Password must has have a minimum length of 8 characters.';
     }
     if (
-      this.email &&
+      this.username &&
       this.password &&
-      this.email.valid &&
+      this.username.valid &&
       this.password.valid
     ) {
       this.router.navigate(['/admin/dashboard']);
