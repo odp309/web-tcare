@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-button',
@@ -11,6 +11,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ButtonComponent implements OnInit {
   @Input() variants: 'primary' | 'secondary' | 'danger' = 'primary';
   @Input() customStyle = '';
+  @Input() onClick = new EventEmitter();
   variantStyle = '';
 
   variantFunc() {
@@ -30,6 +31,10 @@ export class ButtonComponent implements OnInit {
       default:
         this.variantStyle = '';
     }
+  }
+
+  onClickEvent() {
+    this.onClick.emit();
   }
 
   ngOnInit(): void {

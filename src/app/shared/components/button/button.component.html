@@ -1,6 +1,7 @@
 <button
   [class]="'btn w-full h-14 text-base font-medium ' + variantStyle"
   [ngClass]="customStyle"
+  (click)="onClickEvent()"
 >
   <ng-content #buttonText></ng-content>
 </button>
