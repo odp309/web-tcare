@@ -23,9 +23,9 @@
       </div>
       <li class="mt-10">
         <a
-          class="text-base hover:bg-lightBlue active:!bg-bluePrimary active:!text-black"
+          class="text-base hover:bg-lightBlue hover:font-semibold active:!bg-bluePrimary active:!text-black"
           [routerLink]="['/admin/dashboard']"
-          [routerLinkActive]="['bg-lightBlue']"
+          [routerLinkActive]="['bg-lightBlue', 'font-semibold']"
         >
           <lucide-icon name="home" size="20"></lucide-icon>
           Dashboard
@@ -33,7 +33,9 @@
       </li>
       <li class="mt-2">
         <a
-          class="text-base hover:bg-lightBlue active:!bg-bluePrimary active:!text-black"
+          class="text-base hover:bg-lightBlue hover:font-semibold active:!bg-bluePrimary active:!text-black"
+          [routerLink]=""
+          [routerLinkActive]="['bg-lightBlue', 'font-semibold']"
         >
           <lucide-icon name="bar-chart-2" size="20"></lucide-icon>
           Laporan Tiket
