@@ -51,7 +51,7 @@ export class InputFieldComponent implements OnInit {
 
   checkPlaceholderIcon() {
     switch (this.inputName) {
-      case 'email':
+      case 'username':
         this.placeholderIcon = 'user';
         break;
       case 'password':
