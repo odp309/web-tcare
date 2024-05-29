@@ -9,6 +9,7 @@ module.exports = {
         bluePrimary: "#0092BB",
         lightBlue: "#CEE2E8",
         redDanger: "#F24538",
+        yellowStar: "#FFB84D",
       },
     },
   },

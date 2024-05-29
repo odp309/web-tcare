@@ -26,31 +26,23 @@
           [routerLink]="['/admin/dashboard']"
           [routerLinkActive]="['bg-lightBlue', 'font-semibold']"
         >
-          <lucide-icon
-            name="home"
-            size="20"
-            [strokeWidth]="pathname === '/admin/dashboard' ? '3' : '2'"
-          ></lucide-icon>
+          <lucide-icon name="home" size="20"></lucide-icon>
           Dashboard
         </a>
       </li>
       <li class="mt-2">
         <a
           class="text-base hover:bg-lightBlue hover:font-semibold active:!bg-bluePrimary active:!text-black"
-          [routerLink]=""
+          [routerLink]="['/admin/ticket-reports']"
           [routerLinkActive]="['bg-lightBlue', 'font-semibold']"
         >
-          <lucide-icon
-            name="bar-chart-2"
-            size="20"
-            [strokeWidth]="pathname === '' ? '3' : '2'"
-          ></lucide-icon>
+          <lucide-icon name="bar-chart-2" size="20"></lucide-icon>
           Laporan Tiket
         </a>
       </li>
     </ul>
     <div class="absolute bottom-10 px-4 w-full">
-      <app-button variants="danger" >Logout</app-button>
+      <app-button variants="danger">Logout</app-button>
     </div>
   </div>
 </div>
