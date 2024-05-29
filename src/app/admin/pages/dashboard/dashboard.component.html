@@ -1,46 +1,59 @@
-<div class="sm:flex-row lg:flex gap-[22px] mt-14">
-  <app-card
-    customClass="flex items-center justify-center bg-gradient-to-tl from-[#F37142] to-[#F58961] w-[261px] h-[108px] gap-[59px] text-white"
-  >
-    <div>
-      <p>Total Laporan</p>
-      <p class="font-semibold text-[24px]">1,256</p>
+<div class="flex flex-col">
+  <div class="flex justify-between w-full">
+    <app-page-header text="Dashboard" />
+    <div class="flex items-center gap-2">
+      <p class="text-green500Primary font-semibold">Admin John Doe</p>
+      <lucide-icon
+        name="circle-user-round"
+        size="32"
+        color="#006885"
+      ></lucide-icon>
     </div>
-    <div>
-      <lucide-icon name="clipboard-list" size="48"></lucide-icon>
+    <div class="flex justify-between mt-14 w-full">
+      <app-card
+        customClass="flex items-center justify-center bg-gradient-to-tl from-[#F37142] to-[#F58961] w-[261px] h-[108px] gap-[59px] text-white"
+      >
+        <div>
+          <p>Total Laporan</p>
+          <p class="font-semibold text-[24px]">1,256</p>
+        </div>
+        <div>
+          <lucide-icon name="clipboard-list" size="48"></lucide-icon>
+        </div>
+      </app-card>
+      <app-card
+        customClass="flex items-center justify-center bg-gradient-to-tl from-[#135993] to-[#2096F9] w-[261px] h-[108px] gap-[28px] text-white"
+      >
+        <div>
+          <p>Laporan Diajukan</p>
+          <p class="font-semibold text-[24px]">56</p>
+        </div>
+        <div>
+          <lucide-icon name="file-input" size="48"></lucide-icon>
+        </div>
+      </app-card>
+      <app-card
+        customClass="flex items-center justify-center bg-gradient-to-tl from-[#473B91] to-[#7965F7] w-[261px] h-[108px] gap-[28px] text-white"
+      >
+        <div>
+          <p>Laporan Diproses</p>
+          <p class="font-semibold text-[24px]">266</p>
+        </div>
+        <div>
+          <lucide-icon name="hourglass" size="48"></lucide-icon>
+        </div>
+      </app-card>
+      <app-card
+        customClass="flex items-center justify-center bg-gradient-to-tl from-[#006885] to-[#007DA0] w-[261px] h-[108px] gap-[45px] text-white"
+      >
+        <div>
+          <p>Laporan Selesai</p>
+          <p class="font-semibold text-[24px]">10,576</p>
+        </div>
+        <div>
+          <lucide-icon name="file-check-2" size="48"></lucide-icon>
+        </div>
+      </app-card>
     </div>
-  </app-card>
-  <app-card
-    customClass="flex items-center justify-center bg-gradient-to-tl from-[#135993] to-[#2096F9] w-[261px] h-[108px] gap-[28px] text-white"
-  >
-    <div>
-      <p>Laporan Diajukan</p>
-      <p class="font-semibold text-[24px]">56</p>
-    </div>
-    <div>
-      <lucide-icon name="file-input" size="48"></lucide-icon>
-    </div>
-  </app-card>
-  <app-card
-    customClass="flex items-center justify-center bg-gradient-to-tl from-[#473B91] to-[#7965F7] w-[261px] h-[108px] gap-[28px] text-white"
-  >
-    <div>
-      <p>Laporan Diproses</p>
-      <p class="font-semibold text-[24px]">266</p>
-    </div>
-    <div>
-      <lucide-icon name="hourglass" size="48"></lucide-icon>
-    </div>
-  </app-card>
-  <app-card
-    customClass="flex items-center justify-center bg-gradient-to-tl from-[#006885] to-[#007DA0] w-[261px] h-[108px] gap-[45px] text-white"
-  >
-    <div>
-      <p>Laporan Selesai</p>
-      <p class="font-semibold text-[24px]">10,576</p>
-    </div>
-    <div>
-      <lucide-icon name="file-check-2" size="48"></lucide-icon>
-    </div>
-  </app-card>
+  </div>
 </div>

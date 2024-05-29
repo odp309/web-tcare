@@ -1,12 +1,8 @@
-<div class="flex">
+<div class="flex min-w-screen">
   <aside class="lg:w-80">
     <app-sidebar />
   </aside>
-  <div class="w-[75%] px-4 py-8">
-    <div class="flex justify-between">
-      <h1 class="text-green500Primary text-2xl font-semibold">{{ title }}</h1>
-      <ng-content #dashboardUpper></ng-content>
-    </div>
+  <div class="w-full px-8 py-8">
     <router-outlet></router-outlet>
   </div>
 </div>
