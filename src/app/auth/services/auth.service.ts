@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { ApiServiceService } from '../../shared/services/api-service.service';
 import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
+import { IResponse } from '../../shared/types/response';
+import { NgxSonnerToaster, toast } from 'ngx-sonner';
 
-type TLogin = {
-  statusCode: string;
-  message: string;
+interface ILogin extends IResponse {
   result: {
     accessToken: string;
     token: string;
-  };
-};
+  } | null;
+}
 
-export type TLoginBody = {
+type TLoginBody = {
   username: string;
   password: string;
 };
@@ -21,26 +22,39 @@ export type TLoginBody = {
   providedIn: 'root',
 })
 export class AuthService extends ApiServiceService {
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private cookieService: CookieService) {
     super(http);
   }
 
+  message: BehaviorSubject<string> = new BehaviorSubject('');
+  message$: Observable<string> = this.message;
+
+  getMessage() {
+    return this.message$;
+  }
+
   login(body: TLoginBody) {
-    this.post<TLogin, TLoginBody>('public/auth/login', body)
+    this.post<ILogin, TLoginBody>('public/auth/login', body)
       .pipe(
         catchError((e) => {
-          throw new String(e.statusText);
+          throw e.error;
         })
       )
       .subscribe({
-        next(value) {
-          console.log('Login success', value);
+        next: (value) => {
+          this.message.next(value.message);
+          if (value.result) {
+            console.log(value.result);
+            this.cookieService.set('token', value.result.accessToken);
+            this.cookieService.set('refreshToken', value.result.token);
+            toast.success(value.message);
+            return;
+          }
         },
-        error(err) {
+        error: (err: ILogin) => {
           console.log('Login failed', err);
-        },
-        complete() {
-          console.log('finish');
+          this.message.next(err.message);
+          toast.error(err.message);
         },
       });
   }
