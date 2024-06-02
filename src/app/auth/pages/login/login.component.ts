@@ -5,11 +5,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { EMPTY, Observable } from 'rxjs';
+import { NgxSonnerToaster, toast } from 'ngx-sonner';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [DynamicFormComponent, NgClass],
+  imports: [DynamicFormComponent, NgClass, NgxSonnerToaster],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -18,13 +21,16 @@ export class LoginComponent {
   constructor(
     fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private cookieService: CookieService
   ) {
     this.form = fb.group({
-      username: ['', [Validators.required, Validators.minLength(6)]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
+
+  message$: Observable<string> = EMPTY;
 
   fields: IInputField[] = [
     {
@@ -55,12 +61,11 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.username && this.username.invalid) {
-      this.fields[0].errText =
-        'Username must have a minimum length of 6 characters.';
+      this.fields[0].errText = 'Please input a valid username.';
     }
     if (this.password && this.password.invalid) {
       this.fields[1].errText =
-        'Password must has have a minimum length of 8 characters.';
+        'Password must has have a minimum length of 6 characters.';
     }
     if (
       this.username &&
@@ -69,10 +74,13 @@ export class LoginComponent {
       this.password.valid
     ) {
       this.authService.login({
-        username: 'admin',
-        password: '123456',
+        username: this.username.value,
+        password: this.password.value,
       });
-      this.router.navigate(['/admin/dashboard']);
+
+      setTimeout(() => {
+        this.router.navigate(['/admin/dashboard'], { replaceUrl: true });
+      }, 1000);
     }
   }
 }
