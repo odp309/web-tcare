@@ -12,6 +12,7 @@ export class ButtonComponent implements OnInit {
   @Input() variants: 'primary' | 'secondary' | 'danger' = 'primary';
   @Input() customStyle = '';
   @Input() onClick = new EventEmitter();
+  @Input() isDisabled: boolean | null = false;
   variantStyle = '';
 
   variantFunc() {

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DynamicFormComponent } from '../../../shared/components/dynamic-form/dynamic-form.component';
 import { IInputField } from '../../../shared/types/input-field';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgClass } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { EMPTY, Observable } from 'rxjs';
@@ -12,18 +12,13 @@ import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [DynamicFormComponent, NgClass, NgxSonnerToaster],
+  imports: [DynamicFormComponent, NgClass, NgxSonnerToaster, AsyncPipe],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
   form!: FormGroup;
-  constructor(
-    fb: FormBuilder,
-    private router: Router,
-    private authService: AuthService,
-    private cookieService: CookieService
-  ) {
+  constructor(fb: FormBuilder, protected authService: AuthService) {
     this.form = fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -77,10 +72,6 @@ export class LoginComponent {
         username: this.username.value,
         password: this.password.value,
       });
-
-      setTimeout(() => {
-        this.router.navigate(['/admin/dashboard'], { replaceUrl: true });
-      }, 1000);
     }
   }
 }
