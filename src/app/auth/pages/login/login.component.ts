@@ -4,6 +4,7 @@ import { IInputField } from '../../../shared/types/input-field';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,11 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   form!: FormGroup;
-  constructor(fb: FormBuilder, private router: Router) {
+  constructor(
+    fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.form = fb.group({
       username: ['', [Validators.required, Validators.minLength(6)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
@@ -63,6 +68,10 @@ export class LoginComponent {
       this.username.valid &&
       this.password.valid
     ) {
+      this.authService.login({
+        username: 'admin',
+        password: '123456',
+      });
       this.router.navigate(['/admin/dashboard']);
     }
   }
