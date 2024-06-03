@@ -42,7 +42,11 @@
       </li>
     </ul>
     <div class="absolute bottom-10 px-4 w-full">
-      <app-button variants="danger">Logout</app-button>
+      <app-modal btnTitle="Logout" modalDesc="Apa anda yakin ingin keluar?">
+        <app-button variants="danger" (onClick)="onHandleLogout()"
+          >Logout</app-button
+        >
+      </app-modal>
     </div>
   </div>
 </div>
