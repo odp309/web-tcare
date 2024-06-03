@@ -1,0 +1,16 @@
+@if (data) {
+<div class="p-[30px] pb-[15px]">
+  <p class="text-green500Primary font-semibold text-[18px] mb-[10px]">
+    {{ data.title }}
+  </p>
+  <table class="w-full">
+    @for (detail of data.details; track $index) {
+    <tr>
+      <td class="w-[50%]">{{ detail.detailTitle }}</td>
+      <td class="text-[#858585]">{{ detail.detailDesc }}</td>
+    </tr>
+    }
+  </table>
+</div>
+
+}
