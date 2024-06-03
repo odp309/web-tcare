@@ -12,7 +12,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { IResponse } from '../../shared/types/response';
 import { toast } from 'ngx-sonner';
 import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment.development';
 
 interface ILogin extends IResponse {
   result: {
