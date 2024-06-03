@@ -1,0 +1,18 @@
+<app-button variants="danger" onclick="myModal.showModal()">{{
+  btnTitle
+}}</app-button>
+<dialog id="myModal" class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Konfirmasi</h3>
+    <p class="py-4">{{ modalDesc }}</p>
+    <div class="modal-action">
+      <form method="dialog">
+        <app-button variants="plain">{{ btnCloseTitle }}</app-button>
+      </form>
+      <ng-content #modalAction></ng-content>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>

@@ -9,21 +9,9 @@ import {
   finalize,
 } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
-import { IResponse } from '../../shared/types/response';
 import { toast } from 'ngx-sonner';
 import { Router } from '@angular/router';
-
-interface ILogin extends IResponse {
-  result: {
-    accessToken: string;
-    token: string;
-  } | null;
-}
-
-type TLoginBody = {
-  username: string;
-  password: string;
-};
+import { IAuth, TLoginBody, TLoginResult } from '../../shared/types/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -46,10 +34,9 @@ export class AuthService extends ApiServiceService {
   }
 
   login(body: TLoginBody) {
-    console.log(this.isLoading);
     if (!this.isLoading) {
       this.isLoading = true;
-      this.post<ILogin, TLoginBody>('public/auth/login', body)
+      this.post<IAuth, TLoginBody>('public/auth/login', body)
         .pipe(
           catchError((e) => {
             this.isLoading = false;
@@ -64,26 +51,52 @@ export class AuthService extends ApiServiceService {
           next: (value) => {
             this.message.next(value.message);
             if (value.result) {
-              this.cookieService.set('token', value.result.accessToken);
-              this.cookieService.set('refreshToken', value.result.token);
+              const loginRes: TLoginResult = value.result as TLoginResult;
+              this.cookieService.set('token', loginRes.accessToken);
+              this.cookieService.set('refreshToken', loginRes.token);
               toast.success(value.message);
-              setTimeout(() => {
-                this.router.navigate(['/admin/dashboard'], {
-                  replaceUrl: true,
-                });
-              }, 1000);
+              this.router.navigate(['/admin/dashboard'], {
+                replaceUrl: true,
+              });
               return;
             }
           },
-          error: (err: ILogin) => {
+          error: (err: IAuth) => {
             this.message.next(err.message);
             toast.error(err.message);
             console.log('Login failed', err);
           },
-          complete: () => {
-            console.log('finish');
-          },
         });
     }
+  }
+
+  logout() {
+    const token = this.cookieService.get('token');
+    this.post<IAuth, {}>('public/auth/logout', {}, token)
+      .pipe(
+        catchError((e) => {
+          this.isLoading = false;
+          throw e.error;
+        }),
+        finalize(() => {
+          this.isLoading = false;
+        }),
+        debounceTime(1000)
+      )
+      .subscribe({
+        next: (value) => {
+          this.message.next(value.message);
+          this.cookieService.deleteAll();
+          toast.success('Logout successfull');
+          this.router.navigate(['/auth/login'], {
+            replaceUrl: true,
+          });
+        },
+        error: (err: IAuth) => {
+          this.message.next(err.message);
+          toast.error(err.message);
+          console.log('Login failed', err);
+        },
+      });
   }
 }

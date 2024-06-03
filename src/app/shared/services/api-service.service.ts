@@ -15,14 +15,13 @@ export class ApiServiceService {
 
   protected post<TResult, TBody>(
     endpoint: string,
-    body: TBody,
+    body?: TBody,
     token?: string
   ) {
     let headers: THeaders = {
       'Content-Type': 'application/json',
     };
     if (token) {
-      console.log('object', token);
       headers = {
         ...headers,
         Authorization: `Bearer ${token}`,
@@ -30,7 +29,7 @@ export class ApiServiceService {
     }
     return this.http.post<TResult>(
       `${environment.apiBaseUrl}/${endpoint}`,
-      body,
+      body ? body : {},
       {
         headers: headers,
       }
