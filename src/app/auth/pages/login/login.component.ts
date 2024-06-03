@@ -3,11 +3,9 @@ import { DynamicFormComponent } from '../../../shared/components/dynamic-form/dy
 import { IInputField } from '../../../shared/types/input-field';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AsyncPipe, NgClass } from '@angular/common';
-import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { EMPTY, Observable } from 'rxjs';
 import { NgxSonnerToaster, toast } from 'ngx-sonner';
-import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
