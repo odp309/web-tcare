@@ -13,7 +13,10 @@
     [fcName]="field.fcName"
   ></app-input-field>
   } }
-  <app-button [customStyle]="btnStyle" type="submit">{{
-    buttonLabel
-  }}</app-button>
+  <app-button
+    [customStyle]="btnStyle"
+    type="submit"
+    [isDisabled]="isButtonDisabled"
+    >{{ buttonLabel }}</app-button
+  >
 </form>

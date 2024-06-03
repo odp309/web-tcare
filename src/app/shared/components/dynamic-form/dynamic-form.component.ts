@@ -22,6 +22,7 @@ export class DynamicFormComponent implements AfterViewInit {
   @Input({ required: true }) fGroup!: FormGroup;
   @Input({ required: true }) formFields: IInputField[] = [];
   @Input() buttonLabel: string = 'Submit';
+  @Input() isButtonDisabled: boolean | null = false;
   @Input() btnStyle: string = '';
   @Output() onSubmit = new EventEmitter();
 

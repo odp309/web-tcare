@@ -2,6 +2,7 @@
   [class]="'btn w-full h-14 text-base font-medium shadow-lg ' + variantStyle"
   [ngClass]="customStyle"
   (click)="onClickEvent()"
+  [disabled]="isDisabled"
 >
   <ng-content #buttonText></ng-content>
 </button>

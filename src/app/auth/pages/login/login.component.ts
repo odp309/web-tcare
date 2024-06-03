@@ -2,24 +2,28 @@ import { Component } from '@angular/core';
 import { DynamicFormComponent } from '../../../shared/components/dynamic-form/dynamic-form.component';
 import { IInputField } from '../../../shared/types/input-field';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgClass } from '@angular/common';
-import { Router } from '@angular/router';
+import { AsyncPipe, NgClass } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
+import { EMPTY, Observable } from 'rxjs';
+import { NgxSonnerToaster, toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [DynamicFormComponent, NgClass],
+  imports: [DynamicFormComponent, NgClass, NgxSonnerToaster, AsyncPipe],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
   form!: FormGroup;
-  constructor(fb: FormBuilder, private router: Router) {
+  constructor(fb: FormBuilder, protected authService: AuthService) {
     this.form = fb.group({
-      username: ['', [Validators.required, Validators.minLength(6)]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
+
+  message$: Observable<string> = EMPTY;
 
   fields: IInputField[] = [
     {
@@ -50,12 +54,11 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.username && this.username.invalid) {
-      this.fields[0].errText =
-        'Username must have a minimum length of 6 characters.';
+      this.fields[0].errText = 'Please input a valid username.';
     }
     if (this.password && this.password.invalid) {
       this.fields[1].errText =
-        'Password must has have a minimum length of 8 characters.';
+        'Password must has have a minimum length of 6 characters.';
     }
     if (
       this.username &&
@@ -63,7 +66,10 @@ export class LoginComponent {
       this.username.valid &&
       this.password.valid
     ) {
-      this.router.navigate(['/admin/dashboard']);
+      this.authService.login({
+        username: this.username.value,
+        password: this.password.value,
+      });
     }
   }
 }
