@@ -1,12 +1,17 @@
-<div class="navbar bg-base-100">
+<div class="navbar bg-transparent px-[50px] py-[20px]">
   <div class="flex-1">
-    <a class="btn btn-ghost text-xl">Final Project</a>
+    <img src="../../../../assets/BNI-white.png" alt="BNI White" width="153" />
   </div>
   <div class="flex-none">
-    <ul class="menu menu-horizontal px-1">
-      <li>
-        <a [routerLink]="['/auth/login']">Login</a>
-      </li>
-    </ul>
+    <a
+      class="bg-white rounded-[12px] w-[210px] h-[48px] flex justify-center items-center"
+      [routerLink]="['/auth/login']"
+    >
+      <div>
+        <p class="font-semibold text-[18px] text-green500Primary text-center">
+          Login
+        </p>
+      </div>
+    </a>
   </div>
 </div>
