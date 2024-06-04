@@ -10,4 +10,35 @@ import { LabelStatusComponent } from '../../components/label-status/label-status
   templateUrl: './ticket-reports.component.html',
   styleUrl: './ticket-reports.component.scss',
 })
-export class TicketReportsComponent {}
+export class TicketReportsComponent {
+  tHeads = [
+    {
+      title: 'ID Tiket',
+      isAbleToSort: true,
+    },
+    {
+      title: 'Tanggal',
+      isAbleToSort: true,
+    },
+    {
+      title: 'Kategori',
+      isAbleToSort: false,
+    },
+    {
+      title: 'Rating',
+      isAbleToSort: false,
+    },
+    {
+      title: 'Rentang Response',
+      isAbleToSort: false,
+    },
+    {
+      title: 'Status',
+      isAbleToSort: false,
+    },
+    {
+      title: 'Action',
+      isAbleToSort: false,
+    },
+  ];
+}

@@ -1,11 +1,12 @@
 <div>
-  <app-table customClass="lg:w-[1102px]">
+  <app-table customClass="lg:w-full">
     <thead>
       <tr class="bg-[#F7F7F7] h-[64px] text-center">
         <td></td>
+        @for (tHead of tHeads; track $index) { @if (tHead.isAbleToSort) {
         <td>
-          <div class="flex items-center justify-center">
-            <p class="text-sm">ID Tiket</p>
+          <div class="flex items-center justify-start gap-1">
+            <p class="text-sm">{{ tHead.title }}</p>
             <lucide-icon
               name="chevron-down"
               size="12"
@@ -13,21 +14,13 @@
             ></lucide-icon>
           </div>
         </td>
-        <td>
-          <div class="flex items-center justify-center">
-            <p class="text-sm">Tanggal</p>
-            <lucide-icon
-              name="chevron-down"
-              size="12"
-              [strokeWidth]="2.5"
-            ></lucide-icon>
+        } @else {
+        <td class="text-sm">
+          <div class="flex justify-start">
+            <p>{{ tHead.title }}</p>
           </div>
         </td>
-        <td class="text-sm">Kategori</td>
-        <td class="text-sm">Rating</td>
-        <td class="text-sm">Rentang Response</td>
-        <td class="text-sm">Status</td>
-        <td class="text-sm">Action</td>
+        } }
       </tr>
     </thead>
     <tbody>
