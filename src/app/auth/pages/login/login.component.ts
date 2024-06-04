@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DynamicFormComponent } from '../../../shared/components/dynamic-form/dynamic-form.component';
-import { IInputField } from '../../../shared/types/input-field';
+import { IInputField } from '../../../shared/types/inputField';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { AuthService } from '../../services/auth.service';

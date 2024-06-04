@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { InputFieldComponent } from '../input-field/input-field.component';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { IInputField } from '../../types/input-field';
+import { IInputField } from '../../types/inputField';
 import { ButtonComponent } from '../button/button.component';
 
 @Component({
