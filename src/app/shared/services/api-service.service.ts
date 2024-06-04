@@ -43,6 +43,7 @@ export class ApiServiceService {
         Authorization: `Bearer ${token}`,
       };
     }
+    // change env url when backend finished
     return this.http.get<T>(`${environment.jsonServerUrl}/${endpoint}`, {
       headers: headers,
     });

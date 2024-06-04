@@ -1,6 +1,6 @@
 import { IResponse } from './response';
 
-type TResultTicket = {
+export type TResultTicket = {
   id: number;
   ticket_number: string;
   category: string;
@@ -12,5 +12,5 @@ type TResultTicket = {
 };
 
 export interface ITicketReports extends IResponse {
-  result: TResultTicket;
+  result: TResultTicket[];
 }
