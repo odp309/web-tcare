@@ -24,6 +24,35 @@
       </tr>
     </thead>
     <tbody>
+      @for (data of ticketReporsData; ; let idx = $index; track data.id) {
+      <tr>
+        <th>{{ idx + 1 }}</th>
+        <td>{{ data.ticket_number }}</td>
+        <td>{{ data.created_at | formatDate : "DD-MM-YYYY" }}</td>
+        <td>{{ data.status | toTitleCase }}</td>
+        <td>-</td>
+        <td>-</td>
+        <td>
+          <app-label-status customClass="bg-[#FFE3B2]">
+            <p>Dalam Proses</p>
+          </app-label-status>
+        </td>
+        <td>
+          <div class="flex justify-center items-center gap-[16px]">
+            <lucide-icon
+              name="square-check"
+              size="16"
+              [strokeWidth]="2.5"
+            ></lucide-icon>
+            <lucide-icon
+              name="ellipsis"
+              [strokeWidth]="2.5"
+              size="16"
+            ></lucide-icon>
+          </div>
+        </td>
+      </tr>
+      }
       <tr>
         <th>1</th>
         <td>SD-186317293</td>
