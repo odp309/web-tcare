@@ -1,0 +1,11 @@
+<div class="flex gap-3">
+  @for (rating of arrRating; track $index) {
+  <lucide-icon
+    name="star"
+    [class]="rating === 1 ? 'fill-yellowStar' : ''"
+    color="#FFB84D"
+    size="24"
+  ></lucide-icon>
+
+  }
+</div>
