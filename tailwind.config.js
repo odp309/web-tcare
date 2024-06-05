@@ -11,6 +11,10 @@ module.exports = {
         redDanger: "#F24538",
         yellowStar: "#FFB84D",
       },
+      backgroundImage: {
+        landingPage: "url('/assets/backgroundLanding.png')",
+        landingPage2: "url('/assets/backgroundLanding-2.png')",
+      },
     },
   },
   plugins: [require("daisyui")],
