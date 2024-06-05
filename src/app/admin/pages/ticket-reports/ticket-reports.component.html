@@ -1,5 +1,5 @@
 <div>
-  <app-page-header text="Laporan Transaksi">
+  <app-page-header text="Laporan Tiket">
     <app-input-field
       inputType="text"
       inputName="search"
@@ -38,7 +38,8 @@
         </tr>
       </thead>
       <tbody>
-        @for (data of ticketReporsData; ; let idx = $index; track data.id) {
+        @for (data of ticketReports$ | async; ; let idx = $index; track data.id)
+        {
         <tr>
           <th>{{ idx + 1 }}</th>
           <td>{{ data.ticket_number }}</td>
@@ -54,7 +55,10 @@
           <td>
             <div class="flex justify-center items-center gap-[16px]">
               @if (data.status.toLowerCase() === "diajukan") {
-              <button>
+              <button
+                class="hover:text-orangeStatus"
+                (click)="onHandleUpdateStatus(data.id)"
+              >
                 <lucide-icon
                   name="hourglass"
                   size="16"
@@ -62,7 +66,10 @@
                 ></lucide-icon>
               </button>
               } @else if (data.status.toLowerCase() === "dalam proses") {
-              <button>
+              <button
+                class="hover:text-greenStatus"
+                (click)="onHandleUpdateStatus(data.id)"
+              >
                 <lucide-icon
                   name="square-check"
                   size="16"
