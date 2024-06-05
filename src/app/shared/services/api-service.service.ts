@@ -48,4 +48,27 @@ export class ApiServiceService {
       headers: headers,
     });
   }
+
+  protected put<TResult, TBody>(
+    endpoint: string,
+    body?: TBody,
+    token?: string
+  ) {
+    let headers: THeaders = {
+      'Content-Type': 'application/json',
+    };
+    if (token) {
+      headers = {
+        ...headers,
+        Authorization: `Bearer ${token}`,
+      };
+    }
+    return this.http.put<TResult>(
+      `${environment.jsonServerUrl}/${endpoint}`,
+      body,
+      {
+        headers: headers,
+      }
+    );
+  }
 }
