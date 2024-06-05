@@ -1,5 +1,5 @@
 import { NgClass, TitleCasePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-label-status',
@@ -27,6 +27,10 @@ export class LabelStatusComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.checkStatus();
+  }
+
+  ngOnChanges(): void {
     this.checkStatus();
   }
 }
