@@ -45,8 +45,8 @@ export class TicketReportsComponent implements OnInit {
     return this.form.get('search');
   }
 
-  ticketReports$: Observable<ITicketReports> = EMPTY;
-  ticketReporsData: TResultTicket[] = [];
+  ticketReports$: Observable<TResultTicket[]> = EMPTY;
+  ticketReportsData: TResultTicket[] = [];
   tHeads = [
     {
       title: 'ID Tiket',
@@ -82,11 +82,34 @@ export class TicketReportsComponent implements OnInit {
     console.log('click');
   }
 
-  ngOnInit(): void {
+  onHandleUpdateStatus(id: number) {
+    const existingData = this.ticketReportsData.find((data) => data.id === id);
+    let newStatus = '';
+    if (existingData) {
+      switch (existingData.status.toLowerCase()) {
+        case 'diajukan':
+          newStatus = 'dalam proses';
+          break;
+        case 'dalam proses':
+          newStatus = 'selesai';
+          break;
+      }
+    }
+    this.ticketService.updateStatus(id, {
+      ...existingData,
+      status: newStatus,
+    });
+  }
+
+  getTicketData() {
     this.ticketService.getTicketReports();
     this.ticketReports$ = this.ticketService.getData();
     this.ticketService.getData().subscribe((value) => {
-      this.ticketReporsData = value.result;
+      this.ticketReportsData = value;
     });
+  }
+
+  ngOnInit(): void {
+    this.getTicketData();
   }
 }
