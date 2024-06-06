@@ -4,10 +4,14 @@
   </div>
   @switch (inputVariants) { @case ('icons') {
   <label
-    class="input input-bordered flex items-center gap-2"
+    [class]="'input input-bordered flex items-center gap-2 ' + inputSizeStyle"
     [ngClass]="errText !== '' ? 'border-redDanger' : ''"
   >
-    <lucide-icon [name]="placeholderIcon" color="grey" size="20"></lucide-icon>
+    <lucide-icon
+      [name]="placeholderIcon"
+      color="grey"
+      [size]="inputSize === 'small' ? '16' : '20'"
+    ></lucide-icon>
 
     <input
       [type]="inputType"
@@ -17,6 +21,25 @@
       class="grow"
       [placeholder]="placeholder"
     />
+  </label>
+  } @case ("iconsRight") {
+  <label
+    [class]="'input input-bordered flex items-center gap-2 ' + inputSizeStyle"
+    [ngClass]="errText !== '' ? 'border-redDanger' : ''"
+  >
+    <input
+      [type]="inputType"
+      [name]="inputName"
+      [id]="inputId"
+      [formControlName]="fcName"
+      class="grow"
+      [placeholder]="placeholder"
+    />
+    <lucide-icon
+      [name]="placeholderIcon"
+      color="grey"
+      [size]="inputSize === 'small' ? '16' : '20'"
+    ></lucide-icon>
   </label>
   } @case ("noIcons") {
 
