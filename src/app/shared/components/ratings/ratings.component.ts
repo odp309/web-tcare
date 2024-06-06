@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
@@ -10,7 +10,8 @@ import { LucideAngularModule } from 'lucide-angular';
 })
 export class RatingsComponent {
   private maxRating = 5;
-  rating = 3;
+  @Input() size: 'default' | 'small' = 'default';
+  @Input({ required: true }) rating: number = 0;
   arrRating: number[] = [];
 
   private calculateRating() {
@@ -25,6 +26,5 @@ export class RatingsComponent {
 
   ngOnInit(): void {
     this.calculateRating();
-    console.log(this.arrRating);
   }
 }

@@ -1,16 +1,12 @@
 import { NgClass, TitleCasePipe } from '@angular/common';
 import {
   Component,
-  EventEmitter,
   Input,
   OnInit,
-  Output,
-  SimpleChanges,
+
 } from '@angular/core';
 import {
-  AbstractControl,
   FormGroup,
-  FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
 import { LucideALargeSmall, LucideAngularModule, User } from 'lucide-angular';
@@ -38,7 +34,9 @@ export class InputFieldComponent implements OnInit {
   @Input() errText: string | undefined;
   @Input() fGroup!: FormGroup;
   @Input() fcName: string | number | null = null;
-  @Input() inputVariants: 'noIcons' | 'icons' = 'icons';
+  @Input() inputVariants: 'noIcons' | 'icons' | 'iconsRight' = 'icons';
+  @Input() inputSize: 'medium' | 'small' = 'medium';
+  inputSizeStyle = '';
   placeholderIcon: string = '';
   inputStyle: string = 'input input-bordered w-full text-sm';
 
@@ -46,6 +44,14 @@ export class InputFieldComponent implements OnInit {
     if (this.inputType === 'radio' || this.inputType === 'checkbox') {
       this.inputStyle = this.inputType;
       return;
+    }
+  }
+
+  checkInputSize() {
+    switch (this.inputSize) {
+      case 'small':
+        this.inputSizeStyle = 'input-sm';
+        break;
     }
   }
 
@@ -57,6 +63,9 @@ export class InputFieldComponent implements OnInit {
       case 'password':
         this.placeholderIcon = 'lock-keyhole';
         break;
+      case 'search':
+        this.placeholderIcon = 'search';
+        break;
       default:
         this.placeholderIcon = '';
         break;
@@ -66,5 +75,6 @@ export class InputFieldComponent implements OnInit {
   ngOnInit(): void {
     this.checkInputType();
     this.checkPlaceholderIcon();
+    this.checkInputSize();
   }
 }

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 
 type THeaders = {
-  'Content-Type': string;
+  'Content-Type'?: string;
   Authorization?: string;
 };
 
@@ -30,6 +30,42 @@ export class ApiServiceService {
     return this.http.post<TResult>(
       `${environment.apiBaseUrl}/${endpoint}`,
       body ? body : {},
+      {
+        headers: headers,
+      }
+    );
+  }
+
+  protected get<T>(endpoint: string, token?: string) {
+    let headers: THeaders = {};
+    if (token) {
+      headers = {
+        Authorization: `Bearer ${token}`,
+      };
+    }
+    // change env url when backend finished
+    return this.http.get<T>(`${environment.jsonServerUrl}/${endpoint}`, {
+      headers: headers,
+    });
+  }
+
+  protected put<TResult, TBody>(
+    endpoint: string,
+    body?: TBody,
+    token?: string
+  ) {
+    let headers: THeaders = {
+      'Content-Type': 'application/json',
+    };
+    if (token) {
+      headers = {
+        ...headers,
+        Authorization: `Bearer ${token}`,
+      };
+    }
+    return this.http.put<TResult>(
+      `${environment.jsonServerUrl}/${endpoint}`,
+      body,
       {
         headers: headers,
       }
