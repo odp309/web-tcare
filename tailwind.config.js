@@ -17,6 +17,10 @@ module.exports = {
         greenBgStatus: "#E6F8ED",
         orangeBgStatus: "#FFF5E7",
       },
+      backgroundImage: {
+        landingPage: "url('/assets/backgroundLanding.png')",
+        landingPage2: "url('/assets/backgroundLanding-2.png')",
+      },
     },
   },
   plugins: [require("daisyui")],

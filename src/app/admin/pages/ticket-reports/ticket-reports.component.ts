@@ -4,10 +4,7 @@ import { TableComponent } from '../../../shared/components/table/table.component
 import { LabelStatusComponent } from '../../components/label-status/label-status.component';
 import { TicketReportsService } from '../../services/ticket-reports.service';
 import { EMPTY, Observable } from 'rxjs';
-import {
-  ITicketReports,
-  TResultTicket,
-} from '../../../shared/types/ticketReport';
+import { TResultTicket } from '../../../shared/types/ticketReport';
 import { AsyncPipe } from '@angular/common';
 import { ToTitleCasePipe } from '../../../shared/pipes/to-title-case/to-title-case.pipe';
 import { FormatDatePipe } from '../../../shared/pipes/format-date/format-date.pipe';
@@ -15,6 +12,7 @@ import { RatingsComponent } from '../../../shared/components/ratings/ratings.com
 import { PageHeaderComponent } from '../../components/page-header/page-header.component';
 import { InputFieldComponent } from '../../../shared/components/input-field/input-field.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DropdownComponent } from '../../../shared/components/dropdown/dropdown.component';
 
 @Component({
   selector: 'app-ticket-reports',
@@ -29,6 +27,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
     RatingsComponent,
     PageHeaderComponent,
     InputFieldComponent,
+    DropdownComponent,
+    PageHeaderComponent,
   ],
   templateUrl: './ticket-reports.component.html',
   styleUrl: './ticket-reports.component.scss',

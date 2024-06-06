@@ -1,12 +1,20 @@
 import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './shared/layouts/main-layout/main-layout.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
     pathMatch: 'full',
+    children: [
+      {
+        path: '',
+        component: LandingPageComponent,
+        pathMatch: 'full',
+      },
+    ],
   },
   {
     path: 'auth',

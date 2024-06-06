@@ -1,0 +1,22 @@
+<div class="dropdown" (click)="onClick()">
+  <div
+    tabindex="0"
+    role="button"
+    class="btn m-1"
+    class="dropdown border border-[#DBDCDE] w-[210px] h-[46px] rounded-[15px] text-[#A3A3A3] px-[18px] text-[14px] flex justify-between items-center"
+  >
+    <p>{{ text }}</p>
+    @if (!isOpen) {
+    <lucide-icon name="chevron-down" size="18"></lucide-icon>
+    } @else {
+    <lucide-icon name="chevron-up" size="18"></lucide-icon>
+    }
+  </div>
+  <ul
+    tabindex="0"
+    class="dropdown-content z-50 menu bg-white rounded-box w-[210px] border border-[#DBDCDE] text-[#A3A3A3] mt-[2px]"
+  >
+    <li><a>Item 1</a></li>
+    <li><a>Item 2</a></li>
+  </ul>
+</div>
