@@ -1,11 +1,16 @@
-<div class="dropdown" (click)="onClick()">
+<div class="w-fit" (click)="onClick()" (clickOutside)="isOpen = false">
   <div
-    tabindex="0"
     role="button"
-    class="btn m-1"
-    class="dropdown border border-[#DBDCDE] w-[210px] h-[46px] rounded-[15px] text-[#A3A3A3] px-[18px] text-[14px] flex justify-between items-center"
+    class="dropdown border border-[#DBDCDE] rounded-xl text-[#A3A3A3] px-4 w-[210px] text-[14px] flex gap-2 justify-between items-center"
+    [ngClass]="size === 'small' ? 'h-8' : 'h-11'"
   >
-    <p>{{ text }}</p>
+    <p [ngClass]="text !== placeholder && text !== '' ? 'text-black' : ''">
+      @if (text !== '') {
+      {{ text | toTitleCase }}
+      } @else {
+      {{ placeholder | toTitleCase }}
+      }
+    </p>
     @if (!isOpen) {
     <lucide-icon name="chevron-down" size="18"></lucide-icon>
     } @else {
@@ -13,10 +18,16 @@
     }
   </div>
   <ul
-    tabindex="0"
     class="dropdown-content z-50 menu bg-white rounded-box w-[210px] border border-[#DBDCDE] text-[#A3A3A3] mt-[2px]"
+    [ngClass]="!isOpen ? 'hidden' : 'absolute'"
   >
-    <li><a>Item 1</a></li>
-    <li><a>Item 2</a></li>
+    @for (item of dropdownItems; track $index) {
+
+    <li (click)="text = item">
+      <p [ngClass]="text === item ? 'text-green500Primary font-semibold' : ''">
+        {{ item | toTitleCase }}
+      </p>
+    </li>
+    }
   </ul>
 </div>
