@@ -1,4 +1,4 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { TableComponent } from '../../../shared/components/table/table.component';
 import { LabelStatusComponent } from '../../components/label-status/label-status.component';
@@ -13,6 +13,7 @@ import { PageHeaderComponent } from '../../components/page-header/page-header.co
 import { InputFieldComponent } from '../../../shared/components/input-field/input-field.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DropdownComponent } from '../../../shared/components/dropdown/dropdown.component';
+import { ClickOutsideDirective } from '../../../shared/directives/click-outside/click-outside.directive';
 
 @Component({
   selector: 'app-ticket-reports',
@@ -29,6 +30,7 @@ import { DropdownComponent } from '../../../shared/components/dropdown/dropdown.
     InputFieldComponent,
     DropdownComponent,
     PageHeaderComponent,
+    ClickOutsideDirective,
   ],
   templateUrl: './ticket-reports.component.html',
   styleUrl: './ticket-reports.component.scss',
@@ -41,12 +43,9 @@ export class TicketReportsComponent implements OnInit {
     });
   }
 
-  get search() {
-    return this.form.get('search');
-  }
-
   ticketReports$: Observable<TResultTicket[]> = EMPTY;
   ticketReportsData: TResultTicket[] = [];
+
   tHeads = [
     {
       title: 'ID Tiket',
@@ -77,6 +76,17 @@ export class TicketReportsComponent implements OnInit {
       isAbleToSort: false,
     },
   ];
+
+  dropdownItems = [
+    'all category',
+    'gagal transfer',
+    'gagal topup',
+    'gagal pembayaran',
+  ];
+
+  get search() {
+    return this.form.get('search');
+  }
 
   onClick() {
     console.log('click');
