@@ -32,6 +32,7 @@
       inputSizeStyle
     "
     [ngClass]="errText !== '' ? 'border-redDanger' : ''"
+    [ngClass]="inputType === 'date' ? 'w-[206px]' : ''"
   >
     <input
       [type]="inputType"
@@ -40,6 +41,7 @@
       [formControlName]="fcName"
       class="grow"
       [placeholder]="placeholder"
+      (mouseenter)="onMouseEnter.emit()"
     />
     <lucide-icon
       [name]="placeholderIcon"
