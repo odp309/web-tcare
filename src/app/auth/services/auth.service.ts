@@ -12,6 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { toast } from 'ngx-sonner';
 import { Router } from '@angular/router';
 import { IAuth, TLoginBody, TLoginResult } from '../../shared/types/auth';
+import Cookies from 'js-cookie';
 
 @Injectable({
   providedIn: 'root',
@@ -52,8 +53,8 @@ export class AuthService extends ApiServiceService {
             this.message.next(value.message);
             if (value.result) {
               const loginRes: TLoginResult = value.result as TLoginResult;
-              this.cookieService.set('token', loginRes.accessToken);
-              this.cookieService.set('refreshToken', loginRes.token);
+              Cookies.set('token', loginRes.accessToken);
+              Cookies.set('refreshToken', loginRes.token);
               toast.success(value.message);
               this.router.navigate(['/admin/dashboard'], {
                 replaceUrl: true,
@@ -71,7 +72,7 @@ export class AuthService extends ApiServiceService {
   }
 
   logout() {
-    const token = this.cookieService.get('token');
+    const token = Cookies.get('token');
     this.post<IAuth, {}>('public/auth/logout', {}, token)
       .pipe(
         catchError((e) => {
@@ -86,7 +87,8 @@ export class AuthService extends ApiServiceService {
       .subscribe({
         next: (value) => {
           this.message.next(value.message);
-          this.cookieService.deleteAll();
+          Cookies.remove('refreshToken');
+          Cookies.remove('token');
           toast.success('Logout successfull');
           this.router.navigate(['/auth/login'], {
             replaceUrl: true,
