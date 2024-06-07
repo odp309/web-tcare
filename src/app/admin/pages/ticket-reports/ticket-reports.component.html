@@ -44,8 +44,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (data of ticketReports$ | async; ; let idx = $index; track data.id)
-        {
+        @for (data of ticketReportsData; ; let idx = $index; track data.id) {
         <tr>
           <th>{{ idx + 1 }}</th>
           <td>{{ data.ticket_number }}</td>
