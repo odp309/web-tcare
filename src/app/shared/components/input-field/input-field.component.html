@@ -4,7 +4,10 @@
   </div>
   @switch (inputVariants) { @case ('icons') {
   <label
-    [class]="'input input-bordered flex items-center gap-2 ' + inputSizeStyle"
+    [class]="
+      'rounded-xl input input-bordered flex items-center gap-2 ' +
+      inputSizeStyle
+    "
     [ngClass]="errText !== '' ? 'border-redDanger' : ''"
   >
     <lucide-icon
@@ -24,7 +27,10 @@
   </label>
   } @case ("iconsRight") {
   <label
-    [class]="'input input-bordered flex items-center gap-2 ' + inputSizeStyle"
+    [class]="
+      'rounded-xl input input-bordered flex items-center gap-2 ' +
+      inputSizeStyle
+    "
     [ngClass]="errText !== '' ? 'border-redDanger' : ''"
   >
     <input
@@ -43,7 +49,7 @@
   </label>
   } @case ("noIcons") {
 
-  <div class="flex flex-col">
+  <div class="rounded-xl flex flex-col">
     @if (inputType === "radio" || inputType === "checkbox") { @for (choice of
     choices; track $index) {
 
