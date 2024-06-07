@@ -3,21 +3,24 @@ import { Injectable } from '@angular/core';
 import { ApiServiceService } from '../../shared/services/api-service.service';
 import { ITicketReports, TResultTicket } from '../../shared/types/ticketReport';
 import { BehaviorSubject, Observable, catchError, finalize } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
+import Cookies from 'js-cookie';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TicketReportsService extends ApiServiceService {
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private cookieService: CookieService) {
     super(http);
   }
 
-  private data: BehaviorSubject<TResultTicket[]> = new BehaviorSubject(
-    [] as TResultTicket[]
+  private data: BehaviorSubject<ITicketReports> = new BehaviorSubject(
+    {} as ITicketReports
   );
-  private data$: Observable<TResultTicket[]> = this.data;
+  private data$: Observable<ITicketReports> = this.data;
   private isLoading: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private isLoading$: Observable<boolean> = this.isLoading;
+  private token = Cookies.get('token');
 
   getData() {
     return this.data$;
@@ -29,7 +32,7 @@ export class TicketReportsService extends ApiServiceService {
 
   getTicketReports() {
     this.isLoading.next(true);
-    this.get<TResultTicket[]>('ticket-reports-dummy')
+    this.get<ITicketReports>('private/admin/ticket-reports', this.token)
       .pipe(
         catchError((e) => {
           this.isLoading.next(false);
