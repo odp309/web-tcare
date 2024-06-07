@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { AuthService } from '../../../auth/services/auth.service';
@@ -19,7 +19,7 @@ import { ModalComponent } from '../../../shared/components/modal/modal.component
   styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onHandleLogout() {
     this.authService.logout();

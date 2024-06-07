@@ -17,6 +17,7 @@ import { InputFieldComponent } from '../../../shared/components/input-field/inpu
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DropdownComponent } from '../../../shared/components/dropdown/dropdown.component';
 import { ClickOutsideDirective } from '../../../shared/directives/click-outside/click-outside.directive';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ticket-reports',
@@ -41,7 +42,11 @@ import { ClickOutsideDirective } from '../../../shared/directives/click-outside/
 })
 export class TicketReportsComponent implements OnInit {
   form!: FormGroup;
-  constructor(private ticketService: TicketReportsService, fb: FormBuilder) {
+  constructor(
+    private ticketService: TicketReportsService,
+    fb: FormBuilder,
+    public router: Router
+  ) {
     this.form = fb.group({
       search: [''],
       startDate: [''],
