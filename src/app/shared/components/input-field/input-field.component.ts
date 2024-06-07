@@ -1,14 +1,6 @@
 import { NgClass, TitleCasePipe } from '@angular/common';
-import {
-  Component,
-  Input,
-  OnInit,
-
-} from '@angular/core';
-import {
-  FormGroup,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { LucideALargeSmall, LucideAngularModule, User } from 'lucide-angular';
 
 @Component({
@@ -24,6 +16,7 @@ export class InputFieldComponent implements OnInit {
     | 'password'
     | 'radio'
     | 'checkbox'
+    | 'date'
     | '' = '';
   @Input({ required: true }) inputName: string = '';
   @Input() inputId: string | undefined;
@@ -36,6 +29,7 @@ export class InputFieldComponent implements OnInit {
   @Input() fcName: string | number | null = null;
   @Input() inputVariants: 'noIcons' | 'icons' | 'iconsRight' = 'icons';
   @Input() inputSize: 'medium' | 'small' = 'medium';
+  @Output() onMouseEnter = new EventEmitter();
   inputSizeStyle = '';
   placeholderIcon: string = '';
   inputStyle: string = 'input input-bordered w-full text-sm';
@@ -65,6 +59,12 @@ export class InputFieldComponent implements OnInit {
         break;
       case 'search':
         this.placeholderIcon = 'search';
+        break;
+      case 'startDate':
+        this.placeholderIcon = 'calendar';
+        break;
+      case 'endDate':
+        this.placeholderIcon = 'calendar';
         break;
       default:
         this.placeholderIcon = '';

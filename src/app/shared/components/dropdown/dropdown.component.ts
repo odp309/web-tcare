@@ -24,7 +24,40 @@ export class DropdownComponent {
 
   isOpen: boolean = false;
 
+  ngClassStyle = '';
+  prevNgClassStyle = '';
+
+  checkNgClass() {
+    switch (this.size) {
+      case 'small':
+        this.ngClassStyle = 'h-8';
+        this.prevNgClassStyle = this.ngClassStyle;
+        break;
+      case 'medium':
+        this.ngClassStyle = 'h-11';
+        this.prevNgClassStyle = this.ngClassStyle;
+        break;
+    }
+  }
+
+  onClickOutside() {
+    this.isOpen = false;
+    this.ngClassStyle = this.prevNgClassStyle;
+  }
+
   onClick() {
     this.isOpen = !this.isOpen;
+    if (this.isOpen) {
+      this.ngClassStyle += ' dropdown-opened';
+      return;
+    }
+    if (!this.isOpen) {
+      this.ngClassStyle = this.prevNgClassStyle;
+      return;
+    }
+  }
+
+  ngOnInit(): void {
+    this.checkNgClass();
   }
 }

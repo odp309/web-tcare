@@ -1,8 +1,8 @@
-<div class="w-fit" (click)="onClick()" (clickOutside)="isOpen = false">
+<div class="w-fit" (click)="onClick()" (clickOutside)="onClickOutside()">
   <div
     role="button"
     class="dropdown border border-[#DBDCDE] rounded-xl text-[#A3A3A3] px-4 w-[210px] text-[14px] flex gap-2 justify-between items-center"
-    [ngClass]="size === 'small' ? 'h-8' : 'h-11'"
+    [ngClass]="ngClassStyle"
   >
     <p [ngClass]="text !== placeholder && text !== '' ? 'text-black' : ''">
       @if (text !== '') {
@@ -18,7 +18,7 @@
     }
   </div>
   <ul
-    class="dropdown-content z-50 menu bg-white rounded-box w-[210px] border border-[#DBDCDE] text-[#A3A3A3] mt-[2px]"
+    class="dropdown-content z-50 menu bg-white rounded-box w-[200px] border border-[#DBDCDE] text-[#A3A3A3] mt-[2px]"
     [ngClass]="!isOpen ? 'hidden' : 'absolute'"
   >
     @for (item of dropdownItems; track $index) {
