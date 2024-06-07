@@ -4,7 +4,10 @@ import { TableComponent } from '../../../shared/components/table/table.component
 import { LabelStatusComponent } from '../../components/label-status/label-status.component';
 import { TicketReportsService } from '../../services/ticket-reports.service';
 import { EMPTY, Observable } from 'rxjs';
-import { TResultTicket } from '../../../shared/types/ticketReport';
+import {
+  ITicketReports,
+  TResultTicket,
+} from '../../../shared/types/ticketReport';
 import { AsyncPipe } from '@angular/common';
 import { ToTitleCasePipe } from '../../../shared/pipes/to-title-case/to-title-case.pipe';
 import { FormatDatePipe } from '../../../shared/pipes/format-date/format-date.pipe';
@@ -46,7 +49,7 @@ export class TicketReportsComponent implements OnInit {
     });
   }
 
-  ticketReports$: Observable<TResultTicket[]> = EMPTY;
+  ticketReports$: Observable<ITicketReports> = EMPTY;
   ticketReportsData: TResultTicket[] = [];
 
   startDateType: 'text' | 'date' = 'text';
@@ -138,7 +141,7 @@ export class TicketReportsComponent implements OnInit {
     this.ticketService.getTicketReports();
     this.ticketReports$ = this.ticketService.getData();
     this.ticketService.getData().subscribe((value) => {
-      this.ticketReportsData = value;
+      this.ticketReportsData = value.result;
     });
   }
 
