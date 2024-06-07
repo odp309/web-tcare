@@ -34,6 +34,7 @@ import { ClickOutsideDirective } from '../../../shared/directives/click-outside/
     DropdownComponent,
     PageHeaderComponent,
     ClickOutsideDirective,
+    InputFieldComponent,
   ],
   templateUrl: './ticket-reports.component.html',
   styleUrl: './ticket-reports.component.scss',
@@ -43,11 +44,16 @@ export class TicketReportsComponent implements OnInit {
   constructor(private ticketService: TicketReportsService, fb: FormBuilder) {
     this.form = fb.group({
       search: [''],
+      startDate: [''],
+      endDate: [''],
     });
   }
 
   ticketReports$: Observable<ITicketReports> = EMPTY;
   ticketReportsData: TResultTicket[] = [];
+
+  startDateType: 'text' | 'date' = 'text';
+  endDateType: 'text' | 'date' = 'text';
 
   tHeads = [
     {
@@ -80,15 +86,32 @@ export class TicketReportsComponent implements OnInit {
     },
   ];
 
-  dropdownItems = [
-    'all category',
-    'gagal transfer',
-    'gagal topup',
-    'gagal pembayaran',
+  dropdownComp = [
+    {
+      pholder: 'Filter by Category',
+      items: [
+        'all category',
+        'gagal transfer',
+        'gagal topup',
+        'gagal pembayaran',
+      ],
+    },
+    {
+      pholder: 'Filter by Rating',
+      items: ['all rating', '1', '2', '3', '4', '5'],
+    },
+    {
+      pholder: 'Filter by Status',
+      items: ['all status', 'Diajukan', 'Dalam Proses', 'Selesai'],
+    },
   ];
 
   get search() {
     return this.form.get('search');
+  }
+
+  get startDate() {
+    return this.form.get('startDate');
   }
 
   onClick() {

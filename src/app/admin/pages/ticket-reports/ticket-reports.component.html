@@ -12,13 +12,40 @@
       fcName="search"
     />
   </app-page-header>
-  <div class="w-fit mt-6">
-    <app-dropdown
-      placeholder="Filter By Category"
-      [dropdownItems]="dropdownItems"
+  <div class="w-full mt-6 flex justify-between">
+    @for (item of dropdownComp; track $index) {
+    <app-dropdown [placeholder]="item.pholder" [dropdownItems]="item.items" />
+    }
+
+    <app-input-field
+      [inputType]="startDateType"
+      inputId="startDate"
+      inputName="startDate"
+      (onMouseEnter)="startDateType = 'date'"
+      (clickOutside)="startDateType = 'text'"
+      inputSize="small"
+      placeholder="Start Date"
+      errText=""
+      fcName="startDate"
+      [fGroup]="form"
+      inputVariants="iconsRight"
+    />
+
+    <app-input-field
+      [inputType]="endDateType"
+      inputId="startDate"
+      inputName="startDate"
+      (onMouseEnter)="endDateType = 'date'"
+      (clickOutside)="endDateType = 'text'"
+      inputSize="small"
+      placeholder="End Date"
+      errText=""
+      fcName="endDate"
+      [fGroup]="form"
+      inputVariants="iconsRight"
     />
   </div>
-  <div class="mt-4">
+  <div class="mt-1">
     <app-table customClass="lg:w-full">
       <thead>
         <tr class="bg-[#F7F7F7] h-[64px] text-center">
