@@ -4,6 +4,8 @@ import { LucideAngularModule } from 'lucide-angular';
 import { CardComponent } from '../../../shared/components/card/card.component';
 import { DetailInfoComponent } from '../../components/detail-info/detail-info.component';
 import { RatingsComponent } from '../../../shared/components/ratings/ratings.component';
+import { StepsComponent } from '../../components/steps/steps.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-detail-ticket',
@@ -14,6 +16,8 @@ import { RatingsComponent } from '../../../shared/components/ratings/ratings.com
     CardComponent,
     DetailInfoComponent,
     RatingsComponent,
+    StepsComponent,
+    RouterLink,
   ],
   templateUrl: './detail-ticket.component.html',
   styleUrl: './detail-ticket.component.scss',

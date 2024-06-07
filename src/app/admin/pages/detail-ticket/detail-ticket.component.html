@@ -1,7 +1,9 @@
 <div class="flex w-full justify-between">
   <div class="flex">
     <div class="flex justify-center items-center mr-[16px]">
-      <lucide-icon name="chevron-left" color="#006885"></lucide-icon>
+      <a [routerLink]="['/admin/ticket-reports']"
+        ><lucide-icon name="chevron-left" color="#006885"></lucide-icon
+      ></a>
     </div>
     <app-page-header text="Detail Ticket Report" />
   </div>
@@ -16,7 +18,7 @@
 </div>
 
 <div class="flex gap-[16px] mt-[42px]">
-  <app-card customClass="w-[412px] pt-[30px] pb-[15px]">
+  <app-card customClass="w-[412px] py-[38px]">
     <div class="flex-row justify-center items-center">
       <div class="flex justify-center items-center">
         <img
@@ -33,8 +35,10 @@
     </div>
   </app-card>
   <div>
-    <app-card customClass="w-[661px] h-[512px] mb-[16px]"></app-card>
-    <app-card customClass="w-[661px] h-[322px] p-[35px]">
+    <app-card customClass="w-[661px] h-[512px] mb-[16px] overflow-y-auto">
+      <app-steps></app-steps>
+    </app-card>
+    <app-card customClass="w-[661px] h-[322px] p-[38px]">
       <div>
         <p class="text-green500Primary font-semibold text-[18px] mb-[10px]">
           Feedback Pelapor
