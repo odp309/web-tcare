@@ -60,10 +60,13 @@ export class TicketReportsComponent implements OnInit {
   startDateType: 'text' | 'date' = 'text';
   endDateType: 'text' | 'date' = 'text';
 
+  dataOrder: 'asc' | 'desc' = 'asc';
+  dataOrderIcon: 'chevron-up' | 'chevron-down' = 'chevron-up';
+
   tHeads = [
     {
       title: 'ID Tiket',
-      isAbleToSort: true,
+      isAbleToSort: false,
     },
     {
       title: 'Tanggal',
@@ -119,8 +122,16 @@ export class TicketReportsComponent implements OnInit {
     return this.form.get('startDate');
   }
 
-  onClick() {
-    console.log('click');
+  onClickSort() {
+    if (this.dataOrder === 'asc') {
+      this.dataOrder = 'desc';
+      this.dataOrderIcon = 'chevron-down';
+      this.getTicketData();
+      return;
+    }
+    this.dataOrder = 'asc';
+    this.dataOrderIcon = 'chevron-up';
+    this.getTicketData();
   }
 
   onHandleUpdateStatus(id: number) {
@@ -143,7 +154,8 @@ export class TicketReportsComponent implements OnInit {
   }
 
   getTicketData() {
-    this.ticketService.getTicketReports();
+    console.log('object');
+    this.ticketService.getTicketReports(this.dataOrder);
     this.ticketReports$ = this.ticketService.getData();
     this.ticketService.getData().subscribe((value) => {
       this.ticketReportsData = value.result;

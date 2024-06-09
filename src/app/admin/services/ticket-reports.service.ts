@@ -30,9 +30,12 @@ export class TicketReportsService extends ApiServiceService {
     return this.isLoading$;
   }
 
-  getTicketReports() {
+  getTicketReports(order: 'asc' | 'desc') {
     this.isLoading.next(true);
-    this.get<ITicketReports>('private/admin/ticket-reports', this.token)
+    this.get<ITicketReports>(
+      `private/admin/ticket-reports?sort_by=createdAt&order=${order}&page=1&limit=9`,
+      this.token
+    )
       .pipe(
         catchError((e) => {
           this.isLoading.next(false);
@@ -66,7 +69,7 @@ export class TicketReportsService extends ApiServiceService {
       )
       .subscribe({
         next: () => {
-          this.getTicketReports();
+          this.getTicketReports('desc');
         },
         error: (err: any) => {
           console.log('Something went wrong', err);

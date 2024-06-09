@@ -51,11 +51,11 @@
         <tr class="bg-[#F7F7F7] h-[64px] text-center">
           <td></td>
           @for (tHead of tHeads; track $index) { @if (tHead.isAbleToSort) {
-          <td (click)="onClick()" class="cursor-pointer">
+          <td (click)="onClickSort()" class="cursor-pointer">
             <div class="flex items-center justify-start gap-1">
               <p class="text-sm">{{ tHead.title }}</p>
               <lucide-icon
-                name="chevron-down"
+                [name]="dataOrderIcon"
                 size="12"
                 [strokeWidth]="2.5"
               ></lucide-icon>
