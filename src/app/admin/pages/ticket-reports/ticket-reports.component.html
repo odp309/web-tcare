@@ -96,35 +96,41 @@
           <td>
             <div class="flex justify-center items-center gap-[16px]">
               @if (data.status.toLowerCase() === "diajukan") {
-              <button
-                class="hover:text-orangeStatus"
-                (click)="onHandleUpdateStatus(data.id)"
-              >
-                <lucide-icon
-                  name="hourglass"
-                  size="16"
-                  [strokeWidth]="2.5"
-                ></lucide-icon>
-              </button>
+              <div class="tooltip" data-tip="Proses tiket">
+                <button
+                  class="hover:text-orangeStatus"
+                  (click)="onHandleUpdateStatus(data.id)"
+                >
+                  <lucide-icon
+                    name="hourglass"
+                    size="16"
+                    [strokeWidth]="2.5"
+                  ></lucide-icon>
+                </button>
+              </div>
               } @else if (data.status.toLowerCase() === "dalam proses") {
-              <button
-                class="hover:text-greenStatus"
-                (click)="onHandleUpdateStatus(data.id)"
-              >
-                <lucide-icon
-                  name="square-check"
-                  size="16"
-                  [strokeWidth]="2.5"
-                ></lucide-icon>
-              </button>
+              <div class="tooltip" data-tip="Selesaikan tiket">
+                <button
+                  class="hover:text-greenStatus"
+                  (click)="onHandleUpdateStatus(data.id)"
+                >
+                  <lucide-icon
+                    name="square-check"
+                    size="16"
+                    [strokeWidth]="2.5"
+                  ></lucide-icon>
+                </button>
+              </div>
               }
-              <button (click)="router.navigate(['/admin/detail-ticket'])">
-                <lucide-icon
-                  name="info"
-                  [strokeWidth]="2.5"
-                  size="16"
-                ></lucide-icon>
-              </button>
+              <div class="tooltip" data-tip="Detail">
+                <button (click)="router.navigate(['/admin/detail-ticket'])">
+                  <lucide-icon
+                    name="info"
+                    [strokeWidth]="2.5"
+                    size="16"
+                  ></lucide-icon>
+                </button>
+              </div>
             </div>
           </td>
         </tr>
