@@ -3,7 +3,7 @@ import { LucideAngularModule } from 'lucide-angular';
 import { TableComponent } from '../../../shared/components/table/table.component';
 import { LabelStatusComponent } from '../../components/label-status/label-status.component';
 import { TicketReportsService } from '../../services/ticket-reports.service';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, Observable, filter } from 'rxjs';
 import {
   ITicketReports,
   TResultTicket,
@@ -62,6 +62,8 @@ export class TicketReportsComponent implements OnInit {
 
   dataOrder: 'asc' | 'desc' = 'asc';
   dataOrderIcon: 'chevron-up' | 'chevron-down' = 'chevron-up';
+  filterBy: string[] = [];
+  filterQuery: string[] = [];
 
   tHeads = [
     {
@@ -97,20 +99,15 @@ export class TicketReportsComponent implements OnInit {
   dropdownComp = [
     {
       pholder: 'Filter by Category',
-      items: [
-        'all category',
-        'gagal transfer',
-        'gagal topup',
-        'gagal pembayaran',
-      ],
+      items: ['gagal transfer', 'gagal topup', 'gagal payment'],
     },
     {
       pholder: 'Filter by Rating',
-      items: ['all rating', '1', '2', '3', '4', '5'],
+      items: ['1', '2', '3', '4', '5'],
     },
     {
       pholder: 'Filter by Status',
-      items: ['all status', 'Diajukan', 'Dalam Proses', 'Selesai'],
+      items: ['Diajukan', 'Dalam Proses', 'Selesai'],
     },
   ];
 
@@ -134,6 +131,30 @@ export class TicketReportsComponent implements OnInit {
     this.getTicketData();
   }
 
+  onHandleFilter(filter: string, filterQ: string) {
+    if (filter === 'category') {
+      if (this.filterBy.length !== 0) {
+        this.filterQuery[0] = `"${filterQ}"`;
+        this.getTicketData();
+        return;
+      }
+      this.filterBy.push(filter);
+      this.filterQuery.push(`"${filterQ}"`);
+      this.getTicketData();
+      return;
+    }
+    this.filterBy.push(filter);
+    this.filterQuery.push(filterQ);
+    this.getTicketData();
+  }
+
+  onResetFilter(filter: string) {
+    const idxItem = filter.indexOf(filter);
+    this.filterBy.splice(idxItem, 1);
+    this.filterQuery.splice(idxItem, 1);
+    this.getTicketData();
+  }
+
   onHandleUpdateStatus(id: number) {
     const existingData = this.ticketReportsData.find((data) => data.id === id);
     let newStatus = '';
@@ -154,8 +175,11 @@ export class TicketReportsComponent implements OnInit {
   }
 
   getTicketData() {
-    console.log('object');
-    this.ticketService.getTicketReports(this.dataOrder);
+    this.ticketService.getTicketReports(
+      this.dataOrder,
+      this.filterBy,
+      this.filterQuery
+    );
     this.ticketReports$ = this.ticketService.getData();
     this.ticketService.getData().subscribe((value) => {
       this.ticketReportsData = value.result;

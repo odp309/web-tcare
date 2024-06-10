@@ -14,7 +14,16 @@
   </app-page-header>
   <div class="w-full mt-6 flex gap-4">
     @for (item of dropdownComp; track $index) {
-    <app-dropdown [placeholder]="item.pholder" [dropdownItems]="item.items" />
+    <app-dropdown
+      [placeholder]="item.pholder"
+      [dropdownItems]="item.items"
+      (onDropdownClick)="
+        onHandleFilter(item.pholder.split(' ')[2].toLowerCase(), $event)
+      "
+      (onResetCallback)="
+        onResetFilter(item.pholder.split(' ')[2].toLowerCase())
+      "
+    />
     }
 
     <app-input-field
