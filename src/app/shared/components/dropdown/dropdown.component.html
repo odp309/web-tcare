@@ -12,11 +12,15 @@
         {{ placeholder | toTitleCase }}
         }
       </p>
-      @if (!isOpen) {
+      @if (text !== "") {
+      <button (click)="onReset()">
+        <lucide-icon name="circle-x" color="#F24538" size="16"></lucide-icon>
+      </button>
+      } @else { @if (!isOpen) {
       <lucide-icon name="chevron-down" size="18"></lucide-icon>
       } @else {
       <lucide-icon name="chevron-up" size="18"></lucide-icon>
-      }
+      } }
     </div>
     <ul
       class="dropdown-content z-50 menu bg-white rounded-box w-[200px] border border-[#DBDCDE] text-[#A3A3A3] mt-[2px]"
@@ -34,9 +38,9 @@
       }
     </ul>
   </div>
-  @if (text !== "") {
+  <!-- @if (text !== "") {
   <button (click)="onReset()">
-    <p class="text-redDanger text-xs">Reset</p>
+    <lucide-icon name="circle-x" color="#F24538" size="14"></lucide-icon>
   </button>
-  }
+  } -->
 </div>
