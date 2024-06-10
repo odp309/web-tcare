@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { ClickOutsideDirective } from '../../directives/click-outside/click-outside.directive';
 import { ToTitleCasePipe } from '../../pipes/to-title-case/to-title-case.pipe';
@@ -21,6 +21,8 @@ export class DropdownComponent {
   @Input() size: 'small' | 'medium' = 'small';
   text = '';
   @Input({ required: true }) dropdownItems: string[] = [];
+  @Output() onDropdownClick = new EventEmitter();
+  @Output() onResetCallback = new EventEmitter();
 
   isOpen: boolean = false;
 
@@ -38,6 +40,16 @@ export class DropdownComponent {
         this.prevNgClassStyle = this.ngClassStyle;
         break;
     }
+  }
+
+  onDropClick(item: string) {
+    this.onDropdownClick.emit(item);
+    this.text = item;
+  }
+
+  onReset() {
+    this.text = '';
+    this.onResetCallback.emit();
   }
 
   onClickOutside() {
