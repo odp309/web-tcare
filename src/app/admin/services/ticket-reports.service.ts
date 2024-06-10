@@ -2,7 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiServiceService } from '../../shared/services/api-service.service';
 import { ITicketReports, TResultTicket } from '../../shared/types/ticketReport';
-import { BehaviorSubject, Observable, catchError, finalize } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  filter,
+  finalize,
+} from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import Cookies from 'js-cookie';
 
@@ -30,10 +36,20 @@ export class TicketReportsService extends ApiServiceService {
     return this.isLoading$;
   }
 
-  getTicketReports(order: 'asc' | 'desc') {
+  getTicketReports(
+    order: 'asc' | 'desc',
+    filterBy?: string[],
+    filterQuery?: string[]
+  ) {
     this.isLoading.next(true);
+    let queryParams = '';
+    if (filterBy && filterQuery) {
+      for (let i = 0; i < filterBy.length; i++) {
+        queryParams += `&${filterBy[i]}=${filterQuery[i]}`;
+      }
+    }
     this.get<ITicketReports>(
-      `private/admin/ticket-reports?sort_by=createdAt&order=${order}&page=1&limit=9`,
+      `private/admin/ticket-reports?sort_by=createdAt&order=${order}&page=1&limit=9${queryParams}`,
       this.token
     )
       .pipe(
