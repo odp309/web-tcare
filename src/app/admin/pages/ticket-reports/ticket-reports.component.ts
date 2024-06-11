@@ -175,6 +175,7 @@ export class TicketReportsComponent
   onHandleFilter(filter: string, filterQ: string) {
     const modFilter = toLowerSnakeCase(filter);
     const idxFilter = this.filterBy.indexOf(modFilter);
+
     if (this.filterBy.length !== 0 && idxFilter !== -1) {
       this.filterQuery[idxFilter] = filterQ;
       this.getTicketData();
@@ -186,7 +187,11 @@ export class TicketReportsComponent
   }
 
   onResetFilter(filter: string) {
-    const idxItem = this.filterBy.indexOf(filter);
+    const modFilter = toLowerSnakeCase(filter);
+    if (modFilter === 'start_date') {
+      this.dateFilter[1] = { ...this.dateFilter[1], isDisabled: true };
+    }
+    const idxItem = this.filterBy.indexOf(modFilter);
     this.filterBy.splice(idxItem, 1);
     this.filterQuery.splice(idxItem, 1);
     this.getTicketData();
