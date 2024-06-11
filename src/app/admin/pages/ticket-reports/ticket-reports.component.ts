@@ -172,17 +172,27 @@ export class TicketReportsComponent
     this.getTicketData();
   }
 
+  onHandleSearch(e: SubmitEvent) {
+    e.preventDefault();
+    if (this.search) {
+      this.onHandleFilter('ticket_number', this.search.value);
+    }
+  }
+
   onHandleFilter(filter: string, filterQ: string) {
     const modFilter = toLowerSnakeCase(filter);
     const idxFilter = this.filterBy.indexOf(modFilter);
-
     if (this.filterBy.length !== 0 && idxFilter !== -1) {
       this.filterQuery[idxFilter] = filterQ;
       this.getTicketData();
+      console.log(this.filterQuery);
+
       return;
     }
     this.filterBy.push(modFilter);
     this.filterQuery.push(filterQ);
+    console.log(this.filterBy);
+    console.log(this.filterQuery);
     this.getTicketData();
   }
 

@@ -50,9 +50,9 @@
       [readOnly]="isDisabled"
     />
     @if (fGroup.get(strFcName)?.value !== "") {
-    <button (click)="onResetFilter()" class="z-50">
+    <div (click)="onResetFilter()" class="z-50">
       <lucide-icon name="circle-x" color="#F24538" size="16"></lucide-icon>
-    </button>
+    </div>
     } @else {
     <lucide-icon
       [name]="placeholderIcon"
