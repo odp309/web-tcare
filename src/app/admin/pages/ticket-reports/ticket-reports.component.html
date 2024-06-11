@@ -24,35 +24,29 @@
         onResetFilter(item.pholder.split(' ')[2].toLowerCase())
       "
     />
+    } @for (item of dateFilter; track $index) {
+    <app-input-field
+      [inputType]="item.type"
+      [inputId]="item.id"
+      [inputName]="item.name"
+      (onMouseEnter)="
+        !item.isDisabled && item.name === 'endDate'
+          ? (item.type = 'date')
+          : item.name === 'startDate'
+          ? (item.type = 'date')
+          : (item.type = 'text')
+      "
+      (clickOutside)="item.type = 'text'"
+      inputSize="small"
+      [placeholder]="item.placeholder"
+      [errText]="item.errText"
+      [fcName]="item.fcName"
+      [fGroup]="form"
+      inputVariants="iconsRight"
+      [isDisabled]="item.isDisabled"
+      (onReset)="onResetFilter(item.placeholder)"
+    />
     }
-
-    <app-input-field
-      [inputType]="startDateType"
-      inputId="startDate"
-      inputName="startDate"
-      (onMouseEnter)="startDateType = 'date'"
-      (clickOutside)="startDateType = 'text'"
-      inputSize="small"
-      placeholder="Start Date"
-      errText=""
-      fcName="startDate"
-      [fGroup]="form"
-      inputVariants="iconsRight"
-    />
-
-    <app-input-field
-      [inputType]="endDateType"
-      inputId="startDate"
-      inputName="startDate"
-      (onMouseEnter)="endDateType = 'date'"
-      (clickOutside)="endDateType = 'text'"
-      inputSize="small"
-      placeholder="End Date"
-      errText=""
-      fcName="endDate"
-      [fGroup]="form"
-      inputVariants="iconsRight"
-    />
   </div>
   <div class="mt-1">
     <app-table customClass="lg:w-full">
@@ -86,6 +80,7 @@
           <td>{{ data.ticket_number }}</td>
           <td>{{ data.created_at | formatDate : "DD-MM-YYYY" }}</td>
           <td>{{ data.category | toTitleCase }}</td>
+          <td>{{ data.division_target }}</td>
           <td>
             <app-ratings [rating]="data.rating" size="small" />
           </td>

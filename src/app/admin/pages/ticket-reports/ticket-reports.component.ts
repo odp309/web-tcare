@@ -1,13 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { TableComponent } from '../../../shared/components/table/table.component';
 import { LabelStatusComponent } from '../../components/label-status/label-status.component';
 import { TicketReportsService } from '../../services/ticket-reports.service';
-import { EMPTY, Observable, filter } from 'rxjs';
-import {
-  ITicketReports,
-  TResultTicket,
-} from '../../../shared/types/ticketReport';
+import { TResultTicket } from '../../../shared/types/ticketReport';
 import { AsyncPipe } from '@angular/common';
 import { ToTitleCasePipe } from '../../../shared/pipes/to-title-case/to-title-case.pipe';
 import { FormatDatePipe } from '../../../shared/pipes/format-date/format-date.pipe';
@@ -18,6 +14,18 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DropdownComponent } from '../../../shared/components/dropdown/dropdown.component';
 import { ClickOutsideDirective } from '../../../shared/directives/click-outside/click-outside.directive';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import toLowerSnakeCase from '../../../shared/utils/toLowerSnakeCase';
+
+type TDateFilter = {
+  type: 'text' | 'date';
+  id: string;
+  name: string;
+  placeholder: string;
+  errText: string;
+  fcName: string;
+  isDisabled?: boolean;
+};
 
 @Component({
   selector: 'app-ticket-reports',
@@ -40,7 +48,9 @@ import { Router } from '@angular/router';
   templateUrl: './ticket-reports.component.html',
   styleUrl: './ticket-reports.component.scss',
 })
-export class TicketReportsComponent implements OnInit {
+export class TicketReportsComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   form!: FormGroup;
   constructor(
     private ticketService: TicketReportsService,
@@ -54,7 +64,6 @@ export class TicketReportsComponent implements OnInit {
     });
   }
 
-  ticketReports$: Observable<ITicketReports> = EMPTY;
   ticketReportsData: TResultTicket[] = [];
 
   startDateType: 'text' | 'date' = 'text';
@@ -64,6 +73,10 @@ export class TicketReportsComponent implements OnInit {
   dataOrderIcon: 'chevron-up' | 'chevron-down' = 'chevron-up';
   filterBy: string[] = [];
   filterQuery: string[] = [];
+
+  isEndDateDisabled: boolean = true;
+  startDateSubscription!: Subscription;
+  endDateSubscription!: Subscription;
 
   tHeads = [
     {
@@ -76,6 +89,10 @@ export class TicketReportsComponent implements OnInit {
     },
     {
       title: 'Kategori',
+      isAbleToSort: false,
+    },
+    {
+      title: 'Divisi',
       isAbleToSort: false,
     },
     {
@@ -111,12 +128,36 @@ export class TicketReportsComponent implements OnInit {
     },
   ];
 
+  dateFilter: TDateFilter[] = [
+    {
+      type: 'text',
+      id: 'startDate',
+      name: 'startDate',
+      placeholder: 'Start Date',
+      errText: '',
+      fcName: 'startDate',
+    },
+    {
+      type: 'text',
+      id: 'endDate',
+      name: 'endDate',
+      placeholder: 'End Date',
+      errText: '',
+      fcName: 'endDate',
+      isDisabled: true,
+    },
+  ];
+
   get search() {
     return this.form.get('search');
   }
 
   get startDate() {
     return this.form.get('startDate');
+  }
+
+  get endDate() {
+    return this.form.get('endDate');
   }
 
   onClickSort() {
@@ -132,27 +173,45 @@ export class TicketReportsComponent implements OnInit {
   }
 
   onHandleFilter(filter: string, filterQ: string) {
-    if (filter === 'category') {
-      if (this.filterBy.length !== 0) {
-        this.filterQuery[0] = `"${filterQ}"`;
-        this.getTicketData();
-        return;
-      }
-      this.filterBy.push(filter);
-      this.filterQuery.push(`"${filterQ}"`);
+    const modFilter = toLowerSnakeCase(filter);
+    const idxFilter = this.filterBy.indexOf(modFilter);
+    if (this.filterBy.length !== 0 && idxFilter !== -1) {
+      this.filterQuery[idxFilter] = filterQ;
       this.getTicketData();
       return;
     }
-    this.filterBy.push(filter);
+    this.filterBy.push(modFilter);
     this.filterQuery.push(filterQ);
     this.getTicketData();
   }
 
   onResetFilter(filter: string) {
-    const idxItem = filter.indexOf(filter);
+    const idxItem = this.filterBy.indexOf(filter);
     this.filterBy.splice(idxItem, 1);
     this.filterQuery.splice(idxItem, 1);
     this.getTicketData();
+  }
+
+  onSubscribeDate() {
+    if (this.startDate) {
+      this.startDateSubscription = this.startDate.valueChanges.subscribe(
+        (value) => {
+          if (value !== '') {
+            this.dateFilter[1] = { ...this.dateFilter[1], isDisabled: false };
+            this.onHandleFilter('start_date', value);
+          }
+        }
+      );
+    }
+    if (this.endDate) {
+      this.endDateSubscription = this.endDate.valueChanges.subscribe(
+        (value) => {
+          if (value !== '') {
+            this.onHandleFilter('end_date', value);
+          }
+        }
+      );
+    }
   }
 
   onHandleUpdateStatus(id: number) {
@@ -180,7 +239,6 @@ export class TicketReportsComponent implements OnInit {
       this.filterBy,
       this.filterQuery
     );
-    this.ticketReports$ = this.ticketService.getData();
     this.ticketService.getData().subscribe((value) => {
       this.ticketReportsData = value.result;
     });
@@ -188,5 +246,13 @@ export class TicketReportsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTicketData();
+  }
+
+  ngAfterViewInit(): void {
+    this.onSubscribeDate();
+  }
+
+  ngOnDestroy(): void {
+    this.startDateSubscription.unsubscribe();
   }
 }
