@@ -11,6 +11,7 @@ import {
 } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import Cookies from 'js-cookie';
+import { toast } from 'ngx-sonner';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,14 @@ export class TicketReportsService extends ApiServiceService {
   private data$: Observable<ITicketReports> = this.data;
   private isLoading: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private isLoading$: Observable<boolean> = this.isLoading;
+  private errMess: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  private errMess$: Observable<string> = this.errMess;
+
   private token = Cookies.get('token');
+
+  getErrMess() {
+    return this.errMess$;
+  }
 
   getData() {
     return this.data$;
@@ -55,6 +63,7 @@ export class TicketReportsService extends ApiServiceService {
       .pipe(
         catchError((e) => {
           this.isLoading.next(false);
+          console.log(e.error);
           throw e.error;
         }),
         finalize(() => {
@@ -63,10 +72,15 @@ export class TicketReportsService extends ApiServiceService {
       )
       .subscribe({
         next: (value) => {
+          this.errMess.next('');
           this.data.next(value);
         },
         error: (err: ITicketReports) => {
-          console.log('Something went wrong', err);
+          if (err !== null) {
+            toast.error(err.message);
+            this.errMess.next(err.message);
+            console.error('Something went wrong', err);
+          }
         },
       });
   }
@@ -88,7 +102,7 @@ export class TicketReportsService extends ApiServiceService {
           this.getTicketReports('desc');
         },
         error: (err: any) => {
-          console.log('Something went wrong', err);
+          console.error('Something went wrong', err);
         },
       });
   }
