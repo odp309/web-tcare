@@ -1,14 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiServiceService } from '../../shared/services/api-service.service';
-import { ITicketReports, TResultTicket } from '../../shared/types/ticketReport';
-import {
-  BehaviorSubject,
-  Observable,
-  catchError,
-  filter,
-  finalize,
-} from 'rxjs';
+import { ITicketReports } from '../../shared/types/ticketReport';
+import { BehaviorSubject, Observable, catchError, finalize } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import Cookies from 'js-cookie';
 import { toast } from 'ngx-sonner';
