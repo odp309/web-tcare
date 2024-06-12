@@ -42,10 +42,14 @@
       </li>
     </ul>
     <div class="absolute bottom-10 px-4 w-full">
-      <app-modal btnTitle="Logout" modalDesc="Apa anda yakin ingin keluar?">
-        <app-button variants="danger" (onClick)="onHandleLogout()"
-          >Logout</app-button
-        >
+      <app-modal variants="danger" modalId="logoutModal">
+        <p class="text-white" btnContent>Logout</p>
+        <p class="py-4" modalDesc>Apa anda yakin ingin keluar?</p>
+        <div class="w-20" modalAction>
+          <app-button variants="primary" (onClick)="onHandleLogout()"
+            >Ya</app-button
+          >
+        </div>
       </app-modal>
     </div>
   </div>
