@@ -15,3 +15,9 @@ export type TResultTicket = {
 export interface ITicketReports extends IResponsePagination {
   result: TResultTicket[];
 }
+
+export interface IUpdateTicket extends IResponse {
+  result: {
+    status: string;
+  };
+}

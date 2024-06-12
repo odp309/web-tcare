@@ -9,7 +9,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrl: './button.component.scss',
 })
 export class ButtonComponent implements OnInit {
-  @Input() variants: 'primary' | 'secondary' | 'danger' | 'plain' = 'primary';
+  @Input() variants: 'primary' | 'secondary' | 'danger' | 'plain' | 'noStyle' =
+    'primary';
   @Input() customStyle = '';
   @Input() isDisabled: boolean | null = false;
   @Output() onClick = new EventEmitter();
