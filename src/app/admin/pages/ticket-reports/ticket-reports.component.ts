@@ -14,10 +14,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DropdownComponent } from '../../../shared/components/dropdown/dropdown.component';
 import { ClickOutsideDirective } from '../../../shared/directives/click-outside/click-outside.directive';
 import { Router } from '@angular/router';
-import { Subscription, debounceTime } from 'rxjs';
+import { EMPTY, Observable, Subscription, debounceTime } from 'rxjs';
 import toLowerSnakeCase from '../../../shared/utils/toLowerSnakeCase';
 import { ModalComponent } from '../../../shared/components/modal/modal.component';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 
 type TDateFilter = {
   type: 'text' | 'date';
@@ -48,6 +49,7 @@ type TDateFilter = {
     InputFieldComponent,
     ModalComponent,
     ButtonComponent,
+    LoadingComponent,
   ],
   templateUrl: './ticket-reports.component.html',
   styleUrl: './ticket-reports.component.scss',
@@ -69,6 +71,7 @@ export class TicketReportsComponent
   }
 
   ticketReportsData: TResultTicket[] = [];
+  isLoading$: Observable<boolean> = EMPTY;
 
   startDateType: 'text' | 'date' = 'text';
   endDateType: 'text' | 'date' = 'text';
@@ -212,7 +215,7 @@ export class TicketReportsComponent
         .pipe(debounceTime(400))
         .subscribe((value) => {
           if (value !== '') {
-            this.onHandleFilter('ticket_number', value);
+            this.onHandleFilter('ticket_number', value.toUpperCase());
             return;
           }
           this.onResetFilter('ticket_number');
@@ -255,6 +258,7 @@ export class TicketReportsComponent
     this.ticketService.getData().subscribe((value) => {
       this.ticketReportsData = value.result;
     });
+    this.isLoading$ = this.ticketService.getIsLoading();
   }
 
   ngOnInit(): void {

@@ -24,6 +24,7 @@
       [formControlName]="fcName"
       class="grow"
       [ngClass]="isDisabled ? 'bg-gray-200 cursor-default' : ''"
+      [ngClass]="customStyle"
       [placeholder]="placeholder"
       [readOnly]="isDisabled"
     />
@@ -45,6 +46,7 @@
       [formControlName]="fcName"
       class="grow"
       [ngClass]="isDisabled ? 'bg-gray-200 cursor-default' : ''"
+      [ngClass]="customStyle"
       [placeholder]="placeholder"
       (mouseenter)="onMouseEnter.emit()"
       [readOnly]="isDisabled"

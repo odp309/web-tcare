@@ -49,7 +49,13 @@
     />
     }
   </div>
+
   <div class="mt-1">
+    @if (isLoading$ | async) {
+    <div class="w-full flex justify-center">
+      <app-loading />
+    </div>
+    } @else {
     <app-table customClass="lg:w-full">
       <thead>
         <tr class="bg-[#F7F7F7] h-[64px] text-center">
@@ -154,5 +160,6 @@
         }
       </tbody>
     </app-table>
+    }
   </div>
 </div>
