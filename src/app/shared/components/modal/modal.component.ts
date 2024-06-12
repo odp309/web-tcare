@@ -9,7 +9,7 @@ import { ButtonComponent } from '../button/button.component';
   styleUrl: './modal.component.scss',
 })
 export class ModalComponent {
-  @Input() variants: 'plain' | 'danger' = 'plain';
+  @Input() variants: 'noStyle' | 'danger' = 'noStyle';
   @Input() btnCloseTitle = 'Close';
   @Input() customStyle = '';
   @Input({ required: true }) modalId = '';
