@@ -201,7 +201,7 @@ export class TicketReportsComponent
   onSubscribeSearch() {
     if (this.search) {
       this.searchSubscription = this.search.valueChanges
-        .pipe(debounceTime(300))
+        .pipe(debounceTime(400))
         .subscribe((value) => {
           if (value !== '') {
             this.onHandleFilter('ticket_number', value);
