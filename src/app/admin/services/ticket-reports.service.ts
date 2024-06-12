@@ -40,6 +40,7 @@ export class TicketReportsService extends ApiServiceService {
 
   getTicketReports(
     order: 'asc' | 'desc',
+    page: number,
     filterBy?: string[],
     filterQuery?: string[]
   ) {
@@ -51,7 +52,7 @@ export class TicketReportsService extends ApiServiceService {
       }
     }
     this.get<ITicketReports>(
-      `private/admin/ticket-reports?sort_by=createdAt&order=${order}&page=1&limit=8${queryParams}`,
+      `private/admin/ticket-reports?sort_by=createdAt&order=${order}&page=${page}&limit=8${queryParams}`,
       this.token
     )
       .pipe(
@@ -78,7 +79,7 @@ export class TicketReportsService extends ApiServiceService {
       });
   }
 
-  updateStatus(id: number, order: 'asc' | 'desc') {
+  updateStatus(id: number, order: 'asc' | 'desc', page: number) {
     this.isLoading.next(true);
     this.patch<IUpdateTicket, { status: string } | {}>(
       `private/admin/ticket-reports/${id}/update-status`,
@@ -97,7 +98,7 @@ export class TicketReportsService extends ApiServiceService {
       .subscribe({
         next: (value) => {
           toast.success(`Update Status ${value.message}`);
-          this.getTicketReports(order);
+          this.getTicketReports(order, page);
         },
         error: (err: IUpdateTicket) => {
           if (err !== null) {

@@ -3,7 +3,10 @@ import { LucideAngularModule } from 'lucide-angular';
 import { TableComponent } from '../../../shared/components/table/table.component';
 import { LabelStatusComponent } from '../../components/label-status/label-status.component';
 import { TicketReportsService } from '../../services/ticket-reports.service';
-import { TResultTicket } from '../../../shared/types/ticketReport';
+import {
+  ITicketReports,
+  TResultTicket,
+} from '../../../shared/types/ticketReport';
 import { AsyncPipe } from '@angular/common';
 import { ToTitleCasePipe } from '../../../shared/pipes/to-title-case/to-title-case.pipe';
 import { FormatDatePipe } from '../../../shared/pipes/format-date/format-date.pipe';
@@ -19,6 +22,7 @@ import toLowerSnakeCase from '../../../shared/utils/toLowerSnakeCase';
 import { ModalComponent } from '../../../shared/components/modal/modal.component';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 
 type TDateFilter = {
   type: 'text' | 'date';
@@ -50,6 +54,7 @@ type TDateFilter = {
     ModalComponent,
     ButtonComponent,
     LoadingComponent,
+    PaginationComponent,
   ],
   templateUrl: './ticket-reports.component.html',
   styleUrl: './ticket-reports.component.scss',
@@ -57,6 +62,7 @@ type TDateFilter = {
 export class TicketReportsComponent
   implements OnInit, OnDestroy, AfterViewInit
 {
+  limit = 8;
   form!: FormGroup;
   constructor(
     private ticketService: TicketReportsService,
@@ -70,7 +76,7 @@ export class TicketReportsComponent
     });
   }
 
-  ticketReportsData: TResultTicket[] = [];
+  ticketReportsData: ITicketReports = {} as ITicketReports;
   isLoading$: Observable<boolean> = EMPTY;
 
   startDateType: 'text' | 'date' = 'text';
@@ -85,6 +91,8 @@ export class TicketReportsComponent
   startDateSubscription!: Subscription;
   endDateSubscription!: Subscription;
   searchSubscription!: Subscription;
+
+  pageToFetch: number = 1;
 
   tHeads = [
     {
@@ -172,6 +180,12 @@ export class TicketReportsComponent
     return this.form.get('endDate');
   }
 
+  onClickButtonPage(page: number) {
+    console.log(page);
+    this.pageToFetch = page;
+    this.getTicketData();
+  }
+
   onClickSort() {
     if (this.dataOrder === 'asc') {
       this.dataOrder = 'desc';
@@ -246,17 +260,18 @@ export class TicketReportsComponent
   }
 
   onHandleUpdateStatus(id: number) {
-    this.ticketService.updateStatus(id, this.dataOrder);
+    this.ticketService.updateStatus(id, this.dataOrder, 1);
   }
 
   getTicketData() {
     this.ticketService.getTicketReports(
       this.dataOrder,
+      this.pageToFetch,
       this.filterBy,
       this.filterQuery
     );
     this.ticketService.getData().subscribe((value) => {
-      this.ticketReportsData = value.result;
+      this.ticketReportsData = value;
     });
     this.isLoading$ = this.ticketService.getIsLoading();
   }

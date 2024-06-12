@@ -13,42 +13,6 @@
     />
     <button type="submit" class="hidden"></button>
   </app-page-header>
-  <div class="grid grid-cols-4 mt-6 gap-x-8 gap-y-4 w-fit">
-    @for (item of dropdownComp; track $index) {
-    <app-dropdown
-      [placeholder]="item.pholder"
-      [dropdownItems]="item.items"
-      (onDropdownClick)="
-        onHandleFilter(item.pholder.split(' ')[2].toLowerCase(), $event)
-      "
-      (onResetCallback)="
-        onResetFilter(item.pholder.split(' ')[2].toLowerCase())
-      "
-    />
-    } @for (item of dateFilter; track $index) {
-    <app-input-field
-      [inputType]="item.type"
-      [inputId]="item.id"
-      [inputName]="item.name"
-      (onMouseEnter)="
-        !item.isDisabled && item.name === 'endDate'
-          ? (item.type = 'date')
-          : item.name === 'startDate'
-          ? (item.type = 'date')
-          : (item.type = 'text')
-      "
-      (clickOutside)="item.type = 'text'"
-      inputSize="small"
-      [placeholder]="item.placeholder"
-      [errText]="item.errText"
-      [fcName]="item.fcName"
-      [fGroup]="form"
-      inputVariants="iconsRight"
-      [isDisabled]="item.isDisabled"
-      (onReset)="onResetFilter(item.placeholder)"
-    />
-    }
-  </div>
 
   <div class="mt-1">
     @if (isLoading$ | async) {
@@ -56,6 +20,42 @@
       <app-loading />
     </div>
     } @else {
+    <div class="grid grid-cols-4 mt-6 gap-x-8 gap-y-3 w-fit">
+      @for (item of dropdownComp; track $index) {
+      <app-dropdown
+        [placeholder]="item.pholder"
+        [dropdownItems]="item.items"
+        (onDropdownClick)="
+          onHandleFilter(item.pholder.split(' ')[2].toLowerCase(), $event)
+        "
+        (onResetCallback)="
+          onResetFilter(item.pholder.split(' ')[2].toLowerCase())
+        "
+      />
+      } @for (item of dateFilter; track $index) {
+      <app-input-field
+        [inputType]="item.type"
+        [inputId]="item.id"
+        [inputName]="item.name"
+        (onMouseEnter)="
+          !item.isDisabled && item.name === 'endDate'
+            ? (item.type = 'date')
+            : item.name === 'startDate'
+            ? (item.type = 'date')
+            : (item.type = 'text')
+        "
+        (clickOutside)="item.type = 'text'"
+        inputSize="small"
+        [placeholder]="item.placeholder"
+        [errText]="item.errText"
+        [fcName]="item.fcName"
+        [fGroup]="form"
+        inputVariants="iconsRight"
+        [isDisabled]="item.isDisabled"
+        (onReset)="onResetFilter(item.placeholder)"
+      />
+      }
+    </div>
     <app-table customClass="lg:w-full">
       <thead>
         <tr class="bg-[#F7F7F7] h-[64px] text-center">
@@ -81,9 +81,12 @@
         </tr>
       </thead>
       <tbody>
-        @for (data of ticketReportsData; ; let idx = $index; track data.id) {
+        @for (data of ticketReportsData.result; ; let idx = $index; track
+        data.id) {
         <tr>
-          <th>{{ idx + 1 }}</th>
+          <th>
+            {{ (ticketReportsData.current_page - 1) * limit + (idx + 1) }}
+          </th>
           <td>{{ data.ticket_number }}</td>
           <td>{{ data.created_at | formatDate : "DD-MM-YYYY" }}</td>
           <td>{{ data.category | toTitleCase }}</td>
@@ -160,6 +163,13 @@
         }
       </tbody>
     </app-table>
+    <div class="w-full flex justify-center mt-3">
+      <app-pagination
+        [totalPage]="ticketReportsData.total_page / 3"
+        [activePage]="ticketReportsData.current_page"
+        (pageBtn)="onClickButtonPage($event)"
+      />
+    </div>
     }
   </div>
 </div>
