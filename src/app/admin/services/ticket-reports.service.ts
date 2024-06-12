@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiServiceService } from '../../shared/services/api-service.service';
-import { ITicketReports } from '../../shared/types/ticketReport';
+import { ITicketReports, IUpdateTicket } from '../../shared/types/ticketReport';
 import { BehaviorSubject, Observable, catchError, finalize } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import Cookies from 'js-cookie';
@@ -51,13 +51,12 @@ export class TicketReportsService extends ApiServiceService {
       }
     }
     this.get<ITicketReports>(
-      `private/admin/ticket-reports?sort_by=createdAt&order=${order}&page=1&limit=9${queryParams}`,
+      `private/admin/ticket-reports?sort_by=createdAt&order=${order}&page=1&limit=8${queryParams}`,
       this.token
     )
       .pipe(
         catchError((e) => {
           this.isLoading.next(false);
-          console.log(e.error);
           throw e.error;
         }),
         finalize(() => {
@@ -79,9 +78,13 @@ export class TicketReportsService extends ApiServiceService {
       });
   }
 
-  updateStatus(id: number, body: any) {
+  updateStatus(id: number, order: 'asc' | 'desc') {
     this.isLoading.next(true);
-    this.put<any, any>(`ticket-reports-dummy/${id}`, body)
+    this.patch<IUpdateTicket, { status: string } | {}>(
+      `private/admin/ticket-reports/${id}/update-status`,
+      {},
+      this.token
+    )
       .pipe(
         catchError((e) => {
           this.isLoading.next(false);
@@ -92,11 +95,16 @@ export class TicketReportsService extends ApiServiceService {
         })
       )
       .subscribe({
-        next: () => {
-          this.getTicketReports('desc');
+        next: (value) => {
+          toast.success(`Update Status ${value.message}`);
+          this.getTicketReports(order);
         },
-        error: (err: any) => {
-          console.error('Something went wrong', err);
+        error: (err: IUpdateTicket) => {
+          if (err !== null) {
+            toast.error(err.message);
+            this.errMess.next(err.message);
+            console.error('Something went wrong', err);
+          }
         },
       });
   }

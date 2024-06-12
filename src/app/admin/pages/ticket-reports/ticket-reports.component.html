@@ -13,7 +13,7 @@
     />
     <button type="submit" class="hidden"></button>
   </app-page-header>
-  <div class="w-full mt-6 flex gap-4">
+  <div class="grid grid-cols-4 mt-6 gap-x-8 gap-y-4 w-fit">
     @for (item of dropdownComp; track $index) {
     <app-dropdown
       [placeholder]="item.pholder"
@@ -91,41 +91,62 @@
           </td>
           <td>
             <div class="flex justify-center items-center gap-[16px]">
-              @if (data.status.toLowerCase() === "diajukan") {
-              <div class="tooltip" data-tip="Proses tiket">
-                <button
-                  class="hover:text-orangeStatus"
-                  (click)="onHandleUpdateStatus(data.id)"
-                >
-                  <lucide-icon
-                    name="hourglass"
-                    size="16"
-                    [strokeWidth]="2.5"
-                  ></lucide-icon>
-                </button>
+              <div
+                class="tooltip"
+                [attr.data-tip]="
+                  data.status.toLowerCase() === 'diajukan'
+                    ? 'Proses tiket'
+                    : 'Selesaikan tiket'
+                "
+              >
+                <app-modal variants="noStyle" modalId="statusModal">
+                  <app-button
+                    variants="noStyle"
+                    [customStyle]="
+                      data.status.toLowerCase() === 'diajukan'
+                        ? 'hover:text-orangeStatus'
+                        : 'hover:text-greenStatus'
+                    "
+                    btnContent
+                  >
+                    <lucide-icon
+                      [name]="
+                        data.status.toLowerCase() === 'diajukan'
+                          ? 'hourglass'
+                          : 'square-check'
+                      "
+                      size="16"
+                      [strokeWidth]="2.5"
+                    ></lucide-icon>
+                  </app-button>
+                  <p class="py-4" modalDesc>
+                    Apakah anda yakin untuk mengubah status laporan
+                    <span class="text-green500Primary">{{
+                      data.ticket_number
+                    }}</span
+                    >?
+                  </p>
+                  <div class="w-20" modalAction>
+                    <app-button
+                      variants="primary"
+                      (onClick)="onHandleUpdateStatus(data.id)"
+                      >Ya</app-button
+                    >
+                  </div>
+                </app-modal>
               </div>
-              } @else if (data.status.toLowerCase() === "dalam proses") {
-              <div class="tooltip" data-tip="Selesaikan tiket">
-                <button
-                  class="hover:text-greenStatus"
-                  (click)="onHandleUpdateStatus(data.id)"
-                >
-                  <lucide-icon
-                    name="square-check"
-                    size="16"
-                    [strokeWidth]="2.5"
-                  ></lucide-icon>
-                </button>
-              </div>
-              }
               <div class="tooltip" data-tip="Detail">
-                <button (click)="router.navigate(['/admin/detail-ticket'])">
+                <app-button
+                  variants="noStyle"
+                  (onClick)="router.navigate(['/admin/detail-ticket'])"
+                  customStyle="hover:text-neutral300"
+                >
                   <lucide-icon
                     name="info"
                     [strokeWidth]="2.5"
                     size="16"
                   ></lucide-icon>
-                </button>
+                </app-button>
               </div>
             </div>
           </td>

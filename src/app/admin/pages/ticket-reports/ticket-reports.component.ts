@@ -16,6 +16,8 @@ import { ClickOutsideDirective } from '../../../shared/directives/click-outside/
 import { Router } from '@angular/router';
 import { Subscription, debounceTime } from 'rxjs';
 import toLowerSnakeCase from '../../../shared/utils/toLowerSnakeCase';
+import { ModalComponent } from '../../../shared/components/modal/modal.component';
+import { ButtonComponent } from '../../../shared/components/button/button.component';
 
 type TDateFilter = {
   type: 'text' | 'date';
@@ -44,6 +46,8 @@ type TDateFilter = {
     PageHeaderComponent,
     ClickOutsideDirective,
     InputFieldComponent,
+    ModalComponent,
+    ButtonComponent,
   ],
   templateUrl: './ticket-reports.component.html',
   styleUrl: './ticket-reports.component.scss',
@@ -239,22 +243,7 @@ export class TicketReportsComponent
   }
 
   onHandleUpdateStatus(id: number) {
-    const existingData = this.ticketReportsData.find((data) => data.id === id);
-    let newStatus = '';
-    if (existingData) {
-      switch (existingData.status.toLowerCase()) {
-        case 'diajukan':
-          newStatus = 'dalam proses';
-          break;
-        case 'dalam proses':
-          newStatus = 'selesai';
-          break;
-      }
-    }
-    this.ticketService.updateStatus(id, {
-      ...existingData,
-      status: newStatus,
-    });
+    this.ticketService.updateStatus(id, this.dataOrder);
   }
 
   getTicketData() {
