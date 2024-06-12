@@ -1,0 +1,34 @@
+<div class="flex gap-2">
+  <app-button
+    [variants]="btnVariant"
+    class="text-sm border border-neutral50 w-8 h-8 flex justify-center items-center rounded-md"
+  >
+    <lucide-icon
+      name="chevron-left"
+      strokeWidth="3"
+      color="#E0E0E0"
+      size="16"
+      class="flex justify-center"
+    ></lucide-icon>
+  </app-button>
+  @for (item of arrPage; track $index) {
+  <app-button
+    (onClick)="onPageClick(item)"
+    [variants]="btnVariant"
+    class="text-sm border border-neutral50 w-8 h-8 flex justify-center items-center rounded-md"
+    >{{ item }}</app-button
+  >
+  }
+  <app-button
+    [variants]="btnVariant"
+    class="text-sm border border-neutral50 w-8 h-8 flex justify-center items-center rounded-md"
+  >
+    <lucide-icon
+      name="chevron-right"
+      strokeWidth="3"
+      color="#E0E0E0"
+      size="16"
+      class="flex justify-center"
+    ></lucide-icon>
+  </app-button>
+</div>
