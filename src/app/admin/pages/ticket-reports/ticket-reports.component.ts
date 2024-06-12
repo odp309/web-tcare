@@ -127,6 +127,10 @@ export class TicketReportsComponent
       pholder: 'Filter by Status',
       items: ['Diajukan', 'Dalam Proses', 'Selesai'],
     },
+    {
+      pholder: 'Filter by Division',
+      items: ['CXC', 'DGO', 'WPP'],
+    },
   ];
 
   dateFilter: TDateFilter[] = [
