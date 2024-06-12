@@ -63,7 +63,31 @@ export class ApiServiceService {
       };
     }
     return this.http.put<TResult>(
-      `${environment.jsonServerUrl}/${endpoint}`,
+      `${environment.apiBaseUrl}/${endpoint}`,
+      body,
+      {
+        headers: headers,
+      }
+    );
+  }
+
+  protected patch<TResult, TBody>(
+    endpoint: string,
+    body?: TBody,
+    token?: string
+  ) {
+    let headers: THeaders = {
+      'Content-Type': 'application/json',
+    };
+    if (token) {
+      headers = {
+        ...headers,
+        Authorization: `Bearer ${token}`,
+      };
+    }
+    console.log(headers);
+    return this.http.patch<TResult>(
+      `${environment.apiBaseUrl}/${endpoint}`,
       body,
       {
         headers: headers,
