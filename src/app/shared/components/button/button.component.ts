@@ -15,6 +15,7 @@ export class ButtonComponent implements OnInit {
   @Input() isDisabled: boolean | null = false;
   @Output() onClick = new EventEmitter();
   variantStyle = '';
+  btnShadow: string = 'btn w-full h-14 text-base font-medium shadow-lg';
 
   variantFunc() {
     switch (this.variants) {
@@ -32,6 +33,10 @@ export class ButtonComponent implements OnInit {
         break;
       default:
         this.variantStyle = '';
+        break;
+    }
+    if (this.variants !== 'noStyle') {
+      this.variantStyle += ` ${this.btnShadow}`;
     }
   }
 
