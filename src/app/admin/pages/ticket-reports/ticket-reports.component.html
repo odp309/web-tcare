@@ -1,19 +1,17 @@
 <div>
   <app-page-header text="Laporan Tiket">
-    <form (submit)="onHandleSearch($event)">
-      <app-input-field
-        inputType="text"
-        inputName="search"
-        inputId="search"
-        placeholder="Search By Ticket ID"
-        errText=""
-        inputVariants="iconsRight"
-        inputSize="small"
-        [fGroup]="form"
-        fcName="search"
-      />
-      <button type="submit" class="hidden"></button>
-    </form>
+    <app-input-field
+      inputType="text"
+      inputName="search"
+      inputId="search"
+      placeholder="Search By Ticket ID"
+      errText=""
+      inputVariants="iconsRight"
+      inputSize="small"
+      [fGroup]="form"
+      fcName="search"
+    />
+    <button type="submit" class="hidden"></button>
   </app-page-header>
   <div class="w-full mt-6 flex gap-4">
     @for (item of dropdownComp; track $index) {

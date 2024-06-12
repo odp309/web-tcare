@@ -14,7 +14,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DropdownComponent } from '../../../shared/components/dropdown/dropdown.component';
 import { ClickOutsideDirective } from '../../../shared/directives/click-outside/click-outside.directive';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, debounceTime } from 'rxjs';
 import toLowerSnakeCase from '../../../shared/utils/toLowerSnakeCase';
 
 type TDateFilter = {
@@ -77,6 +77,7 @@ export class TicketReportsComponent
   isEndDateDisabled: boolean = true;
   startDateSubscription!: Subscription;
   endDateSubscription!: Subscription;
+  searchSubscription!: Subscription;
 
   tHeads = [
     {
@@ -172,27 +173,17 @@ export class TicketReportsComponent
     this.getTicketData();
   }
 
-  onHandleSearch(e: SubmitEvent) {
-    e.preventDefault();
-    if (this.search) {
-      this.onHandleFilter('ticket_number', this.search.value);
-    }
-  }
-
   onHandleFilter(filter: string, filterQ: string) {
     const modFilter = toLowerSnakeCase(filter);
     const idxFilter = this.filterBy.indexOf(modFilter);
     if (this.filterBy.length !== 0 && idxFilter !== -1) {
       this.filterQuery[idxFilter] = filterQ;
       this.getTicketData();
-      console.log(this.filterQuery);
 
       return;
     }
     this.filterBy.push(modFilter);
     this.filterQuery.push(filterQ);
-    console.log(this.filterBy);
-    console.log(this.filterQuery);
     this.getTicketData();
   }
 
@@ -205,6 +196,20 @@ export class TicketReportsComponent
     this.filterBy.splice(idxItem, 1);
     this.filterQuery.splice(idxItem, 1);
     this.getTicketData();
+  }
+
+  onSubscribeSearch() {
+    if (this.search) {
+      this.searchSubscription = this.search.valueChanges
+        .pipe(debounceTime(300))
+        .subscribe((value) => {
+          if (value !== '') {
+            this.onHandleFilter('ticket_number', value);
+            return;
+          }
+          this.onResetFilter('ticket_number');
+        });
+    }
   }
 
   onSubscribeDate() {
@@ -265,9 +270,11 @@ export class TicketReportsComponent
 
   ngAfterViewInit(): void {
     this.onSubscribeDate();
+    this.onSubscribeSearch();
   }
 
   ngOnDestroy(): void {
     this.startDateSubscription.unsubscribe();
+    this.searchSubscription.unsubscribe();
   }
 }
