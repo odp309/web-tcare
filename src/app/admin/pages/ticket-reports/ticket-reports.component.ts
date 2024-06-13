@@ -202,12 +202,13 @@ export class TicketReportsComponent
     const idxFilter = this.filterBy.indexOf(modFilter);
     if (this.filterBy.length !== 0 && idxFilter !== -1) {
       this.filterQuery[idxFilter] = filterQ;
+      this.pageToFetch = 1;
       this.getTicketData();
-
       return;
     }
     this.filterBy.push(modFilter);
     this.filterQuery.push(filterQ);
+    this.pageToFetch = 1;
     this.getTicketData();
   }
 
@@ -215,6 +216,7 @@ export class TicketReportsComponent
     const modFilter = toLowerSnakeCase(filter);
     if (modFilter === 'start_date') {
       this.dateFilter[1] = { ...this.dateFilter[1], isDisabled: true };
+      console.log(this.dateFilter);
     }
     const idxItem = this.filterBy.indexOf(modFilter);
     this.filterBy.splice(idxItem, 1);

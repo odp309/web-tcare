@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
 import { LucideAngularModule } from 'lucide-angular';
 
@@ -19,11 +25,14 @@ export class PaginationComponent {
   @Input() totalPage: number = 1;
   @Input() activePage: number = 1;
   @Output() pageBtn = new EventEmitter<number>();
-  // @Output() pageBtn = new EventEmitter<number>();
 
   fillArrPage() {
+    const tempArr = [];
     for (let i = 0; i < this.totalPage; i++) {
-      this.arrPage.push(i + 1);
+      tempArr.push(i + 1);
+    }
+    if (this.arrPage.length !== tempArr.length) {
+      this.arrPage = tempArr;
     }
   }
 
@@ -64,7 +73,10 @@ export class PaginationComponent {
     this.pageBtn.emit(page);
   }
 
-  ngOnInit(): void {
-    this.fillArrPage();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['totalPage']) {
+      this.totalPage = changes['totalPage'].currentValue;
+      this.fillArrPage();
+    }
   }
 }

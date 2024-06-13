@@ -36,7 +36,9 @@
       inputSizeStyle
     "
     [ngClass]="errText !== '' ? 'border-redDanger' : ''"
-    [ngClass]="inputType === 'date' ? 'w-[206px]' : ''"
+    [ngClass]="
+      inputType === 'date' ? 'w-[206px]' : isDisabled ? 'bg-gray-200' : ''
+    "
     [ngClass]="isDisabled ? 'bg-gray-200' : ''"
   >
     <input
