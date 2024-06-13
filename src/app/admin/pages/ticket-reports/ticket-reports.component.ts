@@ -181,7 +181,6 @@ export class TicketReportsComponent
   }
 
   onClickButtonPage(page: number) {
-    console.log(page);
     this.pageToFetch = page;
     this.getTicketData();
   }

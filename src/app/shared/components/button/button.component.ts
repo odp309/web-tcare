@@ -32,7 +32,7 @@ export class ButtonComponent implements OnInit {
           'border-0 bg-gradient-to-br from-[#F24538] to-[#F56A60] text-white';
         break;
       default:
-        this.variantStyle = 'w-full';
+        this.variantStyle = 'w-full h-full';
         break;
     }
     if (this.variants !== 'noStyle') {

@@ -85,7 +85,6 @@ export class ApiServiceService {
         Authorization: `Bearer ${token}`,
       };
     }
-    console.log(headers);
     return this.http.patch<TResult>(
       `${environment.apiBaseUrl}/${endpoint}`,
       body,

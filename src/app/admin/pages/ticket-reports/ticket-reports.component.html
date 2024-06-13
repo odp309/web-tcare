@@ -15,11 +15,11 @@
   </app-page-header>
 
   <div class="mt-1">
-    @if (isLoading$ | async) {
+    <!-- @if (isLoading$ | async) {
     <div class="w-full flex justify-center">
       <app-loading />
     </div>
-    } @else {
+    } @else { -->
     <div class="grid grid-cols-4 mt-6 gap-x-8 gap-y-3 w-fit">
       @for (item of dropdownComp; track $index) {
       <app-dropdown
@@ -163,6 +163,7 @@
         }
       </tbody>
     </app-table>
+    @if (ticketReportsData.current_page) {
     <div class="w-full flex justify-center mt-3">
       <app-pagination
         [totalPage]="ticketReportsData.total_page / 3"
@@ -171,5 +172,6 @@
       />
     </div>
     }
+    <!-- } -->
   </div>
 </div>

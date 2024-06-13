@@ -1,12 +1,17 @@
 <div class="flex gap-2">
   <app-button
     [variants]="btnVariant"
-    class="text-sm border border-neutral50 w-8 h-8 flex justify-center items-center rounded-md"
+    class="w-8 h-8 flex justify-center items-center text-sm"
+    [customStyle]="
+      isBtnDisabled.prev
+        ? 'bg-neutral50 rounded-md text-white'
+        : 'border border-neutral50 rounded-md text-neutral50'
+    "
+    (onClick)="onPageNextPrev('prev')"
   >
     <lucide-icon
       name="chevron-left"
       strokeWidth="3"
-      color="#E0E0E0"
       size="16"
       class="flex justify-center"
     ></lucide-icon>
@@ -15,18 +20,28 @@
   <app-button
     (onClick)="onPageClick(item)"
     [variants]="btnVariant"
-    class="text-sm border border-neutral50 w-8 h-8 flex justify-center items-center rounded-md"
+    class="text-sm w-8 h-8 flex justify-center items-center"
+    [customStyle]="
+      activePage === item
+        ? 'border border-black font-bold rounded-md'
+        : 'border border-neutral50 rounded-md'
+    "
     >{{ item }}</app-button
   >
   }
   <app-button
     [variants]="btnVariant"
-    class="text-sm border border-neutral50 w-8 h-8 flex justify-center items-center rounded-md"
+    class="w-8 h-8 flex justify-center items-center"
+    [customStyle]="
+      isBtnDisabled.next
+        ? 'bg-neutral50 rounded-md text-white'
+        : 'text-sm border border-neutral50 rounded-md text-neutral50'
+    "
+    (onClick)="onPageNextPrev('next')"
   >
     <lucide-icon
       name="chevron-right"
       strokeWidth="3"
-      color="#E0E0E0"
       size="16"
       class="flex justify-center"
     ></lucide-icon>
