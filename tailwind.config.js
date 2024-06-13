@@ -20,6 +20,8 @@ module.exports = {
       backgroundImage: {
         landingPage: "url('/assets/backgroundLanding.png')",
         landingPage2: "url('/assets/backgroundLanding-2.png')",
+        card1: "url('/assets/card-1.png')",
+        card2: "url('/assets/card-2.png')",
       },
     },
   },
