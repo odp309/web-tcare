@@ -9,7 +9,6 @@ import { ButtonComponent } from '../button/button.component';
 import { LucideAngularModule } from 'lucide-angular';
 import { ClickOutsideDirective } from '../../directives/click-outside/click-outside.directive';
 import {
-  Form,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
@@ -41,7 +40,6 @@ export class PaginationComponent {
   firstPage = 1;
   numOfPageShowed = 4;
   numOfLoops = 0;
-  numOfLoopsChanger = 1;
   btnVariant: 'noStyle' = 'noStyle';
   arrPage: number[] = [];
   isBtnDisabled = {
@@ -54,6 +52,8 @@ export class PaginationComponent {
   };
   @Input() totalPage: number = 1;
   @Input() activePage: number = 1;
+  @Input() numOfLoopsChanger: number = 1;
+
   @Output() pageBtn = new EventEmitter<number>();
 
   get firstDot() {
@@ -78,8 +78,13 @@ export class PaginationComponent {
     }
 
     const tempArr: number[] = [];
+    console.log('numofloopschanger', this.numOfLoopsChanger);
 
-    if (this.numOfLoopsChanger * this.numOfPageShowed <= this.totalPage) {
+    if (
+      this.numOfLoopsChanger * this.numOfPageShowed <= this.totalPage ||
+      this.totalPage < this.numOfPageShowed
+    ) {
+      console.log('object');
       if (this.activePage % 4 === 0) {
         for (let i = 0; i < this.numOfPageShowed; i++) {
           tempArr.push(this.activePage - this.numOfPageShowed + (i + 1));
@@ -94,7 +99,6 @@ export class PaginationComponent {
           tempArr.push(this.numOfLoops * this.numOfPageShowed + i + 1);
         }
       }
-
       this.arrPage = tempArr;
     }
   }
@@ -114,11 +118,13 @@ export class PaginationComponent {
   }
 
   onSearchPage(whatDot: 'first' | 'last') {
-    if (whatDot === 'first') {
-      this.isDotClicked.first = true;
-    }
-    if (whatDot === 'last') {
-      this.isDotClicked.last = true;
+    switch (whatDot) {
+      case 'first':
+        this.isDotClicked.first = true;
+        break;
+      case 'last':
+        this.isDotClicked.last = true;
+        break;
     }
   }
 
@@ -149,18 +155,22 @@ export class PaginationComponent {
     if (whatBtn === 'next' && this.activePage < this.totalPage) {
       this.isBtnDisabled.prev = false;
       this.pageBtn.emit((this.activePage += 1));
+      return;
     }
     if (whatBtn === 'next' && this.activePage === this.totalPage) {
       this.isBtnDisabled.next = true;
       this.isBtnDisabled.prev = false;
+      return;
     }
     if (whatBtn === 'prev' && this.activePage > 1) {
       this.isBtnDisabled.next = false;
       this.pageBtn.emit((this.activePage -= 1));
+      return;
     }
     if (whatBtn === 'prev' && this.activePage === 1) {
       this.isBtnDisabled.prev = true;
       this.isBtnDisabled.next = false;
+      return;
     }
   }
 
@@ -170,30 +180,46 @@ export class PaginationComponent {
   }
 
   onPageClick(page: number) {
-    this.countLoopsChanger(page);
-    if (page < this.totalPage) {
-      this.isBtnDisabled.prev = false;
-    }
-    if (page > 1) {
-      this.isBtnDisabled.next = false;
-    }
-    if (page === this.totalPage) {
-      this.isBtnDisabled.next = true;
-      this.isBtnDisabled.prev = false;
-    }
     if (page === 1) {
       this.numOfLoopsChanger =
         (this.arrPage[0] - this.firstPage) / this.numOfPageShowed;
       this.isBtnDisabled.prev = true;
       this.isBtnDisabled.next = false;
+      this.pageBtn.emit(page);
+      return;
     }
-    this.pageBtn.emit(page);
+
+    this.countLoopsChanger(page);
+
+    if (page < this.totalPage) {
+      this.isBtnDisabled.prev = false;
+      this.pageBtn.emit(page);
+      return;
+    }
+    if (page > 1) {
+      this.isBtnDisabled.next = false;
+      this.pageBtn.emit(page);
+      return;
+    }
+    if (page === this.totalPage) {
+      this.isBtnDisabled.next = true;
+      this.isBtnDisabled.prev = false;
+      this.pageBtn.emit(page);
+      return;
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['totalPage']) {
-      this.totalPage = changes['totalPage'].currentValue;
+      this.totalPage = Math.floor(changes['totalPage'].currentValue);
     }
     this.fillArrPage();
+    console.log(changes);
   }
+
+  // ngDoCheck(): void {
+  //   //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
+  //   //Add 'implements DoCheck' to the class.
+  //   console.log(this.arrPage);
+  // }
 }

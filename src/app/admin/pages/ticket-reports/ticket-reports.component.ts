@@ -93,6 +93,7 @@ export class TicketReportsComponent
   searchSubscription!: Subscription;
 
   pageToFetch: number = 1;
+  numOfLoopsChanger: number = 1;
 
   tHeads = [
     {
@@ -203,12 +204,14 @@ export class TicketReportsComponent
     if (this.filterBy.length !== 0 && idxFilter !== -1) {
       this.filterQuery[idxFilter] = filterQ;
       this.pageToFetch = 1;
+      this.numOfLoopsChanger = 1;
       this.getTicketData();
       return;
     }
     this.filterBy.push(modFilter);
     this.filterQuery.push(filterQ);
     this.pageToFetch = 1;
+    this.numOfLoopsChanger = 1;
     this.getTicketData();
   }
 
