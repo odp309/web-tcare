@@ -4,58 +4,68 @@
       inputType="text"
       inputName="search"
       inputId="search"
-      placeholder="Search By ID"
+      placeholder="Search By Ticket ID"
       errText=""
       inputVariants="iconsRight"
       inputSize="small"
       [fGroup]="form"
       fcName="search"
     />
+    <button type="submit" class="hidden"></button>
   </app-page-header>
-  <div class="w-full mt-6 flex justify-between">
-    @for (item of dropdownComp; track $index) {
-    <app-dropdown [placeholder]="item.pholder" [dropdownItems]="item.items" />
-    }
 
-    <app-input-field
-      [inputType]="startDateType"
-      inputId="startDate"
-      inputName="startDate"
-      (onMouseEnter)="startDateType = 'date'"
-      (clickOutside)="startDateType = 'text'"
-      inputSize="small"
-      placeholder="Start Date"
-      errText=""
-      fcName="startDate"
-      [fGroup]="form"
-      inputVariants="iconsRight"
-    />
-
-    <app-input-field
-      [inputType]="endDateType"
-      inputId="startDate"
-      inputName="startDate"
-      (onMouseEnter)="endDateType = 'date'"
-      (clickOutside)="endDateType = 'text'"
-      inputSize="small"
-      placeholder="End Date"
-      errText=""
-      fcName="endDate"
-      [fGroup]="form"
-      inputVariants="iconsRight"
-    />
-  </div>
   <div class="mt-1">
+    <!-- @if (isLoading$ | async) {
+    <div class="w-full flex justify-center">
+      <app-loading />
+    </div>
+    } @else { -->
+    <div class="grid grid-cols-4 mt-6 gap-x-8 gap-y-3 w-fit">
+      @for (item of dropdownComp; track $index) {
+      <app-dropdown
+        [placeholder]="item.pholder"
+        [dropdownItems]="item.items"
+        (onDropdownClick)="
+          onHandleFilter(item.pholder.split(' ')[2].toLowerCase(), $event)
+        "
+        (onResetCallback)="
+          onResetFilter(item.pholder.split(' ')[2].toLowerCase())
+        "
+      />
+      } @for (item of dateFilter; track $index) {
+      <app-input-field
+        [inputType]="item.type"
+        [inputId]="item.id"
+        [inputName]="item.name"
+        (onMouseEnter)="
+          !item.isDisabled && item.name === 'endDate'
+            ? (item.type = 'date')
+            : item.name === 'startDate'
+            ? (item.type = 'date')
+            : (item.type = 'text')
+        "
+        (clickOutside)="item.type = 'text'"
+        inputSize="small"
+        [placeholder]="item.placeholder"
+        [errText]="item.errText"
+        [fcName]="item.fcName"
+        [fGroup]="form"
+        inputVariants="iconsRight"
+        [isDisabled]="item.isDisabled"
+        (onReset)="onResetFilter(item.placeholder)"
+      />
+      }
+    </div>
     <app-table customClass="lg:w-full">
       <thead>
         <tr class="bg-[#F7F7F7] h-[64px] text-center">
           <td></td>
           @for (tHead of tHeads; track $index) { @if (tHead.isAbleToSort) {
-          <td (click)="onClick()" class="cursor-pointer">
+          <td (click)="onClickSort()" class="cursor-pointer">
             <div class="flex items-center justify-start gap-1">
               <p class="text-sm">{{ tHead.title }}</p>
               <lucide-icon
-                name="chevron-down"
+                [name]="dataOrderIcon"
                 size="12"
                 [strokeWidth]="2.5"
               ></lucide-icon>
@@ -71,56 +81,97 @@
         </tr>
       </thead>
       <tbody>
-        @for (data of ticketReportsData; ; let idx = $index; track data.id) {
+        @for (data of ticketReportsData.result; ; let idx = $index; track
+        data.id) {
         <tr>
-          <th>{{ idx + 1 }}</th>
+          <th>
+            {{ (ticketReportsData.current_page - 1) * limit + (idx + 1) }}
+          </th>
           <td>{{ data.ticket_number }}</td>
           <td>{{ data.created_at | formatDate : "DD-MM-YYYY" }}</td>
           <td>{{ data.category | toTitleCase }}</td>
+          <td>{{ data.division_target }}</td>
           <td>
             <app-ratings [rating]="data.rating" size="small" />
           </td>
-          <td>{{ data.time_response }}</td>
+          <td>{{ data.time_response }} hari</td>
           <td>
             <app-label-status [status]="data.status" />
           </td>
           <td>
             <div class="flex justify-center items-center gap-[16px]">
-              @if (data.status.toLowerCase() === "diajukan") {
-              <button
-                class="hover:text-orangeStatus"
-                (click)="onHandleUpdateStatus(data.id)"
+              <div
+                class="tooltip"
+                [attr.data-tip]="
+                  data.status.toLowerCase() === 'diajukan'
+                    ? 'Proses tiket'
+                    : 'Selesaikan tiket'
+                "
               >
-                <lucide-icon
-                  name="hourglass"
-                  size="16"
-                  [strokeWidth]="2.5"
-                ></lucide-icon>
-              </button>
-              } @else if (data.status.toLowerCase() === "dalam proses") {
-              <button
-                class="hover:text-greenStatus"
-                (click)="onHandleUpdateStatus(data.id)"
-              >
-                <lucide-icon
-                  name="square-check"
-                  size="16"
-                  [strokeWidth]="2.5"
-                ></lucide-icon>
-              </button>
-              }
-              <button>
-                <lucide-icon
-                  name="ellipsis"
-                  [strokeWidth]="2.5"
-                  size="16"
-                ></lucide-icon>
-              </button>
+                <app-modal variants="noStyle" modalId="statusModal">
+                  <app-button
+                    variants="noStyle"
+                    [customStyle]="
+                      data.status.toLowerCase() === 'diajukan'
+                        ? 'hover:text-orangeStatus'
+                        : 'hover:text-greenStatus'
+                    "
+                    btnContent
+                  >
+                    <lucide-icon
+                      [name]="
+                        data.status.toLowerCase() === 'diajukan'
+                          ? 'hourglass'
+                          : 'square-check'
+                      "
+                      size="16"
+                      [strokeWidth]="2.5"
+                    ></lucide-icon>
+                  </app-button>
+                  <p class="py-4" modalDesc>
+                    Apakah anda yakin untuk mengubah status laporan
+                    <span class="text-green500Primary">{{
+                      data.ticket_number
+                    }}</span
+                    >?
+                  </p>
+                  <div class="w-20" modalAction>
+                    <app-button
+                      variants="primary"
+                      (onClick)="onHandleUpdateStatus(data.id)"
+                      >Ya</app-button
+                    >
+                  </div>
+                </app-modal>
+              </div>
+              <div class="tooltip" data-tip="Detail">
+                <app-button
+                  variants="noStyle"
+                  (onClick)="router.navigate(['/admin/detail-ticket'])"
+                  customStyle="hover:text-neutral300"
+                >
+                  <lucide-icon
+                    name="info"
+                    [strokeWidth]="2.5"
+                    size="16"
+                  ></lucide-icon>
+                </app-button>
+              </div>
             </div>
           </td>
         </tr>
         }
       </tbody>
     </app-table>
+    @if (ticketReportsData.current_page) {
+    <div class="w-full flex justify-center mt-3">
+      <app-pagination
+        [totalPage]="ticketReportsData.total_page / 3"
+        [activePage]="ticketReportsData.current_page"
+        (pageBtn)="onClickButtonPage($event)"
+      />
+    </div>
+    }
+    <!-- } -->
   </div>
 </div>

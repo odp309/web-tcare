@@ -4,8 +4,8 @@ export interface IResponse {
 }
 
 export interface IResponsePagination extends IResponse {
-  currentPage: number;
-  currentItem: number;
-  totalPage: number;
-  totalItem: number;
+  current_page: number;
+  current_item: number;
+  total_page: number;
+  total_item: number;
 }

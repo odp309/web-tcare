@@ -1,15 +1,26 @@
-<app-button variants="danger" onclick="myModal.showModal()">{{
-  btnTitle
-}}</app-button>
-<dialog id="myModal" class="modal">
-  <div class="modal-box">
-    <h3 class="font-bold text-lg">Konfirmasi</h3>
-    <p class="py-4">{{ modalDesc }}</p>
-    <div class="modal-action">
+<app-button
+  [variants]="variants"
+  (onClick)="onClickModal()"
+  [customStyle]="customStyle"
+>
+  <ng-content select="[btnContent]"></ng-content>
+</app-button>
+<dialog [id]="modalId" class="modal">
+  <div class="modal-box w-[421px]">
+    <h3 class="font-bold text-lg text-center text-green500Primary">
+      Konfirmasi
+    </h3>
+    <div
+      class="flex items-center justify-center text-base text-neutral300 font-light"
+    >
+      <ng-content select="[modalDesc]"></ng-content>
+    </div>
+
+    <div class="modal-action flex justify-center gap-2">
       <form method="dialog">
-        <app-button variants="plain">{{ btnCloseTitle }}</app-button>
+        <app-button variants="plain">Tidak</app-button>
       </form>
-      <ng-content #modalAction></ng-content>
+      <ng-content select="[modalAction]"></ng-content>
     </div>
   </div>
   <form method="dialog" class="modal-backdrop">

@@ -3,13 +3,14 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   Output,
-  SimpleChanges,
 } from '@angular/core';
 import { InputFieldComponent } from '../input-field/input-field.component';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IInputField } from '../../types/inputField';
 import { ButtonComponent } from '../button/button.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -18,13 +19,15 @@ import { ButtonComponent } from '../button/button.component';
   templateUrl: './dynamic-form.component.html',
   styleUrl: './dynamic-form.component.scss',
 })
-export class DynamicFormComponent implements AfterViewInit {
+export class DynamicFormComponent implements AfterViewInit, OnDestroy {
   @Input({ required: true }) fGroup!: FormGroup;
   @Input({ required: true }) formFields: IInputField[] = [];
   @Input() buttonLabel: string = 'Submit';
   @Input() isButtonDisabled: boolean | null = false;
   @Input() btnStyle: string = '';
   @Output() onSubmit = new EventEmitter();
+
+  private subscription!: Subscription;
 
   mySubmit(e: Event) {
     e.preventDefault();
@@ -37,7 +40,7 @@ export class DynamicFormComponent implements AfterViewInit {
         field.fcName as string | (string | number)[]
       );
       if (getForm) {
-        getForm.valueChanges.subscribe(() => {
+        this.subscription = getForm.valueChanges.subscribe(() => {
           field.errText = '';
         });
       }
@@ -46,5 +49,9 @@ export class DynamicFormComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.subscribeToFormControlStatusChanges();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

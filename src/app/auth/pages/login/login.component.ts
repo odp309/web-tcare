@@ -4,8 +4,7 @@ import { IInputField } from '../../../shared/types/inputField';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
-import { EMPTY, Observable } from 'rxjs';
-import { NgxSonnerToaster, toast } from 'ngx-sonner';
+import { NgxSonnerToaster } from 'ngx-sonner';
 
 @Component({
   selector: 'app-login',
@@ -18,12 +17,10 @@ export class LoginComponent {
   form!: FormGroup;
   constructor(fb: FormBuilder, protected authService: AuthService) {
     this.form = fb.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      username: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
-
-  message$: Observable<string> = EMPTY;
 
   fields: IInputField[] = [
     {
@@ -53,12 +50,21 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    if (this.username && this.username.invalid) {
-      this.fields[0].errText = 'Please input a valid username.';
+    if (this.username && this.username.invalid && this.username.errors) {
+      if (this.username.errors['required']) {
+        this.fields[0].errText = 'Username must be filled.';
+      } else {
+        this.fields[0].errText =
+          'Username must have a minimum length of 6 characters.';
+      }
     }
-    if (this.password && this.password.invalid) {
-      this.fields[1].errText =
-        'Password must has have a minimum length of 6 characters.';
+    if (this.password && this.password.invalid && this.password.errors) {
+      if (this.password.errors['required']) {
+        this.fields[1].errText = 'Password must be filled.';
+      } else {
+        this.fields[1].errText =
+          'Password must have a minimum length of 8 characters.';
+      }
     }
     if (
       this.username &&

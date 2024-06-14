@@ -65,7 +65,7 @@ export class AuthService extends ApiServiceService {
           error: (err: IAuth) => {
             this.message.next(err.message);
             toast.error(err.message);
-            console.log('Login failed', err);
+            console.error('Login failed', err);
           },
         });
     }
@@ -97,7 +97,7 @@ export class AuthService extends ApiServiceService {
         error: (err: IAuth) => {
           this.message.next(err.message);
           toast.error(err.message);
-          console.log('Login failed', err);
+          console.error('Login failed', err);
         },
       });
   }

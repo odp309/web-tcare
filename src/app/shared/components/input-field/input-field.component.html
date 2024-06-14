@@ -9,6 +9,7 @@
       inputSizeStyle
     "
     [ngClass]="errText !== '' ? 'border-redDanger' : ''"
+    [ngClass]="isDisabled ? 'bg-gray-200' : ''"
   >
     <lucide-icon
       [name]="placeholderIcon"
@@ -22,7 +23,10 @@
       [id]="inputId"
       [formControlName]="fcName"
       class="grow"
+      [ngClass]="isDisabled ? 'bg-gray-200 cursor-default' : ''"
+      [ngClass]="customStyle"
       [placeholder]="placeholder"
+      [readOnly]="isDisabled"
     />
   </label>
   } @case ("iconsRight") {
@@ -32,7 +36,10 @@
       inputSizeStyle
     "
     [ngClass]="errText !== '' ? 'border-redDanger' : ''"
-    [ngClass]="inputType === 'date' ? 'w-[206px]' : ''"
+    [ngClass]="
+      inputType === 'date' ? 'w-[206px]' : isDisabled ? 'bg-gray-200' : ''
+    "
+    [ngClass]="isDisabled ? 'bg-gray-200' : ''"
   >
     <input
       [type]="inputType"
@@ -40,17 +47,25 @@
       [id]="inputId"
       [formControlName]="fcName"
       class="grow"
+      [ngClass]="isDisabled ? 'bg-gray-200 cursor-default' : ''"
+      [ngClass]="customStyle"
       [placeholder]="placeholder"
       (mouseenter)="onMouseEnter.emit()"
+      [readOnly]="isDisabled"
     />
+    @if (fGroup.get(strFcName)?.value !== "") {
+    <div (click)="onResetFilter()" class="z-50 cursor-pointer">
+      <lucide-icon name="circle-x" color="#F24538" size="16"></lucide-icon>
+    </div>
+    } @else {
     <lucide-icon
       [name]="placeholderIcon"
       color="grey"
       [size]="inputSize === 'small' ? '16' : '20'"
     ></lucide-icon>
+    }
   </label>
   } @case ("noIcons") {
-
   <div class="rounded-xl flex flex-col">
     @if (inputType === "radio" || inputType === "checkbox") { @for (choice of
     choices; track $index) {
@@ -63,6 +78,7 @@
         [class]="inputStyle"
         [ngClass]="customStyle"
         [formControlName]="fcName"
+        [readOnly]="isDisabled"
       />
       <label [for]="inputId">{{ choice | titlecase }}</label>
     </div>
@@ -75,6 +91,7 @@
       [class]="inputStyle"
       [ngClass]="customStyle ? customStyle : ''"
       [formControlName]="fcName"
+      [readOnly]="isDisabled"
     />
     }
   </div>

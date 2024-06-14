@@ -9,11 +9,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrl: './button.component.scss',
 })
 export class ButtonComponent implements OnInit {
-  @Input() variants: 'primary' | 'secondary' | 'danger' | 'plain' = 'primary';
+  @Input() variants: 'primary' | 'secondary' | 'danger' | 'plain' | 'noStyle' =
+    'primary';
   @Input() customStyle = '';
   @Input() isDisabled: boolean | null = false;
   @Output() onClick = new EventEmitter();
   variantStyle = '';
+  btnShadow: string = 'btn w-full h-14 text-base font-medium shadow-lg';
 
   variantFunc() {
     switch (this.variants) {
@@ -30,7 +32,11 @@ export class ButtonComponent implements OnInit {
           'border-0 bg-gradient-to-br from-[#F24538] to-[#F56A60] text-white';
         break;
       default:
-        this.variantStyle = '';
+        this.variantStyle = 'w-full h-full';
+        break;
+    }
+    if (this.variants !== 'noStyle') {
+      this.variantStyle += ` ${this.btnShadow}`;
     }
   }
 

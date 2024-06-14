@@ -9,7 +9,17 @@ import { ButtonComponent } from '../button/button.component';
   styleUrl: './modal.component.scss',
 })
 export class ModalComponent {
-  @Input({ required: true }) btnTitle = '';
-  @Input({ required: true }) modalDesc = '';
+  @Input() variants: 'noStyle' | 'danger' = 'noStyle';
   @Input() btnCloseTitle = 'Close';
+  @Input() customStyle = '';
+  @Input({ required: true }) modalId = '';
+
+  isDialogOpen: boolean = false;
+
+  onClickModal() {
+    const dialogElement = document.getElementById(this.modalId);
+    if (dialogElement) {
+      (dialogElement as HTMLDialogElement).showModal();
+    }
+  }
 }

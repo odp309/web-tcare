@@ -5,7 +5,7 @@ export type TResultTicket = {
   ticket_number: string;
   category: string;
   time_response: string;
-  divisiTarget: string | null;
+  division_target: string;
   status: string;
   rating: number;
   created_at: string;
@@ -14,4 +14,10 @@ export type TResultTicket = {
 
 export interface ITicketReports extends IResponsePagination {
   result: TResultTicket[];
+}
+
+export interface IUpdateTicket extends IResponse {
+  result: {
+    status: string;
+  };
 }
