@@ -219,7 +219,6 @@ export class TicketReportsComponent
     const modFilter = toLowerSnakeCase(filter);
     if (modFilter === 'start_date') {
       this.dateFilter[1] = { ...this.dateFilter[1], isDisabled: true };
-      console.log(this.dateFilter);
     }
     const idxItem = this.filterBy.indexOf(modFilter);
     this.filterBy.splice(idxItem, 1);
