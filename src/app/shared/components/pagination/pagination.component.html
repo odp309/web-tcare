@@ -16,7 +16,41 @@
       class="flex justify-center"
     ></lucide-icon>
   </app-button>
-  @for (item of arrPage; track $index) {
+  @if (activePage > numOfPageShowed) {
+  <app-button
+    (onClick)="onPageClick(firstPage)"
+    [variants]="btnVariant"
+    class="text-sm w-8 h-8 flex justify-center items-center"
+    [customStyle]="
+      activePage === firstPage
+        ? 'border border-black font-bold rounded-md'
+        : 'border border-neutral50 rounded-md'
+    "
+    >{{ firstPage }}</app-button
+  >
+  @if (!isDotClicked.first) {
+  <app-button
+    (onClick)="onSearchPage('first')"
+    [variants]="btnVariant"
+    class="text-sm w-8 h-8 flex justify-center items-center"
+    [customStyle]="'border border-neutral50 rounded-md'"
+  >
+    <p>..</p>
+  </app-button>
+
+  } @else {
+  <div [formGroup]="form">
+    <input
+      type="text"
+      name="firstDot"
+      class="w-8 h-8 text-sm flex justify-center items-center border border-neutral50 rounded-md text-center"
+      formControlName="firstDot"
+      (keydown)="onKeyDown($event, 'firstDot')"
+      (input)="filterInput($event, 'firstDot')"
+      autofocus
+    />
+  </div>
+  } } @for (item of arrPage; track $index) {
   <app-button
     (onClick)="onPageClick(item)"
     [variants]="btnVariant"
@@ -28,7 +62,41 @@
     "
     >{{ item }}</app-button
   >
+  } @if (activePage < totalPage ) { @if (!isDotClicked.last) {
+  <app-button
+    (onClick)="onSearchPage('last')"
+    [variants]="btnVariant"
+    class="text-sm w-8 h-8 flex justify-center items-center"
+    [customStyle]="'border border-neutral50 rounded-md'"
+    (clickOutside)="onClickOutside()"
+  >
+    <p>..</p>
+  </app-button>
+
+  } @else {
+  <div [formGroup]="form">
+    <input
+      type="text"
+      name="lastDot"
+      class="w-8 h-8 text-sm flex justify-center items-center border border-neutral50 rounded-md text-center"
+      formControlName="lastDot"
+      (keydown)="onKeyDown($event, 'lastDot')"
+      (input)="filterInput($event, 'lastDot')"
+      autofocus
+    />
+  </div>
   }
+  <app-button
+    (onClick)="onPageClick(totalPage)"
+    [variants]="btnVariant"
+    class="text-sm w-8 h-8 flex justify-center items-center"
+    [customStyle]="
+      activePage === totalPage
+        ? 'border border-black font-bold rounded-md'
+        : 'border border-neutral50 rounded-md'
+    "
+    >{{ totalPage }}</app-button
+  >}
   <app-button
     [variants]="btnVariant"
     class="w-8 h-8 flex justify-center items-center"
