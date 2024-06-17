@@ -8,6 +8,7 @@ import { StepsComponent } from '../../components/steps/steps.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DetailTicketService } from '../../services/detail-ticket/detail-ticket.service';
 import {
+  IFeedbackTicket,
   ITicketDetail,
   ITrackStatus,
   TDataDetail,
@@ -43,13 +44,16 @@ export class DetailTicketComponent implements OnInit {
 
   ticketDetailData: ITicketDetail = {} as ITicketDetail;
   trackStatusData: ITrackStatus = {} as ITrackStatus;
+  feedbackData: IFeedbackTicket = {} as IFeedbackTicket;
   isLoading$: Observable<boolean> = EMPTY;
 
   data: TDataDetail[] = [];
 
+  private ticketNumber = this.route.snapshot.params['ticketNum'];
+  private ticketId = this.route.snapshot.queryParams['ticketId'];
+
   getDetailTicketData() {
-    const ticketNumber = this.route.snapshot.params['ticketNum'];
-    this.detailService.getDetailTicket(ticketNumber);
+    this.detailService.getDetailTicket(this.ticketNumber);
     this.detailService.getObsvData().subscribe((value) => {
       this.ticketDetailData = value;
       this.mappingData();
@@ -57,10 +61,17 @@ export class DetailTicketComponent implements OnInit {
   }
 
   getTrackStatusData() {
-    const ticketId = this.route.snapshot.queryParams['ticketId'];
-    this.detailService.getTrackStatusData(ticketId);
+    this.detailService.getTrackStatusData(this.ticketId);
     this.detailService.getObsvTrackData().subscribe((value) => {
       this.trackStatusData = value;
+    });
+  }
+
+  getFeedbackData() {
+    this.detailService.getFeedback(this.ticketId);
+    this.detailService.getObsvFeedbackData().subscribe((value) => {
+      this.feedbackData = value;
+      // console.log(value);
     });
   }
 
@@ -161,6 +172,7 @@ export class DetailTicketComponent implements OnInit {
   ngOnInit(): void {
     this.getDetailTicketData();
     this.getTrackStatusData();
+    this.getFeedbackData();
     this.isLoading$ = this.detailService.getObsvLoading();
   }
 }
