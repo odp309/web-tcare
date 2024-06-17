@@ -3,16 +3,31 @@
 </div>
 <div class="mx-[36px] mb-[36px]">
   <ul class="steps steps-vertical">
-    <li data-content="●" class="step step-custom py-[25px]">
-      <div class="text-start ml-[36px]">
+    @for (item of finalData; track $index) { @if (item) {
+
+    <li data-content="●" class="step step-custom">
+      <div class="text-start ml-[36px] py-6">
         <p class="text-green500Primary text-[16px] font-medium">
-          Transaksi Berhasil
+          {{ item.description | toTitleCase }}
         </p>
-        <p class="text-[14px] text-[#666666]">Kendala : Gagal Bayar</p>
-        <p class="text-[14px] text-[#666666]">18 April 2024 17:53 WIB</p>
+        <p class="text-[14px] text-[#666666]">Diterima oleh : {{ item.pic }}</p>
+        <p class="text-[14px] text-[#666666]">
+          {{ item.date | formatDate : "DD MMM YYYY HH:MM:SS" }}
+        </p>
       </div>
     </li>
-    <li data-content="●" class="step step-custom">
+    } @else {
+    <li data-content="●" class="step step-custom-disable">
+      <div class="text-start ml-[36px]">
+        <p class="text-[#C2C2C2] text-[16px] font-medium">
+          Laporan Selesai Proses
+        </p>
+        <p class="text-[14px] text-[#C2C2C2]">Diselesaikan oleh : -</p>
+        <p class="text-[14px] text-[#C2C2C2]">-</p>
+      </div>
+    </li>
+    } }
+    <!-- <li data-content="●" class="step step-custom">
       <div class="text-start ml-[36px]">
         <p class="text-green500Primary text-[16px] font-medium">
           Laporan Diajukan
@@ -49,6 +64,6 @@
         <p class="text-[14px] text-[#C2C2C2]">Ditutup oleh : -</p>
         <p class="text-[14px] text-[#C2C2C2]">-</p>
       </div>
-    </li>
+    </li> -->
   </ul>
 </div>
