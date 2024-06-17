@@ -21,3 +21,44 @@ export interface IUpdateTicket extends IResponse {
     status: string;
   };
 }
+
+export interface ITicketDetail extends IResponse {
+  result: {
+    reporter_detail: {
+      nama: string;
+      account_number: string;
+      address: string;
+      no_handphone: string;
+    };
+    report_detail: {
+      transaction_date: string;
+      amount: number;
+      category: string;
+      description: string;
+      reference_num: string | null;
+    };
+    report_status_detail: {
+      report_date: string;
+      ticket_number: string;
+      status: 'Diajukan' | 'Dalam Proses' | 'Selesai';
+    };
+  };
+}
+
+export interface ITrackStatus extends IResponse {
+  result: IResTrackStatus[];
+}
+
+export type IResTrackStatus = {
+  pic: string;
+  date: string;
+  description: string;
+} | null;
+
+export type TDataDetail = {
+  title: string;
+  details: {
+    detailTitle: string;
+    detailDesc: string | null;
+  }[];
+};
