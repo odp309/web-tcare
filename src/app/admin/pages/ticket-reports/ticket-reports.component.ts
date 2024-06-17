@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { TableComponent } from '../../../shared/components/table/table.component';
 import { LabelStatusComponent } from '../../components/label-status/label-status.component';
-import { TicketReportsService } from '../../services/ticket-reports.service';
+import { TicketReportsService } from '../../services/ticket-reports/ticket-reports.service';
 import {
   ITicketReports,
   TResultTicket,
@@ -16,7 +16,7 @@ import { InputFieldComponent } from '../../../shared/components/input-field/inpu
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DropdownComponent } from '../../../shared/components/dropdown/dropdown.component';
 import { ClickOutsideDirective } from '../../../shared/directives/click-outside/click-outside.directive';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, Observable, Subscription, debounceTime } from 'rxjs';
 import toLowerSnakeCase from '../../../shared/utils/toLowerSnakeCase';
 import { ModalComponent } from '../../../shared/components/modal/modal.component';
@@ -64,10 +64,12 @@ export class TicketReportsComponent
 {
   limit = 8;
   form!: FormGroup;
+
   constructor(
     private ticketService: TicketReportsService,
     fb: FormBuilder,
-    public router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.form = fb.group({
       search: [''],
@@ -277,6 +279,12 @@ export class TicketReportsComponent
       this.ticketReportsData = value;
     });
     this.isLoading$ = this.ticketService.getIsLoading();
+  }
+
+  navigateToDetail(ticketNum: string, id: number) {
+    this.router.navigate(['admin', ticketNum, 'detail-ticket'], {
+      queryParams: { ticketId: id },
+    });
   }
 
   ngOnInit(): void {
