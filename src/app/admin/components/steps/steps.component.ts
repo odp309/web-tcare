@@ -10,7 +10,7 @@ import { FormatDatePipe } from '../../../shared/pipes/format-date/format-date.pi
   templateUrl: './steps.component.html',
   styleUrl: './steps.component.scss',
 })
-export class StepsComponent implements OnChanges {
+export class StepsComponent implements OnInit  {
   @Input() stepsData: IResTrackStatus[] = [];
   @Input() numOfSteps: number = 0;
 
@@ -26,7 +26,7 @@ export class StepsComponent implements OnChanges {
     }
   }
 
-  ngOnChanges(): void {
+  ngOnInit(): void {
     this.mappingFinalData();
   }
 }
