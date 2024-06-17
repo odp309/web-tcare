@@ -1,11 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PageHeaderComponent } from '../../components/page-header/page-header.component';
 import { LucideAngularModule } from 'lucide-angular';
 import { CardComponent } from '../../../shared/components/card/card.component';
 import { DetailInfoComponent } from '../../components/detail-info/detail-info.component';
 import { RatingsComponent } from '../../../shared/components/ratings/ratings.component';
 import { StepsComponent } from '../../components/steps/steps.component';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { DetailTicketService } from '../../services/detail-ticket/detail-ticket.service';
+import {
+  ITicketDetail,
+  ITrackStatus,
+  TDataDetail,
+} from '../../../shared/types/ticketReport';
+import { EMPTY, Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import moment from 'moment';
+import 'moment/locale/id';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'app-detail-ticket',
@@ -18,79 +29,138 @@ import { RouterLink } from '@angular/router';
     RatingsComponent,
     StepsComponent,
     RouterLink,
+    AsyncPipe,
+    LoadingComponent,
   ],
   templateUrl: './detail-ticket.component.html',
   styleUrl: './detail-ticket.component.scss',
 })
-export class DetailTicketComponent {
-  data = [
-    {
-      title: 'Informasi Pelapor',
-      details: [
+export class DetailTicketComponent implements OnInit {
+  constructor(
+    private detailService: DetailTicketService,
+    private route: ActivatedRoute
+  ) {}
+
+  ticketDetailData: ITicketDetail = {} as ITicketDetail;
+  trackStatusData: ITrackStatus = {} as ITrackStatus;
+  isLoading$: Observable<boolean> = EMPTY;
+
+  data: TDataDetail[] = [];
+
+  getDetailTicketData() {
+    const ticketNumber = this.route.snapshot.params['ticketNum'];
+    this.detailService.getDetailTicket(ticketNumber);
+    this.detailService.getObsvData().subscribe((value) => {
+      this.ticketDetailData = value;
+      this.mappingData();
+    });
+  }
+
+  getTrackStatusData() {
+    const ticketId = this.route.snapshot.queryParams['ticketId'];
+    this.detailService.getTrackStatusData(ticketId);
+    this.detailService.getObsvTrackData().subscribe((value) => {
+      this.trackStatusData = value;
+    });
+  }
+
+  formatDate(date: string) {
+    return moment(date).locale('id').format('DD MMMM YYYY');
+  }
+
+  mappingData() {
+    if (this.ticketDetailData && this.ticketDetailData.result) {
+      this.data = [
         {
-          detailTitle: 'Name',
-          detailDesc: 'Fajru Ramadhan',
+          title: 'Informasi Pelapor',
+          details: [
+            {
+              detailTitle: 'Nama',
+              detailDesc: this.ticketDetailData.result.reporter_detail.nama,
+            },
+            {
+              detailTitle: 'Nomor Rekening',
+              detailDesc:
+                this.ticketDetailData.result.reporter_detail.account_number,
+            },
+            {
+              detailTitle: 'Alamat',
+              detailDesc: this.ticketDetailData.result.reporter_detail.address,
+            },
+            {
+              detailTitle: 'Nomor Handphone',
+              detailDesc:
+                this.ticketDetailData.result.reporter_detail.no_handphone,
+            },
+          ],
         },
         {
-          detailTitle: 'Nomor Rekening',
-          detailDesc: '156251625263',
+          title: 'Detail Laporan',
+          details: [
+            {
+              detailTitle: 'Tanggal Transaksi',
+              detailDesc: this.formatDate(
+                this.ticketDetailData.result.report_detail.transaction_date
+              ),
+            },
+            {
+              detailTitle: 'Nominal',
+              detailDesc: new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+              }).format(this.ticketDetailData.result.report_detail.amount),
+            },
+            {
+              detailTitle: 'Kategori Laporan',
+              detailDesc: this.ticketDetailData.result.report_detail.category,
+            },
+            {
+              detailTitle: 'Deskripsi Laporan',
+              detailDesc:
+                this.ticketDetailData.result.report_detail.description,
+            },
+            {
+              detailTitle: 'Nomor Transaksi',
+              detailDesc:
+                this.ticketDetailData.result.report_detail.reference_num,
+            },
+          ],
         },
         {
-          detailTitle: 'Alamat',
-          detailDesc: 'Jalan Lada Nomor 07',
+          title: 'Status Pengaduan',
+          details: [
+            {
+              detailTitle: 'Tanggal Pengaduan',
+              detailDesc: this.formatDate(
+                this.ticketDetailData.result.report_status_detail.report_date
+              ),
+            },
+            {
+              detailTitle: 'Nomor Tiket',
+              detailDesc:
+                this.ticketDetailData.result.report_status_detail.ticket_number,
+            },
+            {
+              detailTitle: 'Nomor Referensi',
+              detailDesc: !this.ticketDetailData.result.report_detail
+                .reference_num
+                ? '-'
+                : this.ticketDetailData.result.report_detail.reference_num,
+            },
+            {
+              detailTitle: 'Status Tiket',
+              detailDesc:
+                this.ticketDetailData.result.report_status_detail.status,
+            },
+          ],
         },
-        {
-          detailTitle: 'Nomor Handphone',
-          detailDesc: '0851526135263',
-        },
-      ],
-    },
-    {
-      title: 'Detail Laporan',
-      details: [
-        {
-          detailTitle: 'Tanggal Transaksi',
-          detailDesc: '19 Mei 2024',
-        },
-        {
-          detailTitle: 'Nominal',
-          detailDesc: 'Rp 57.000,00',
-        },
-        {
-          detailTitle: 'Kategori Laporan',
-          detailDesc: 'Gagal Bayar',
-        },
-        {
-          detailTitle: 'Deskripsi Laporan',
-          detailDesc:
-            'The sun set behind the mountains, casting hues of orange and pink across the sky, as the gentle breeze whispered through the trees, creating a sense of tranquility in the evening air.',
-        },
-        {
-          detailTitle: 'Nomor Transaksi',
-          detailDesc: 'ABC1726177272',
-        },
-      ],
-    },
-    {
-      title: 'Status Pengaduan',
-      details: [
-        {
-          detailTitle: 'Tanggal Pengaduan',
-          detailDesc: '20 Mei 2024',
-        },
-        {
-          detailTitle: 'Nomor Tiket',
-          detailDesc: 'ABC8176263728',
-        },
-        {
-          detailTitle: 'Nomor Referensi',
-          detailDesc: 'CBA8162537173',
-        },
-        {
-          detailTitle: 'Status Tiket',
-          detailDesc: 'Dalam Proses',
-        },
-      ],
-    },
-  ];
+      ];
+    }
+  }
+
+  ngOnInit(): void {
+    this.getDetailTicketData();
+    this.getTrackStatusData();
+    this.isLoading$ = this.detailService.getObsvLoading();
+  }
 }

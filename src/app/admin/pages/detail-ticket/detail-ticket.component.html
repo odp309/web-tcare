@@ -18,6 +18,9 @@
 </div>
 
 <div class="flex gap-[16px] mt-[42px]">
+  @if (isLoading$ | async) {
+  <app-loading />
+  } @else {
   <app-card customClass="w-[412px] py-[38px]">
     <div class="flex-row justify-center items-center">
       <div class="flex justify-center items-center">
@@ -36,7 +39,7 @@
   </app-card>
   <div>
     <app-card customClass="w-[661px] h-[512px] mb-[16px] overflow-y-auto">
-      <app-steps></app-steps>
+      <app-steps [stepsData]="trackStatusData.result" [numOfSteps]="5" />
     </app-card>
     <app-card customClass="w-[661px] h-[322px] p-[38px]">
       <div>
@@ -59,4 +62,5 @@
       </div>
     </app-card>
   </div>
+  }
 </div>
