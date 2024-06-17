@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiServiceService } from '../../shared/services/api-service.service';
-import { ITicketReports, IUpdateTicket } from '../../shared/types/ticketReport';
+import { ApiServiceService } from '../../../shared/services/api-service.service';
+import {
+  ITicketReports,
+  IUpdateTicket,
+} from '../../../shared/types/ticketReport';
 import { BehaviorSubject, Observable, catchError, finalize } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import Cookies from 'js-cookie';
@@ -11,7 +14,7 @@ import { toast } from 'ngx-sonner';
   providedIn: 'root',
 })
 export class TicketReportsService extends ApiServiceService {
-  constructor(http: HttpClient, private cookieService: CookieService) {
+  constructor(http: HttpClient) {
     super(http);
   }
 
