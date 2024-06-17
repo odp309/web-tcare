@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ApiServiceService } from '../../../shared/services/api-service.service';
 import Cookies from 'js-cookie';
 import {
+  IFeedbackTicket,
   ITicketDetail,
   ITrackStatus,
 } from '../../../shared/types/ticketReport';
@@ -27,6 +28,11 @@ export class DetailTicketService extends ApiServiceService {
     {} as ITrackStatus
   );
   private trackStatusData$: Observable<ITrackStatus> = this.trackStatusData;
+
+  private feedbackData: BehaviorSubject<IFeedbackTicket> = new BehaviorSubject(
+    {} as IFeedbackTicket
+  );
+  private feedbackData$: Observable<IFeedbackTicket> = this.feedbackData;
 
   private isLoading: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private isLoading$: Observable<boolean> = this.isLoading;
@@ -85,6 +91,38 @@ export class DetailTicketService extends ApiServiceService {
           }
         },
       });
+  }
+
+  getFeedback(id: number) {
+    this.isLoading.next(true);
+    this.get<IFeedbackTicket>(
+      `private/admin/ticket-reports/${id}/feedback`,
+      this.token
+    )
+      .pipe(
+        catchError((e) => {
+          this.isLoading.next(false);
+          throw e.error;
+        }),
+        finalize(() => {
+          this.isLoading.next(false);
+        })
+      )
+      .subscribe({
+        next: (value) => {
+          this.feedbackData.next(value);
+        },
+        error: (err: IFeedbackTicket) => {
+          if (err !== null) {
+            toast.error(err.message);
+            console.error('Something went wrong', err);
+          }
+        },
+      });
+  }
+
+  getObsvFeedbackData() {
+    return this.feedbackData$;
   }
 
   getObsvTrackData() {
