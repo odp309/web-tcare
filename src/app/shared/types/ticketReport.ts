@@ -62,3 +62,10 @@ export type TDataDetail = {
     detailDesc: string | null;
   }[];
 };
+
+export interface IFeedbackTicket extends IResponse {
+  result: {
+    rating: number;
+    comment: string;
+  };
+}
