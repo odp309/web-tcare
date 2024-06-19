@@ -1,4 +1,4 @@
-<div class="flex flex-col">
+<div class="flex flex-col gap-[30px]">
   <app-page-header text="Dashboard">
     <div class="flex items-center gap-2">
       <p class="text-green500Primary font-semibold">Admin John Doe</p>
@@ -9,7 +9,93 @@
       ></lucide-icon>
     </div>
   </app-page-header>
-  <div class="flex justify-between mt-14 w-full">
+
+  <h3 class="text-[#007DA0] text-xl font-semibold mt-[15px]">Dashboard Saya</h3>
+  <div class="flex w-full justify-between">
+    <app-card customClass="bg-card1 w-[250px] h-[237px] p-[25px]">
+      <div>
+        <h4 class="text-white font-semibold text-lg">Total Laporan Tiket</h4>
+        <h5 class="text-white text-base">Diajukan ke saya</h5>
+      </div>
+      <div class="mt-[75px]">
+        <p class="text-end text-6xl text-white font-bold">48</p>
+      </div>
+    </app-card>
+    <app-card customClass="bg-card2 w-[810px] h-[237px] p-[25px]">
+      <h4 class="text-white font-semibold text-lg mb-[15px]">
+        Aktivitas Hari Ini
+      </h4>
+      <div class="flex gap-[10px]">
+        <div class="flex flex-col gap-[10px]">
+          <div
+            class="bg-[#FDE7DF] w-[155px] flex justify-center items-center rounded-xl h-[39px]"
+          >
+            <p>GP-317267382</p>
+          </div>
+          <div
+            class="bg-[#FDE7DF] w-[155px] flex justify-center items-center rounded-xl h-[39px]"
+          >
+            <p>GP-317267382</p>
+          </div>
+          <div
+            class="bg-[#FDE7DF] w-[155px] flex justify-center items-center rounded-xl h-[39px]"
+          >
+            <p>GP-317267382</p>
+          </div>
+        </div>
+        <div class="flex flex-col gap-[10px]">
+          <div
+            class="bg-[#FDE7DF] w-[155px] flex justify-center items-center rounded-xl h-[39px]"
+          >
+            <p>GP-317267382</p>
+          </div>
+          <div
+            class="bg-[#FDE7DF] w-[155px] flex justify-center items-center rounded-xl h-[39px]"
+          >
+            <p>GP-317267382</p>
+          </div>
+          <div
+            class="bg-[#FDE7DF] w-[155px] flex justify-center items-center rounded-xl h-[39px]"
+          >
+            <p>GP-317267382</p>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <div>
+    <app-card
+      customClass="w-full h-[100px] flex justify-center items-center gap-[30px]"
+    >
+      <h4 class="font-medium text-lg">SLA Tiket Selesai</h4>
+      <div
+        class="flex justify-between items-center bg-gradient-to-br from-[#F37142] to-[#F58961] w-[195px] h-[65px] rounded-xl px-[30px] text-white"
+      >
+        <p class="text-lg">0 < 5 HK</p>
+        <p class="text-2xl font-semibold">21</p>
+      </div>
+      <div
+        class="flex justify-between items-center bg-gradient-to-br from-[#F37142] to-[#F58961] w-[195px] h-[65px] rounded-xl px-[30px] text-white"
+      >
+        <p class="text-lg">6 < 10 HK</p>
+        <p class="text-2xl font-semibold">13</p>
+      </div>
+      <div
+        class="flex justify-between items-center bg-gradient-to-br from-[#F37142] to-[#F58961] w-[195px] h-[65px] rounded-xl px-[30px] text-white"
+      >
+        <p class="text-lg">11 < 15 HK</p>
+        <p class="text-2xl font-semibold">7</p>
+      </div>
+      <div
+        class="flex justify-between items-center bg-gradient-to-br from-[#F37142] to-[#F58961] w-[195px] h-[65px] rounded-xl px-[30px] text-white"
+      >
+        <p class="text-lg">> 15 HK</p>
+        <p class="text-2xl font-semibold">2</p>
+      </div>
+    </app-card>
+  </div>
+  <h3 class="text-[#007DA0] text-xl font-semibold">Dashboard Utama</h3>
+  <div class="flex justify-between w-full">
     <app-card
       customClass="flex items-center justify-center bg-gradient-to-tl from-[#F37142] to-[#F58961] w-[261px] h-[108px] gap-[59px] text-white"
     >
@@ -54,5 +140,17 @@
         <lucide-icon name="file-check-2" size="48"></lucide-icon>
       </div>
     </app-card>
+  </div>
+  <div class="flex gap-[15px]">
+    <app-card customClass="w-[812px] h-[420px] p-[35px]"></app-card>
+    <app-card customClass="w-[261px] h-[420px] p-[25px]"></app-card>
+  </div>
+  <div class="flex gap-[15px]">
+    <app-card customClass="w-[812px] h-[420px] p-[35px]"></app-card>
+    <app-card customClass="w-[261px] h-[420px] p-[25px]"></app-card>
+  </div>
+  <div class="flex gap-[15px]">
+    <app-card customClass="w-[812px] h-[420px] p-[35px]"></app-card>
+    <app-card customClass="w-[261px] h-[420px] p-[25px]"></app-card>
   </div>
 </div>
