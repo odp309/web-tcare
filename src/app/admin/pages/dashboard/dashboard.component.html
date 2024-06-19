@@ -10,91 +10,155 @@
     </div>
   </app-page-header>
 
-  <h3 class="text-[#007DA0] text-xl font-semibold mt-[15px]">Dashboard Saya</h3>
-  <div class="flex w-full justify-between">
-    <app-card customClass="bg-card1 w-[250px] h-[237px] p-[25px]">
-      <div>
-        <h4 class="text-white font-semibold text-lg">Total Laporan Tiket</h4>
-        <h5 class="text-white text-base">Diajukan ke saya</h5>
-      </div>
-      <div class="mt-[75px]">
-        <p class="text-end text-6xl text-white font-bold">48</p>
-      </div>
-    </app-card>
-    <app-card customClass="bg-card2 w-[810px] h-[237px] p-[25px]">
-      <h4 class="text-white font-semibold text-lg mb-[15px]">
-        Aktivitas Hari Ini
-      </h4>
-      <div class="flex gap-[10px]">
-        <div class="flex flex-col gap-[10px]">
-          <div
-            class="bg-[#FDE7DF] w-[155px] flex justify-center items-center rounded-xl h-[39px]"
-          >
-            <p>GP-317267382</p>
-          </div>
-          <div
-            class="bg-[#FDE7DF] w-[155px] flex justify-center items-center rounded-xl h-[39px]"
-          >
-            <p>GP-317267382</p>
-          </div>
-          <div
-            class="bg-[#FDE7DF] w-[155px] flex justify-center items-center rounded-xl h-[39px]"
-          >
-            <p>GP-317267382</p>
-          </div>
-        </div>
-        <div class="flex flex-col gap-[10px]">
-          <div
-            class="bg-[#FDE7DF] w-[155px] flex justify-center items-center rounded-xl h-[39px]"
-          >
-            <p>GP-317267382</p>
-          </div>
-          <div
-            class="bg-[#FDE7DF] w-[155px] flex justify-center items-center rounded-xl h-[39px]"
-          >
-            <p>GP-317267382</p>
-          </div>
-          <div
-            class="bg-[#FDE7DF] w-[155px] flex justify-center items-center rounded-xl h-[39px]"
-          >
-            <p>GP-317267382</p>
-          </div>
-        </div>
-      </div>
-    </app-card>
-  </div>
   <div>
+    <div class="flex justify-end mt-[15px]">
+      <button
+        class="w-[90px] h-[26px] rounded-l-xl rounded-r-none border border-[#DBDCDE] text-sm bg-[#0092BB] text-white font-medium"
+      >
+        Personal
+      </button>
+      <button
+        class="w-[90px] h-[26px] rounded-none border border-[#DBDCDE] text-gray-400 text-sm"
+      >
+        Divisi
+      </button>
+      <button
+        class="w-[90px] h-[26px] rounded-r-xl rounded-l-none border border-[#DBDCDE] text-gray-400 text-sm"
+      >
+        Semua
+      </button>
+    </div>
+  </div>
+
+  <!-- Personal Dashboard -->
+  <div class="flex w-full justify-between">
+    <app-card customClass="bg-card1 w-[260px] h-[237px] p-[25px]">
+      <div class="h-[25%]">
+        <h4 class="text-white font-semibold text-lg">
+          % Laporan Dibuka Kembali
+        </h4>
+      </div>
+      <div class="h-[75%] flex justify-end">
+        <div class="flex justify-end items-end">
+          <p class="text-end text-6xl text-white font-bold">48%</p>
+        </div>
+      </div>
+    </app-card>
+    <app-card customClass="bg-card2 w-[260px] h-[237px] p-[25px]">
+      <div class="h-[25%]">
+        <h4 class="text-white font-semibold text-lg">% Performa SLA</h4>
+      </div>
+      <div class="h-[75%] flex justify-end">
+        <div class="flex justify-end items-end">
+          <p class="text-end text-6xl text-white font-bold">89%</p>
+        </div>
+      </div>
+    </app-card>
     <app-card
-      customClass="w-full h-[100px] flex justify-center items-center gap-[30px]"
+      customClass="w-[540px] h-[237px] p-[25px] flex flex-col gap-[15px]"
     >
-      <h4 class="font-medium text-lg">SLA Tiket Selesai</h4>
-      <div
-        class="flex justify-between items-center bg-gradient-to-br from-[#F37142] to-[#F58961] w-[195px] h-[65px] rounded-xl px-[30px] text-white"
-      >
-        <p class="text-lg">0 < 5 HK</p>
-        <p class="text-2xl font-semibold">21</p>
+      <h4 class="font-semibold text-lg">SLA Tiket Selesai</h4>
+      <div class="flex justify-between">
+        <div
+          class="flex justify-between items-center bg-gradient-to-br from-[#3FAB6C] to-[#65D493] w-[230px] h-[65px] rounded-xl px-[30px] text-white"
+        >
+          <p class="text-lg">0 < 5 HK</p>
+          <p class="text-2xl font-semibold">21</p>
+        </div>
+        <div
+          class="flex justify-between items-center bg-gradient-to-br from-[#F7BB21] to-[#FDCD85] w-[230px] h-[65px] rounded-xl px-[30px] text-white"
+        >
+          <p class="text-lg">6 < 10 HK</p>
+          <p class="text-2xl font-semibold">13</p>
+        </div>
       </div>
-      <div
-        class="flex justify-between items-center bg-gradient-to-br from-[#F37142] to-[#F58961] w-[195px] h-[65px] rounded-xl px-[30px] text-white"
-      >
-        <p class="text-lg">6 < 10 HK</p>
-        <p class="text-2xl font-semibold">13</p>
-      </div>
-      <div
-        class="flex justify-between items-center bg-gradient-to-br from-[#F37142] to-[#F58961] w-[195px] h-[65px] rounded-xl px-[30px] text-white"
-      >
-        <p class="text-lg">11 < 15 HK</p>
-        <p class="text-2xl font-semibold">7</p>
-      </div>
-      <div
-        class="flex justify-between items-center bg-gradient-to-br from-[#F37142] to-[#F58961] w-[195px] h-[65px] rounded-xl px-[30px] text-white"
-      >
-        <p class="text-lg">> 15 HK</p>
-        <p class="text-2xl font-semibold">2</p>
+      <div class="flex justify-between">
+        <div
+          class="flex justify-between items-center bg-gradient-to-br from-[#FF8901] to-[#FFB867] w-[230px] h-[65px] rounded-xl px-[30px] text-white"
+        >
+          <p class="text-lg">11 < 15 HK</p>
+          <p class="text-2xl font-semibold">7</p>
+        </div>
+        <div
+          class="flex justify-between items-center bg-gradient-to-br from-[#F55217] to-[#FB7949] w-[230px] h-[65px] rounded-xl px-[30px] text-white"
+        >
+          <p class="text-lg">> 15 HK</p>
+          <p class="text-2xl font-semibold">2</p>
+        </div>
       </div>
     </app-card>
   </div>
-  <h3 class="text-[#007DA0] text-xl font-semibold">Dashboard Utama</h3>
+
+  <!-- Divisi & All Dashboard -->
+  <div class="flex w-full justify-between">
+    <app-card customClass="bg-card1 w-[200px] h-[237px] p-[25px]">
+      <div class="h-[25%]">
+        <h4 class="text-white font-semibold text-lg">
+          % Laporan Dibuka Kembali
+        </h4>
+      </div>
+      <div class="h-[75%] flex justify-end">
+        <div class="flex justify-end items-end">
+          <p class="text-end text-6xl text-white font-bold">68%</p>
+        </div>
+      </div>
+    </app-card>
+    <app-card customClass="bg-card2 w-[200px] h-[237px] p-[25px]">
+      <div class="h-[25%]">
+        <h4 class="text-white font-semibold text-lg">% Performa SLA</h4>
+      </div>
+      <div class="h-[75%] flex justify-end">
+        <div class="flex justify-end items-end">
+          <p class="text-end text-6xl text-white font-bold">93%</p>
+        </div>
+      </div>
+    </app-card>
+    <app-card customClass="bg-card3 w-[200px] h-[237px] p-[25px]">
+      <div class="h-[25%]">
+        <h4 class="text-white font-semibold text-lg">% Tiket Autoclose</h4>
+      </div>
+      <div class="h-[75%] flex justify-end">
+        <div class="flex justify-end items-end">
+          <p class="text-end text-6xl text-white font-bold">21%</p>
+        </div>
+      </div>
+    </app-card>
+    <app-card
+      customClass="w-[430px] h-[237px] p-[25px] flex flex-col gap-[15px]"
+    >
+      <h4 class="font-semibold text-lg">SLA Tiket Selesai</h4>
+      <div class="flex justify-between">
+        <div
+          class="flex justify-between items-center bg-gradient-to-br from-[#3FAB6C] to-[#65D493] w-[180px] h-[65px] rounded-xl px-[15px] text-white"
+        >
+          <p class="text-lg">0 < 5 HK</p>
+          <p class="text-2xl font-semibold">21</p>
+        </div>
+        <div
+          class="flex justify-between items-center bg-gradient-to-br from-[#F7BB21] to-[#FDCD85] w-[180px] h-[65px] rounded-xl px-[15px] text-white"
+        >
+          <p class="text-lg">6 < 10 HK</p>
+          <p class="text-2xl font-semibold">13</p>
+        </div>
+      </div>
+      <div class="flex justify-between">
+        <div
+          class="flex justify-between items-center bg-gradient-to-br from-[#FF8901] to-[#FFB867] w-[180px] h-[65px] rounded-xl px-[15px] text-white"
+        >
+          <p class="text-lg">11 < 15 HK</p>
+          <p class="text-2xl font-semibold">7</p>
+        </div>
+        <div
+          class="flex justify-between items-center bg-gradient-to-br from-[#F55217] to-[#FB7949] w-[180px] h-[65px] rounded-xl px-[15px] text-white"
+        >
+          <p class="text-lg">> 15 HK</p>
+          <p class="text-2xl font-semibold">2</p>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- End -->
+
   <div class="flex justify-between w-full">
     <app-card
       customClass="flex items-center justify-center bg-gradient-to-tl from-[#F37142] to-[#F58961] w-[261px] h-[108px] gap-[59px] text-white"

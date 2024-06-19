@@ -25,6 +25,7 @@ module.exports = {
         landingPage2: "url('/assets/backgroundLanding-2.png')",
         card1: "url('/assets/card-1.png')",
         card2: "url('/assets/card-2.png')",
+        card3: "url('/assets/card-3.png')",
       },
     },
   },
