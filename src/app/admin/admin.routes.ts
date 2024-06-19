@@ -25,7 +25,7 @@ export const adminRoutes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'detail-ticket',
+        path: ':ticketNum/detail-ticket',
         component: DetailTicketComponent,
         pathMatch: 'full',
       },

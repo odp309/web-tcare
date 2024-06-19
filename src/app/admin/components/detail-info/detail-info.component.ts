@@ -1,12 +1,5 @@
 import { Component, Input } from '@angular/core';
-
-export type TData = {
-  title: string;
-  details: {
-    detailTitle: string;
-    detailDesc: string;
-  }[];
-};
+import { TDataDetail } from '../../../shared/types/ticketReport';
 
 @Component({
   selector: 'app-detail-info',
@@ -16,5 +9,5 @@ export type TData = {
   styleUrl: './detail-info.component.scss',
 })
 export class DetailInfoComponent {
-  @Input() data: TData | null = null;
+  @Input() data: TDataDetail | null = null;
 }

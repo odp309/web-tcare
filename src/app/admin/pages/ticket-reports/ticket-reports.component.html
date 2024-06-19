@@ -15,11 +15,11 @@
   </app-page-header>
 
   <div class="mt-1">
-    <!-- @if (isLoading$ | async) {
+    @if ((isLoading$ | async) && !ticketReportsData.current_page) {
     <div class="w-full flex justify-center">
       <app-loading />
     </div>
-    } @else { -->
+    } @else {
     <div class="grid grid-cols-4 mt-6 gap-x-8 gap-y-3 w-fit">
       @for (item of dropdownComp; track $index) {
       <app-dropdown
@@ -147,7 +147,7 @@
               <div class="tooltip" data-tip="Detail">
                 <app-button
                   variants="noStyle"
-                  (onClick)="router.navigate(['/admin/detail-ticket'])"
+                  (onClick)="navigateToDetail(data.ticket_number, data.id)"
                   customStyle="hover:text-neutral300"
                 >
                   <lucide-icon
@@ -166,12 +166,11 @@
     @if (ticketReportsData.current_page) {
     <div class="w-full flex justify-center mt-3">
       <app-pagination
-        [totalPage]="ticketReportsData.total_page / 3"
+        [totalPage]="ticketReportsData.total_page"
         [activePage]="ticketReportsData.current_page"
         (pageBtn)="onClickButtonPage($event)"
       />
     </div>
-    }
-    <!-- } -->
+    } }
   </div>
 </div>
