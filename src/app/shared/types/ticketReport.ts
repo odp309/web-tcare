@@ -50,10 +50,11 @@ export interface ITrackStatus extends IResponse {
 }
 
 export type IResTrackStatus = {
-  pic: string;
-  date: string;
+  pic: string | null;
+  category: string;
+  date: string | null;
   description: string;
-} | null;
+};
 
 export type TDataDetail = {
   title: string;

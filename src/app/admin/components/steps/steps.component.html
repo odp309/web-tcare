@@ -3,67 +3,49 @@
 </div>
 <div class="mx-[36px] mb-[36px]">
   <ul class="steps steps-vertical">
-    @for (item of finalData; track $index) { @if (item) {
+    @for (item of stepsData; let idx = $index; track idx ) { @if (item) {
 
-    <li data-content="●" class="step step-custom">
+    <li
+      data-content="●"
+      class="step"
+      [ngClass]="item.pic && item.date ? 'step-custom' : 'step-custom-disable'"
+    >
       <div class="text-start ml-[36px] py-6">
-        <p class="text-green500Primary text-[16px] font-medium">
+        <p
+          class="text-[16px] font-medium"
+          [ngClass]="
+            item.pic && item.date ? 'text-green500Primary' : 'text-[#C2C2C2]'
+          "
+        >
           {{ item.description | toTitleCase }}
         </p>
-        <p class="text-[14px] text-[#666666]">Diterima oleh : {{ item.pic }}</p>
-        <p class="text-[14px] text-[#666666]">
-          {{ item.date | formatDate : "DD MMM YYYY HH:MM:SS" }}
+        <p
+          class="text-[14px]"
+          [ngClass]="
+            item.pic && item.date ? 'text-[#666666]' : 'text-[#C2C2C2]'
+          "
+        >
+          {{ descInfo[idx] }}:
+          {{
+            idx === 0
+              ? (item.category | toTitleCase)
+              : !item.pic
+              ? "-"
+              : (item.pic | toTitleCase)
+          }}
         </p>
-      </div>
-    </li>
-    } @else {
-    <li data-content="●" class="step step-custom-disable">
-      <div class="text-start ml-[36px]">
-        <p class="text-[#C2C2C2] text-[16px] font-medium">
-          Laporan Selesai Proses
+        <p
+          class="text-[14px]"
+          [ngClass]="
+            item.pic && item.date ? 'text-[#666666]' : 'text-[#C2C2C2]'
+          "
+        >
+          {{
+            !item.date ? "-" : (item.date | formatDate : "DD MMM YYYY HH:MM:SS")
+          }}
         </p>
-        <p class="text-[14px] text-[#C2C2C2]">Diselesaikan oleh : -</p>
-        <p class="text-[14px] text-[#C2C2C2]">-</p>
       </div>
     </li>
     } }
-    <!-- <li data-content="●" class="step step-custom">
-      <div class="text-start ml-[36px]">
-        <p class="text-green500Primary text-[16px] font-medium">
-          Laporan Diajukan
-        </p>
-        <p class="text-[14px] text-[#666666]">
-          Diterima oleh : Himawan Zidan Prayoga
-        </p>
-        <p class="text-[14px] text-[#666666]">18 April 2024 20:53 WIB</p>
-      </div>
-    </li>
-    <li data-content="●" class="step step-custom">
-      <div class="text-start ml-[36px]">
-        <p class="text-green500Primary text-[16px] font-medium">
-          Laporan Dalam Proses
-        </p>
-        <p class="text-[14px] text-[#666666]">
-          Diproses oleh : Himawan Zidan Prayoga
-        </p>
-        <p class="text-[14px] text-[#666666]">19 April 2024 10:53 WIB</p>
-      </div>
-    </li>
-    <li data-content="●" class="step step-custom-disable">
-      <div class="text-start ml-[36px]">
-        <p class="text-[#C2C2C2] text-[16px] font-medium">
-          Laporan Selesai Proses
-        </p>
-        <p class="text-[14px] text-[#C2C2C2]">Diselesaikan oleh : -</p>
-        <p class="text-[14px] text-[#C2C2C2]">-</p>
-      </div>
-    </li>
-    <li data-content="●" class="step step-custom-disable">
-      <div class="text-start ml-[36px]">
-        <p class="text-[#C2C2C2] text-[16px] font-medium">Laporan Ditutup</p>
-        <p class="text-[14px] text-[#C2C2C2]">Ditutup oleh : -</p>
-        <p class="text-[14px] text-[#C2C2C2]">-</p>
-      </div>
-    </li> -->
   </ul>
 </div>
