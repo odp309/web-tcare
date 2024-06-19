@@ -21,20 +21,4 @@ export class StepsComponent {
     'Selesai Diproses oleh',
     'Diterima oleh',
   ];
-
-  // finalData: IResTrackStatus[] = [];
-
-  // mappingFinalData() {
-  //   for (let i = 0; i < this.numOfSteps; i++) {
-  //     if (i <= this.stepsData.length - 1) {
-  //       this.finalData.push(this.stepsData[i]);
-  //       continue;
-  //     }
-  //     this.finalData.push(null);
-  //   }
-  // }
-
-  // ngOnInit(): void {
-  //   this.mappingFinalData();
-  // }
 }
