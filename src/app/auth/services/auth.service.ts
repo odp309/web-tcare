@@ -13,6 +13,7 @@ import { toast } from 'ngx-sonner';
 import { Router } from '@angular/router';
 import { IAuth, TLoginBody, TLoginResult } from '../../shared/types/auth';
 import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -54,6 +55,10 @@ export class AuthService extends ApiServiceService {
             if (value.result) {
               const loginRes: TLoginResult = value.result as TLoginResult;
               Cookies.set('token', loginRes.accessToken);
+              Cookies.set(
+                'role',
+                jwtDecode<{ role: string }>(loginRes.accessToken).role
+              );
               Cookies.set('refreshToken', loginRes.token);
               toast.success(value.message);
               this.router.navigate(['/admin/dashboard'], {
@@ -89,6 +94,7 @@ export class AuthService extends ApiServiceService {
           this.message.next(value.message);
           Cookies.remove('refreshToken');
           Cookies.remove('token');
+          Cookies.remove('role');
           toast.success('Logout successfull');
           this.router.navigate(['/auth/login'], {
             replaceUrl: true,
