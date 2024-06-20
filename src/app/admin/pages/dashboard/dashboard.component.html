@@ -9,28 +9,37 @@
       ></lucide-icon>
     </div>
   </app-page-header>
-
   <div>
     <div class="flex justify-end mt-[15px]">
+      @for (item of arrFilterBy;let idx = $index; track idx) {
       <button
-        class="w-[90px] h-[26px] rounded-l-xl rounded-r-none border border-[#DBDCDE] text-sm bg-[#0092BB] text-white font-medium"
+        [class]="
+          filter === item
+            ? 'w-[90px] h-[26px] border border-[#DBDCDE] text-sm text-white font-medium bg-[#0092BB]'
+            : 'w-[90px] h-[26px] rounded-none border border-[#DBDCDE] text-gray-400 text-sm'
+        "
+        [ngClass]="
+          idx === 0
+            ? 'rounded-l-xl rounded-r-none'
+            : idx === 1
+            ? 'rounded-none'
+            : 'rounded-r-xl rounded-l-none'
+        "
+        (click)="onHandleFilterBtn(item)"
       >
-        Personal
+        @switch (item) { @case ('personal') {
+        {{ item | toTitleCase }}
+        } @case ('division') { Divisi } @case ('all') { Semua } }
       </button>
-      <button
-        class="w-[90px] h-[26px] rounded-none border border-[#DBDCDE] text-gray-400 text-sm"
-      >
-        Divisi
-      </button>
-      <button
-        class="w-[90px] h-[26px] rounded-r-xl rounded-l-none border border-[#DBDCDE] text-gray-400 text-sm"
-      >
-        Semua
-      </button>
+      }
     </div>
   </div>
-
-  <!-- Personal Dashboard -->
+  @if (isLoading$ | async) {
+  <div class="flex justify-center w-full">
+    <app-loading />
+  </div>
+  } @if (data.reopened && data.sla_performance && data.sla_completed) { @if
+  (filter === 'personal') {
   <div class="flex w-full justify-between">
     <app-card customClass="bg-card1 w-[260px] h-[237px] p-[25px]">
       <div class="h-[25%]">
@@ -40,20 +49,26 @@
       </div>
       <div class="h-[75%] flex justify-end">
         <div class="flex justify-end items-end">
-          <p class="text-end text-6xl text-white font-bold">48%</p>
+          <p class="text-end text-5xl text-white font-bold">
+            {{ data.reopened.percentage }}%
+          </p>
         </div>
       </div>
     </app-card>
+
     <app-card customClass="bg-card2 w-[260px] h-[237px] p-[25px]">
       <div class="h-[25%]">
         <h4 class="text-white font-semibold text-lg">% Performa SLA</h4>
       </div>
       <div class="h-[75%] flex justify-end">
         <div class="flex justify-end items-end">
-          <p class="text-end text-6xl text-white font-bold">89%</p>
+          <p class="text-end text-5xl text-white font-bold">
+            {{ data.sla_performance.percentage_sla_performance }}%
+          </p>
         </div>
       </div>
     </app-card>
+
     <app-card
       customClass="w-[540px] h-[237px] p-[25px] flex flex-col gap-[15px]"
     >
@@ -63,13 +78,17 @@
           class="flex justify-between items-center bg-gradient-to-br from-[#3FAB6C] to-[#65D493] w-[230px] h-[65px] rounded-xl px-[30px] text-white"
         >
           <p class="text-lg">0 < 5 HK</p>
-          <p class="text-2xl font-semibold">21</p>
+          <p class="text-2xl font-semibold">
+            {{ data.sla_completed.sla_completed["0-5_HK"] }}
+          </p>
         </div>
         <div
           class="flex justify-between items-center bg-gradient-to-br from-[#F7BB21] to-[#FDCD85] w-[230px] h-[65px] rounded-xl px-[30px] text-white"
         >
           <p class="text-lg">6 < 10 HK</p>
-          <p class="text-2xl font-semibold">13</p>
+          <p class="text-2xl font-semibold">
+            {{ data.sla_completed.sla_completed["6-10_HK"] }}
+          </p>
         </div>
       </div>
       <div class="flex justify-between">
@@ -77,19 +96,23 @@
           class="flex justify-between items-center bg-gradient-to-br from-[#FF8901] to-[#FFB867] w-[230px] h-[65px] rounded-xl px-[30px] text-white"
         >
           <p class="text-lg">11 < 15 HK</p>
-          <p class="text-2xl font-semibold">7</p>
+          <p class="text-2xl font-semibold">
+            {{ data.sla_completed.sla_completed["11-15_HK"] }}
+          </p>
         </div>
         <div
           class="flex justify-between items-center bg-gradient-to-br from-[#F55217] to-[#FB7949] w-[230px] h-[65px] rounded-xl px-[30px] text-white"
         >
           <p class="text-lg">> 15 HK</p>
-          <p class="text-2xl font-semibold">2</p>
+          <p class="text-2xl font-semibold">
+            {{ data.sla_completed.sla_completed[">15_HK"] }}
+          </p>
         </div>
       </div>
     </app-card>
   </div>
+  } @else {
 
-  <!-- Divisi & All Dashboard -->
   <div class="flex w-full justify-between">
     <app-card customClass="bg-card1 w-[200px] h-[237px] p-[25px]">
       <div class="h-[25%]">
@@ -99,7 +122,9 @@
       </div>
       <div class="h-[75%] flex justify-end">
         <div class="flex justify-end items-end">
-          <p class="text-end text-6xl text-white font-bold">68%</p>
+          <p class="text-end text-5xl text-white font-bold">
+            {{ data.reopened.percentage }}%
+          </p>
         </div>
       </div>
     </app-card>
@@ -109,20 +134,26 @@
       </div>
       <div class="h-[75%] flex justify-end">
         <div class="flex justify-end items-end">
-          <p class="text-end text-6xl text-white font-bold">93%</p>
+          <p class="text-end text-5xl text-white font-bold">
+            {{ data.sla_performance.percentage_sla_performance }}%
+          </p>
         </div>
       </div>
     </app-card>
+    @if (data.autoclose) {
     <app-card customClass="bg-card3 w-[200px] h-[237px] p-[25px]">
       <div class="h-[25%]">
         <h4 class="text-white font-semibold text-lg">% Tiket Autoclose</h4>
       </div>
       <div class="h-[75%] flex justify-end">
         <div class="flex justify-end items-end">
-          <p class="text-end text-6xl text-white font-bold">21%</p>
+          <p class="text-end text-5xl text-white font-bold">
+            {{ data.autoclose.percentage }}%
+          </p>
         </div>
       </div>
     </app-card>
+    }
     <app-card
       customClass="w-[430px] h-[237px] p-[25px] flex flex-col gap-[15px]"
     >
@@ -132,13 +163,17 @@
           class="flex justify-between items-center bg-gradient-to-br from-[#3FAB6C] to-[#65D493] w-[180px] h-[65px] rounded-xl px-[15px] text-white"
         >
           <p class="text-lg">0 < 5 HK</p>
-          <p class="text-2xl font-semibold">21</p>
+          <p class="text-2xl font-semibold">
+            {{ data.sla_completed.sla_completed["0-5_HK"] }}
+          </p>
         </div>
         <div
           class="flex justify-between items-center bg-gradient-to-br from-[#F7BB21] to-[#FDCD85] w-[180px] h-[65px] rounded-xl px-[15px] text-white"
         >
           <p class="text-lg">6 < 10 HK</p>
-          <p class="text-2xl font-semibold">13</p>
+          <p class="text-2xl font-semibold">
+            {{ data.sla_completed.sla_completed["6-10_HK"] }}
+          </p>
         </div>
       </div>
       <div class="flex justify-between">
@@ -146,26 +181,29 @@
           class="flex justify-between items-center bg-gradient-to-br from-[#FF8901] to-[#FFB867] w-[180px] h-[65px] rounded-xl px-[15px] text-white"
         >
           <p class="text-lg">11 < 15 HK</p>
-          <p class="text-2xl font-semibold">7</p>
+          <p class="text-2xl font-semibold">
+            {{ data.sla_completed.sla_completed["11-15_HK"] }}
+          </p>
         </div>
         <div
           class="flex justify-between items-center bg-gradient-to-br from-[#F55217] to-[#FB7949] w-[180px] h-[65px] rounded-xl px-[15px] text-white"
         >
           <p class="text-lg">> 15 HK</p>
-          <p class="text-2xl font-semibold">2</p>
+          <p class="text-2xl font-semibold">
+            {{ data.sla_completed.sla_completed[">15_HK"] }}
+          </p>
         </div>
       </div>
     </app-card>
   </div>
-  <!-- End -->
-
+  } } @if (data.total && data.submitted && data.processed && data.completed) {
   <div class="flex justify-between w-full">
     <app-card
       customClass="flex items-center justify-center bg-gradient-to-tl from-[#F37142] to-[#F58961] w-[261px] h-[108px] gap-[59px] text-white"
     >
       <div>
         <p>Total Laporan</p>
-        <p class="font-semibold text-[24px]">1,256</p>
+        <p class="font-semibold text-[24px]">{{ data.total.total_reports }}</p>
       </div>
       <div>
         <lucide-icon name="clipboard-list" size="48"></lucide-icon>
@@ -176,7 +214,9 @@
     >
       <div>
         <p>Laporan Diajukan</p>
-        <p class="font-semibold text-[24px]">56</p>
+        <p class="font-semibold text-[24px]">
+          {{ data.submitted.total_reports }}
+        </p>
       </div>
       <div>
         <lucide-icon name="file-input" size="48"></lucide-icon>
@@ -187,7 +227,9 @@
     >
       <div>
         <p>Laporan Diproses</p>
-        <p class="font-semibold text-[24px]">266</p>
+        <p class="font-semibold text-[24px]">
+          {{ data.processed.reports }}
+        </p>
       </div>
       <div>
         <lucide-icon name="hourglass" size="48"></lucide-icon>
@@ -198,13 +240,15 @@
     >
       <div>
         <p>Laporan Selesai</p>
-        <p class="font-semibold text-[24px]">10,576</p>
+        <p class="font-semibold text-[24px]">{{ data.completed.reports }}</p>
       </div>
       <div>
         <lucide-icon name="file-check-2" size="48"></lucide-icon>
       </div>
     </app-card>
   </div>
+  }
+
   <div class="flex gap-[15px]">
     <app-card customClass="w-[812px] h-[420px] p-[35px]"></app-card>
     <app-card customClass="w-[261px] h-[420px] p-[25px]"></app-card>
