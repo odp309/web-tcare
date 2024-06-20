@@ -71,7 +71,6 @@ export class DetailTicketComponent implements OnInit {
     this.detailService.getFeedback(this.ticketId);
     this.detailService.getObsvFeedbackData().subscribe((value) => {
       this.feedbackData = value;
-      // console.log(value);
     });
   }
 
