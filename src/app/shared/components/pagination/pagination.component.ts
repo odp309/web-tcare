@@ -189,19 +189,20 @@ export class PaginationComponent {
 
     this.countLoopsChanger(page);
 
+    if (page === this.totalPage) {
+      this.isBtnDisabled.next = true;
+      this.isBtnDisabled.prev = false;
+      this.pageBtn.emit(page);
+      return;
+    }
+
     if (page < this.totalPage) {
       this.isBtnDisabled.prev = false;
       this.pageBtn.emit(page);
       return;
     }
-    if (page > 1) {
+    if (page > this.firstPage) {
       this.isBtnDisabled.next = false;
-      this.pageBtn.emit(page);
-      return;
-    }
-    if (page === this.totalPage) {
-      this.isBtnDisabled.next = true;
-      this.isBtnDisabled.prev = false;
       this.pageBtn.emit(page);
       return;
     }
