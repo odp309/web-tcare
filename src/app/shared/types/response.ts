@@ -9,3 +9,9 @@ export interface IResponsePagination extends IResponse {
   total_page: number;
   total_item: number;
 }
+
+export interface IResponseReport extends IResponse {
+  total: number;
+  total_all_year: number;
+  year: number;
+}
