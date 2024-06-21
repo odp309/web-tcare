@@ -38,12 +38,17 @@ export class DashboardService extends ApiServiceService {
 
   getReportStats(
     endpoint: string,
+    entity: string,
     filterBy?: string[],
-    filterQuery?: string[]
+    filterQuery?: string[],
+    monthParams?: string
   ) {
     this.isLoading.next(true);
     if (this.token) {
-      const month = moment(new Date()).locale('en').format('MMMM');
+      let month = monthParams;
+      if (!month) {
+        month = moment(new Date()).locale('en').format('MMMM');
+      }
       let queryParams = '';
       if (filterBy && filterQuery) {
         for (let i = 0; i < filterBy.length; i++) {
@@ -53,7 +58,7 @@ export class DashboardService extends ApiServiceService {
       const key = endpoint.split('-').join('_');
 
       this.get<any>(
-        `private/admin/reports-stats/${endpoint}?month=${month}${queryParams}`,
+        `private/admin/reports-stats/${endpoint}?filter=${entity}&month=${month}${queryParams}`,
         this.token
       )
         .pipe(
@@ -70,7 +75,7 @@ export class DashboardService extends ApiServiceService {
             this.errMess.next('');
             this.data.next({
               ...this.data.getValue(),
-              [key]: value.result,
+              [key]: value,
             });
           },
           error: (err: any) => {
