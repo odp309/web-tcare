@@ -135,7 +135,7 @@ export class TicketReportsComponent
       items: ['gagal transfer', 'gagal topup', 'gagal payment'],
     },
     {
-      pholder: 'Filter by Rating',
+      pholder: 'Filter by Rate',
       items: ['1', '2', '3', '4', '5'],
     },
     {
