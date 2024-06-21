@@ -14,7 +14,7 @@
       @for (item of arrFilterBy;let idx = $index; track idx) {
       <button
         [class]="
-          filter === item
+          filterEntity === item
             ? 'w-[90px] h-[26px] border border-[#DBDCDE] text-sm text-white font-medium bg-[#0092BB]'
             : 'w-[90px] h-[26px] rounded-none border border-[#DBDCDE] text-gray-400 text-sm'
         "
@@ -34,12 +34,12 @@
       }
     </div>
   </div>
-  @if (isLoading$ | async) {
+  @if ((isLoading$ | async) && isFetchDashboardCard) {
   <div class="flex justify-center w-full">
     <app-loading />
   </div>
   } @if (data.reopened && data.sla_performance && data.sla_completed) { @if
-  (filter === 'personal') {
+  (filterEntity === 'personal') {
   <div class="flex w-full justify-between">
     <app-card customClass="bg-card1 w-[260px] h-[237px] p-[25px]">
       <div class="h-[25%]">
@@ -50,7 +50,7 @@
       <div class="h-[75%] flex justify-end">
         <div class="flex justify-end items-end">
           <p class="text-end text-5xl text-white font-bold">
-            {{ data.reopened.percentage }}%
+            {{ data.reopened.result.percentage }}%
           </p>
         </div>
       </div>
@@ -63,7 +63,7 @@
       <div class="h-[75%] flex justify-end">
         <div class="flex justify-end items-end">
           <p class="text-end text-5xl text-white font-bold">
-            {{ data.sla_performance.percentage_sla_performance }}%
+            {{ data.sla_performance.result.percentage_sla_performance }}%
           </p>
         </div>
       </div>
@@ -79,7 +79,7 @@
         >
           <p class="text-lg">0 < 5 HK</p>
           <p class="text-2xl font-semibold">
-            {{ data.sla_completed.sla_completed["0-5_HK"] }}
+            {{ data.sla_completed.result.sla_completed["0-5_HK"] }}
           </p>
         </div>
         <div
@@ -87,7 +87,7 @@
         >
           <p class="text-lg">6 < 10 HK</p>
           <p class="text-2xl font-semibold">
-            {{ data.sla_completed.sla_completed["6-10_HK"] }}
+            {{ data.sla_completed.result.sla_completed["6-10_HK"] }}
           </p>
         </div>
       </div>
@@ -97,7 +97,7 @@
         >
           <p class="text-lg">11 < 15 HK</p>
           <p class="text-2xl font-semibold">
-            {{ data.sla_completed.sla_completed["11-15_HK"] }}
+            {{ data.sla_completed.result.sla_completed["11-15_HK"] }}
           </p>
         </div>
         <div
@@ -105,7 +105,7 @@
         >
           <p class="text-lg">> 15 HK</p>
           <p class="text-2xl font-semibold">
-            {{ data.sla_completed.sla_completed[">15_HK"] }}
+            {{ data.sla_completed.result.sla_completed[">15_HK"] }}
           </p>
         </div>
       </div>
@@ -123,7 +123,7 @@
       <div class="h-[75%] flex justify-end">
         <div class="flex justify-end items-end">
           <p class="text-end text-5xl text-white font-bold">
-            {{ data.reopened.percentage }}%
+            {{ data.reopened.result.percentage }}%
           </p>
         </div>
       </div>
@@ -135,7 +135,7 @@
       <div class="h-[75%] flex justify-end">
         <div class="flex justify-end items-end">
           <p class="text-end text-5xl text-white font-bold">
-            {{ data.sla_performance.percentage_sla_performance }}%
+            {{ data.sla_performance.result.percentage_sla_performance }}%
           </p>
         </div>
       </div>
@@ -148,7 +148,7 @@
       <div class="h-[75%] flex justify-end">
         <div class="flex justify-end items-end">
           <p class="text-end text-5xl text-white font-bold">
-            {{ data.autoclose.percentage }}%
+            {{ data.autoclose.result.percentage }}%
           </p>
         </div>
       </div>
@@ -164,7 +164,7 @@
         >
           <p class="text-lg">0 < 5 HK</p>
           <p class="text-2xl font-semibold">
-            {{ data.sla_completed.sla_completed["0-5_HK"] }}
+            {{ data.sla_completed.result.sla_completed["0-5_HK"] }}
           </p>
         </div>
         <div
@@ -172,7 +172,7 @@
         >
           <p class="text-lg">6 < 10 HK</p>
           <p class="text-2xl font-semibold">
-            {{ data.sla_completed.sla_completed["6-10_HK"] }}
+            {{ data.sla_completed.result.sla_completed["6-10_HK"] }}
           </p>
         </div>
       </div>
@@ -182,7 +182,7 @@
         >
           <p class="text-lg">11 < 15 HK</p>
           <p class="text-2xl font-semibold">
-            {{ data.sla_completed.sla_completed["11-15_HK"] }}
+            {{ data.sla_completed.result.sla_completed["11-15_HK"] }}
           </p>
         </div>
         <div
@@ -190,7 +190,7 @@
         >
           <p class="text-lg">> 15 HK</p>
           <p class="text-2xl font-semibold">
-            {{ data.sla_completed.sla_completed[">15_HK"] }}
+            {{ data.sla_completed.result.sla_completed[">15_HK"] }}
           </p>
         </div>
       </div>
@@ -203,7 +203,9 @@
     >
       <div>
         <p>Total Laporan</p>
-        <p class="font-semibold text-[24px]">{{ data.total.total_reports }}</p>
+        <p class="font-semibold text-[24px]">
+          {{ data.total.result.total_reports }}
+        </p>
       </div>
       <div>
         <lucide-icon name="clipboard-list" size="48"></lucide-icon>
@@ -215,7 +217,7 @@
       <div>
         <p>Laporan Diajukan</p>
         <p class="font-semibold text-[24px]">
-          {{ data.submitted.total_reports }}
+          {{ data.submitted.result.total_reports }}
         </p>
       </div>
       <div>
@@ -228,7 +230,7 @@
       <div>
         <p>Laporan Diproses</p>
         <p class="font-semibold text-[24px]">
-          {{ data.processed.reports }}
+          {{ data.processed.result.reports }}
         </p>
       </div>
       <div>
@@ -240,7 +242,9 @@
     >
       <div>
         <p>Laporan Selesai</p>
-        <p class="font-semibold text-[24px]">{{ data.completed.reports }}</p>
+        <p class="font-semibold text-[24px]">
+          {{ data.completed.result.reports }}
+        </p>
       </div>
       <div>
         <lucide-icon name="file-check-2" size="48"></lucide-icon>
@@ -250,15 +254,167 @@
   }
 
   <div class="flex gap-[15px]">
-    <app-card customClass="w-[812px] h-[420px] p-[35px]"></app-card>
-    <app-card customClass="w-[261px] h-[420px] p-[25px]"></app-card>
+    <app-card customClass="w-[812px] h-[420px] p-[25px]">
+      <h2 class="text-lg font-medium text-greenPrimary">
+        Total Reports By Category
+      </h2>
+      <div class="w-full flex justify-end gap-4">
+        <app-dropdown
+          variants="dashboard"
+          [text]="filterDropdown.category[0]"
+          [dropdownItems]="filterDropdown.category"
+          (onDropdownClick)="onHandleLeftGraph('category', 'name', $event)"
+        />
+        <app-dropdown
+          variants="dashboard"
+          [text]="monthDropdown.items[idxDateNow]"
+          [dropdownItems]="monthDropdown.items"
+          (onDropdownClick)="onHandleLeftGraph('category', 'month', $event)"
+        />
+      </div>
+      @if (weekLabel.category && graphWeekData.category) {
+      <div class="h-[300px] mt-4">
+        <app-bar-chart
+          idChart="categoryChart"
+          [labels]="weekLabel.category"
+          [data]="graphWeekData.category"
+        />
+      </div>
+      }
+    </app-card>
+    <app-card customClass="w-[261px] h-[420px] p-[25px]">
+      <h2 class="text-lg font-medium text-greenPrimary">
+        {{ chosenDropdown.category | toTitleCase }}
+      </h2>
+      <div class="flex flex-col justify-around h-full w-full">
+        <div class="w-full mt-4">
+          <app-doughnut-chart
+            idChart="categorySecondChart"
+            [data]="doughnutData.category"
+            [labels]="doughnutLabel.category"
+          />
+        </div>
+        <div class="flex flex-col gap-1 text-sm">
+          <div class="flex justify-between">
+            <p>{{ chosenDropdown.category | toTitleCase }}</p>
+            <p>{{ doughnutData.category[0] }}</p>
+          </div>
+          <div class="flex justify-between text-neutral300">
+            <p>Total Laporan</p>
+            <p>{{ doughnutData.category[0] + doughnutData.category[1] }}</p>
+          </div>
+        </div>
+      </div>
+    </app-card>
   </div>
   <div class="flex gap-[15px]">
-    <app-card customClass="w-[812px] h-[420px] p-[35px]"></app-card>
-    <app-card customClass="w-[261px] h-[420px] p-[25px]"></app-card>
+    <app-card customClass="w-[812px] h-[420px] p-[25px]">
+      <h2 class="text-lg font-medium text-greenPrimary">
+        Total Reports By Status
+      </h2>
+      <div class="w-full flex justify-end gap-4">
+        <app-dropdown
+          variants="dashboard"
+          [text]="filterDropdown.status[0]"
+          [dropdownItems]="filterDropdown.status"
+          (onDropdownClick)="onHandleLeftGraph('status', 'name', $event)"
+        />
+        <app-dropdown
+          variants="dashboard"
+          [text]="monthDropdown.items[idxDateNow]"
+          [dropdownItems]="monthDropdown.items"
+          (onDropdownClick)="onHandleLeftGraph('status', 'month', $event)"
+        />
+      </div>
+      @if (weekLabel.category && graphWeekData.category) {
+      <div class="h-[300px] mt-4">
+        <app-line-chart
+          idChart="statusChart"
+          legendLabel="Reports by Status"
+          [labels]="weekLabel.status"
+          [data]="graphWeekData.status"
+        />
+      </div>
+      }
+    </app-card>
+    <app-card customClass="w-[261px] h-[420px] p-[25px]">
+      <h2 class="text-lg font-medium text-greenPrimary">
+        {{ chosenDropdown.status | toTitleCase }}
+      </h2>
+      <div class="flex flex-col justify-around h-full w-full">
+        <div class="w-full mt-4">
+          <app-doughnut-chart
+            idChart="statusSecondChart"
+            [data]="doughnutData.status"
+            [labels]="doughnutLabel.status"
+          />
+        </div>
+        <div class="flex flex-col gap-1 text-sm">
+          <div class="flex justify-between">
+            <p>{{ chosenDropdown.status | toTitleCase }}</p>
+            <p>{{ doughnutData.status[0] }}</p>
+          </div>
+          <div class="flex justify-between text-neutral300">
+            <p>Total Laporan</p>
+            <p>{{ doughnutData.category[0] + doughnutData.category[1] }}</p>
+          </div>
+        </div>
+      </div>
+    </app-card>
   </div>
   <div class="flex gap-[15px]">
-    <app-card customClass="w-[812px] h-[420px] p-[35px]"></app-card>
-    <app-card customClass="w-[261px] h-[420px] p-[25px]"></app-card>
+    <app-card customClass="w-[812px] h-[420px] p-[25px]">
+      <h2 class="text-lg font-medium text-greenPrimary">
+        Total Reports By Rating
+      </h2>
+      <div class="w-full flex justify-end gap-4">
+        <app-dropdown
+          variants="dashboard"
+          [text]="filterDropdown.rating[filterDropdown.rating.length - 1]"
+          [dropdownItems]="filterDropdown.rating"
+          (onDropdownClick)="onHandleLeftGraph('rating', 'rate', $event)"
+        />
+        <app-dropdown
+          variants="dashboard"
+          [text]="monthDropdown.items[idxDateNow]"
+          [dropdownItems]="monthDropdown.items"
+          (onDropdownClick)="onHandleLeftGraph('rating', 'month', $event)"
+        />
+      </div>
+      @if (weekLabel.category && graphWeekData.category) {
+      <div class="h-[300px] mt-4">
+        <app-line-chart
+          idChart="ratingChart"
+          legendLabel="Reports by Rating"
+          [labels]="weekLabel.rating"
+          [data]="graphWeekData.rating"
+        />
+      </div>
+      }
+    </app-card>
+    <app-card customClass="w-[261px] h-[420px] p-[25px]">
+      <h2 class="text-lg font-medium text-greenPrimary">
+        {{ chosenDropdown.rating | toTitleCase }} Bintang
+      </h2>
+      <div class="flex flex-col justify-around h-full w-full">
+        <div class="w-full mt-4">
+          <app-doughnut-chart
+            idChart="ratingSecondChart"
+            [data]="doughnutData.rating"
+            [labels]="doughnutLabel.rating"
+          />
+        </div>
+        <div class="flex flex-col gap-1 text-sm">
+          <div class="flex justify-between">
+            <p>{{ chosenDropdown.rating | toTitleCase }} Bintang</p>
+            <p>{{ doughnutData.rating[0] }}</p>
+          </div>
+          <div class="flex justify-between text-neutral300">
+            <p>Total Laporan</p>
+            <p>{{ doughnutData.rating[0] + doughnutData.rating[1] }}</p>
+          </div>
+        </div>
+      </div>
+    </app-card>
   </div>
 </div>
