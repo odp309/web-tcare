@@ -131,14 +131,29 @@ export class PaginationComponent {
       return;
     }
     if (this.lastDot && whatDot === 'lastDot') {
-      this.countLoopsChanger(parseInt(this.lastDot.value));
+      this.onPageClick(parseInt(this.lastDot.value));
+
+      if (
+        parseInt(this.lastDot.value) % this.arrPage[this.arrPage.length - 1] ===
+        0
+      ) {
+        this.numOfLoopsChanger -= 1;
+      }
+
       this.pageBtn.emit(this.lastDot.value);
       this.isDotClicked.last = false;
       this.lastDot.setValue('');
       return;
     }
     if (this.firstDot && whatDot === 'firstDot') {
-      this.countLoopsChanger(parseInt(this.firstDot.value));
+      this.onPageClick(parseInt(this.firstDot.value));
+      if (
+        parseInt(this.firstDot.value) %
+          this.arrPage[this.arrPage.length - 1] ===
+        0
+      ) {
+        this.numOfLoopsChanger -= 1;
+      }
       this.pageBtn.emit(this.firstDot.value);
       this.isDotClicked.first = false;
       this.firstDot.setValue('');

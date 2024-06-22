@@ -62,7 +62,8 @@
     "
     >{{ item }}</app-button
   >
-  } @if (activePage < totalPage ) { @if (!isDotClicked.last) {
+  } @if (activePage < totalPage && !arrPage.includes(totalPage)) { @if
+  (totalPage - activePage !== 1) { @if (!isDotClicked.last ) {
   <app-button
     (onClick)="onSearchPage('last')"
     [variants]="btnVariant"
@@ -85,7 +86,7 @@
       autofocus
     />
   </div>
-  }
+  } }
   <app-button
     (onClick)="onPageClick(totalPage)"
     [variants]="btnVariant"
