@@ -22,16 +22,19 @@
     } @else {
     <div class="grid grid-cols-4 mt-6 gap-x-8 gap-y-3 w-fit">
       @for (item of dropdownComp; track $index) {
-      <app-dropdown
-        [placeholder]="item.pholder"
-        [dropdownItems]="item.items"
-        (onDropdownClick)="
-          onHandleFilter(item.pholder.split(' ')[2].toLowerCase(), $event)
-        "
-        (onResetCallback)="
-          onResetFilter(item.pholder.split(' ')[2].toLowerCase())
-        "
-      />
+      <div class="w-[210px]">
+        <app-dropdown
+          [placeholder]="item.pholder"
+          [dropdownItems]="item.items"
+          (onDropdownClick)="
+            onHandleFilter(item.pholder.split(' ')[2].toLowerCase(), $event)
+          "
+          (onResetCallback)="
+            onResetFilter(item.pholder.split(' ')[2].toLowerCase())
+          "
+        />
+      </div>
+
       } @for (item of dateFilter; track $index) {
       <app-input-field
         [inputType]="item.type"
