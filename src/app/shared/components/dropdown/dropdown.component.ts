@@ -17,10 +17,11 @@ import { ToTitleCasePipe } from '../../pipes/to-title-case/to-title-case.pipe';
   styleUrl: './dropdown.component.scss',
 })
 export class DropdownComponent {
-  @Input({ required: true }) placeholder = '';
+  @Input() placeholder = '';
   @Input() size: 'small' | 'medium' = 'small';
-  text = '';
+  @Input() text = '';
   @Input({ required: true }) dropdownItems: string[] = [];
+  @Input() variants: 'default' | 'dashboard' = 'default';
   @Output() onDropdownClick = new EventEmitter();
   @Output() onResetCallback = new EventEmitter();
 

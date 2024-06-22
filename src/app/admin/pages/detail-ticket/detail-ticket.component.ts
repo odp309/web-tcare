@@ -18,6 +18,8 @@ import { AsyncPipe } from '@angular/common';
 import moment from 'moment';
 import 'moment/locale/id';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-detail-ticket',
@@ -41,6 +43,8 @@ export class DetailTicketComponent implements OnInit {
     private detailService: DetailTicketService,
     private route: ActivatedRoute
   ) {}
+  private token = Cookies.get('token');
+  name: string = '';
 
   ticketDetailData: ITicketDetail = {} as ITicketDetail;
   trackStatusData: ITrackStatus = {} as ITrackStatus;
@@ -71,7 +75,6 @@ export class DetailTicketComponent implements OnInit {
     this.detailService.getFeedback(this.ticketId);
     this.detailService.getObsvFeedbackData().subscribe((value) => {
       this.feedbackData = value;
-      // console.log(value);
     });
   }
 
@@ -174,5 +177,8 @@ export class DetailTicketComponent implements OnInit {
     this.getTrackStatusData();
     this.getFeedbackData();
     this.isLoading$ = this.detailService.getObsvLoading();
+    if (this.token) {
+      this.name = jwtDecode<{ firstName: string }>(this.token).firstName;
+    }
   }
 }

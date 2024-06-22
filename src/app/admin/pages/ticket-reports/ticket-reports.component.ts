@@ -3,10 +3,7 @@ import { LucideAngularModule } from 'lucide-angular';
 import { TableComponent } from '../../../shared/components/table/table.component';
 import { LabelStatusComponent } from '../../components/label-status/label-status.component';
 import { TicketReportsService } from '../../services/ticket-reports/ticket-reports.service';
-import {
-  ITicketReports,
-  TResultTicket,
-} from '../../../shared/types/ticketReport';
+import { ITicketReports } from '../../../shared/types/ticketReport';
 import { AsyncPipe } from '@angular/common';
 import { ToTitleCasePipe } from '../../../shared/pipes/to-title-case/to-title-case.pipe';
 import { FormatDatePipe } from '../../../shared/pipes/format-date/format-date.pipe';

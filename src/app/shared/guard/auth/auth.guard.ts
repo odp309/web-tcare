@@ -8,7 +8,12 @@ export const authGuard: CanActivateFn = () => {
   const token = Cookies.get('token');
   const role = Cookies.get('role');
 
-  if (token || role === 'admin') {
+  // if (!token || role !== 'admin') {
+  //   router.navigate(['auth/login'], { replaceUrl: true });
+  //   return false;
+  // }
+
+  if (token && role === 'admin') {
     router.navigate(['admin/dashboard'], { replaceUrl: true });
     return false;
   }
