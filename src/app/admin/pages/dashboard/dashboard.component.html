@@ -1,13 +1,15 @@
 <div class="flex flex-col gap-[30px]">
   <app-page-header text="Dashboard">
+    @if (name !== '') {
     <div class="flex items-center gap-2">
-      <p class="text-green500Primary font-semibold">Admin John Doe</p>
+      <p class="text-green500Primary font-semibold">{{ name }}</p>
       <lucide-icon
         name="circle-user-round"
         size="32"
         color="#006885"
       ></lucide-icon>
     </div>
+    }
   </app-page-header>
   <div>
     <div class="flex justify-end mt-[15px]">
@@ -251,8 +253,8 @@
       </div>
     </app-card>
   </div>
-  }
-
+  } @if (graphWeekData.category && doughnutData.category && weekLabel.category)
+  {
   <div class="flex gap-[15px]">
     <app-card customClass="w-[812px] h-[420px] p-[25px]">
       <h2 class="text-lg font-medium text-greenPrimary">
@@ -272,7 +274,7 @@
           (onDropdownClick)="onHandleLeftGraph('category', 'month', $event)"
         />
       </div>
-      @if (weekLabel.category && graphWeekData.category) {
+
       <div class="h-[300px] mt-4">
         <app-bar-chart
           idChart="categoryChart"
@@ -280,7 +282,6 @@
           [data]="graphWeekData.category"
         />
       </div>
-      }
     </app-card>
     <app-card customClass="w-[261px] h-[420px] p-[25px]">
       <h2 class="text-lg font-medium text-greenPrimary">
@@ -307,6 +308,7 @@
       </div>
     </app-card>
   </div>
+  } @if (doughnutData.status && graphWeekData.status && weekLabel.status) {
   <div class="flex gap-[15px]">
     <app-card customClass="w-[812px] h-[420px] p-[25px]">
       <h2 class="text-lg font-medium text-greenPrimary">
@@ -362,6 +364,7 @@
       </div>
     </app-card>
   </div>
+  } @if (doughnutData.rating && graphWeekData.rating && weekLabel.rating) {
   <div class="flex gap-[15px]">
     <app-card customClass="w-[812px] h-[420px] p-[25px]">
       <h2 class="text-lg font-medium text-greenPrimary">
@@ -417,4 +420,5 @@
       </div>
     </app-card>
   </div>
+  }
 </div>

@@ -7,14 +7,16 @@
     </div>
     <app-page-header text="Detail Ticket Report" />
   </div>
+  @if (name !== '') {
   <div class="flex items-center gap-2 justify-end">
-    <p class="text-green500Primary font-semibold">Admin John Doe</p>
+    <p class="text-green500Primary font-semibold">{{ name }}</p>
     <lucide-icon
       name="circle-user-round"
       size="32"
       color="#006885"
     ></lucide-icon>
   </div>
+  }
 </div>
 
 <div class="flex gap-[16px] mt-[42px]">

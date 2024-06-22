@@ -45,14 +45,13 @@ import toTitleCase from '../../../shared/utils/toTitleCase';
 export class DashboardComponent {
   constructor(private dashboardService: DashboardService) {}
   private token = Cookies.get('token');
+  name: string = '';
 
   filterEntity: 'personal' | 'division' | 'all' = 'personal';
   classStyle: string = '';
   arrFilterBy: string[] = ['personal', 'division', 'all'];
   filterBy: string[] = [];
   filterQuery: string[] = [];
-  // graphFilterBy: string[] = [];
-  // graphFilterQuery: string[] = [];
 
   filterDropdown: TGraphWeekLabel = {
     category: ['gagal transfer', 'gagal topup', 'gagal payment'],
@@ -337,5 +336,8 @@ export class DashboardComponent {
   ngOnInit(): void {
     this.onHandleFilterBtn('personal');
     this.getInitDashboardGraphData();
+    if (this.token) {
+      this.name = jwtDecode<{ firstName: string }>(this.token).firstName;
+    }
   }
 }
