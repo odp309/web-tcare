@@ -271,12 +271,14 @@
           [dropdownItems]="filterDropdown.category"
           (onDropdownClick)="onHandleLeftGraph('category', 'name', $event)"
         />
-        <app-dropdown
-          variants="dashboard"
-          [text]="monthDropdown.items[idxDateNow]"
-          [dropdownItems]="monthDropdown.items"
-          (onDropdownClick)="onHandleLeftGraph('category', 'month', $event)"
-        />
+        <div class="w-32">
+          <app-dropdown
+            variants="dashboard"
+            [text]="monthDropdown.items[idxDateNow]"
+            [dropdownItems]="monthDropdown.items"
+            (onDropdownClick)="onHandleLeftGraph('category', 'month', $event)"
+          />
+        </div>
       </div>
 
       <div class="lg:h-[300px] mt-4">
@@ -319,18 +321,22 @@
         Total Reports By Status
       </h2>
       <div class="w-full flex justify-end gap-4">
-        <app-dropdown
-          variants="dashboard"
-          [text]="filterDropdown.status[0]"
-          [dropdownItems]="filterDropdown.status"
-          (onDropdownClick)="onHandleLeftGraph('status', 'name', $event)"
-        />
-        <app-dropdown
-          variants="dashboard"
-          [text]="monthDropdown.items[idxDateNow]"
-          [dropdownItems]="monthDropdown.items"
-          (onDropdownClick)="onHandleLeftGraph('status', 'month', $event)"
-        />
+        <div class="w-[150px]">
+          <app-dropdown
+            variants="dashboard"
+            [text]="filterDropdown.status[0]"
+            [dropdownItems]="filterDropdown.status"
+            (onDropdownClick)="onHandleLeftGraph('status', 'name', $event)"
+          />
+        </div>
+        <div class="w-32">
+          <app-dropdown
+            variants="dashboard"
+            [text]="monthDropdown.items[idxDateNow]"
+            [dropdownItems]="monthDropdown.items"
+            (onDropdownClick)="onHandleLeftGraph('status', 'month', $event)"
+          />
+        </div>
       </div>
       @if (weekLabel.category && graphWeekData.category) {
       <div class="lg:h-[300px] mt-4">
@@ -375,18 +381,22 @@
         Total Reports By Rating
       </h2>
       <div class="w-full flex justify-end gap-4">
-        <app-dropdown
-          variants="dashboard"
-          [text]="filterDropdown.rating[filterDropdown.rating.length - 1]"
-          [dropdownItems]="filterDropdown.rating"
-          (onDropdownClick)="onHandleLeftGraph('rating', 'rate', $event)"
-        />
-        <app-dropdown
-          variants="dashboard"
-          [text]="monthDropdown.items[idxDateNow]"
-          [dropdownItems]="monthDropdown.items"
-          (onDropdownClick)="onHandleLeftGraph('rating', 'month', $event)"
-        />
+        <div class="w-[150px]">
+          <app-dropdown
+            variants="dashboard"
+            [text]="filterDropdown.rating[filterDropdown.rating.length - 1]"
+            [dropdownItems]="filterDropdown.rating"
+            (onDropdownClick)="onHandleLeftGraph('rating', 'rate', $event)"
+          />
+        </div>
+        <div class="w-32">
+          <app-dropdown
+            variants="dashboard"
+            [text]="monthDropdown.items[idxDateNow]"
+            [dropdownItems]="monthDropdown.items"
+            (onDropdownClick)="onHandleLeftGraph('rating', 'month', $event)"
+          />
+        </div>
       </div>
       @if (weekLabel.category && graphWeekData.category) {
       <div class="lg:h-[300px] mt-4">
