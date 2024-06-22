@@ -42,7 +42,9 @@
   </div>
   } @if (data.reopened && data.sla_performance && data.sla_completed) { @if
   (filterEntity === 'personal') {
-  <div class="flex w-full justify-between">
+  <div
+    class="flex w-full flex-wrap gap-4 justify-center xl:flex-nowrap xl:justify-between"
+  >
     <app-card customClass="bg-card1 w-[260px] h-[237px] p-[25px]">
       <div class="h-[25%]">
         <h4 class="text-white font-semibold text-lg">
@@ -72,10 +74,10 @@
     </app-card>
 
     <app-card
-      customClass="w-[540px] h-[237px] p-[25px] flex flex-col gap-[15px]"
+      customClass="w-[380px] lg:w-[540px] h-[237px] p-[25px] flex flex-col gap-[15px]"
     >
       <h4 class="font-semibold text-lg">SLA Tiket Selesai</h4>
-      <div class="flex justify-between">
+      <div class="flex justify-between gap-2">
         <div
           class="flex justify-between items-center bg-gradient-to-br from-[#3FAB6C] to-[#65D493] w-[230px] h-[65px] rounded-xl px-[30px] text-white"
         >
@@ -93,7 +95,7 @@
           </p>
         </div>
       </div>
-      <div class="flex justify-between">
+      <div class="flex justify-between gap-2">
         <div
           class="flex justify-between items-center bg-gradient-to-br from-[#FF8901] to-[#FFB867] w-[230px] h-[65px] rounded-xl px-[30px] text-white"
         >
@@ -115,7 +117,9 @@
   </div>
   } @else {
 
-  <div class="flex w-full justify-between">
+  <div
+    class="flex w-full flex-wrap gap-4 justify-center xl:flex-nowrap xl:justify-between"
+  >
     <app-card customClass="bg-card1 w-[200px] h-[237px] p-[25px]">
       <div class="h-[25%]">
         <h4 class="text-white font-semibold text-lg">
@@ -199,7 +203,7 @@
     </app-card>
   </div>
   } } @if (data.total && data.submitted && data.processed && data.completed) {
-  <div class="flex justify-between w-full">
+  <div class="flex justify-center gap-4 xl:justify-between w-full flex-wrap">
     <app-card
       customClass="flex items-center justify-center bg-gradient-to-tl from-[#F37142] to-[#F58961] w-[261px] h-[108px] gap-[59px] text-white"
     >
@@ -255,8 +259,8 @@
   </div>
   } @if (graphWeekData.category && doughnutData.category && weekLabel.category)
   {
-  <div class="flex gap-[15px]">
-    <app-card customClass="w-[812px] h-[420px] p-[25px]">
+  <div class="flex flex-col items-center xl:items-start xl:flex-row gap-[15px]">
+    <app-card customClass="lg:w-[812px] h-[420px] p-[25px]">
       <h2 class="text-lg font-medium text-greenPrimary">
         Total Reports By Category
       </h2>
@@ -275,7 +279,7 @@
         />
       </div>
 
-      <div class="h-[300px] mt-4">
+      <div class="lg:h-[300px] mt-4">
         <app-bar-chart
           idChart="categoryChart"
           [labels]="weekLabel.category"
@@ -309,8 +313,8 @@
     </app-card>
   </div>
   } @if (doughnutData.status && graphWeekData.status && weekLabel.status) {
-  <div class="flex gap-[15px]">
-    <app-card customClass="w-[812px] h-[420px] p-[25px]">
+  <div class="flex flex-col items-center xl:items-start xl:flex-row gap-[15px]">
+    <app-card customClass="lg:w-[812px] h-[420px] p-[25px]">
       <h2 class="text-lg font-medium text-greenPrimary">
         Total Reports By Status
       </h2>
@@ -329,7 +333,7 @@
         />
       </div>
       @if (weekLabel.category && graphWeekData.category) {
-      <div class="h-[300px] mt-4">
+      <div class="lg:h-[300px] mt-4">
         <app-line-chart
           idChart="statusChart"
           legendLabel="Reports by Status"
@@ -365,8 +369,8 @@
     </app-card>
   </div>
   } @if (doughnutData.rating && graphWeekData.rating && weekLabel.rating) {
-  <div class="flex gap-[15px]">
-    <app-card customClass="w-[812px] h-[420px] p-[25px]">
+  <div class="flex flex-col items-center xl:items-start xl:flex-row gap-[15px]">
+    <app-card customClass="lg:w-[812px] h-[420px] p-[25px]">
       <h2 class="text-lg font-medium text-greenPrimary">
         Total Reports By Rating
       </h2>
@@ -385,7 +389,7 @@
         />
       </div>
       @if (weekLabel.category && graphWeekData.category) {
-      <div class="h-[300px] mt-4">
+      <div class="lg:h-[300px] mt-4">
         <app-line-chart
           idChart="ratingChart"
           legendLabel="Reports by Rating"
