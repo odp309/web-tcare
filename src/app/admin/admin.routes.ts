@@ -3,6 +3,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TicketReportsComponent } from './pages/ticket-reports/ticket-reports.component';
 import { DetailTicketComponent } from './pages/detail-ticket/detail-ticket.component';
+import { LandingPageComponent } from '../landing-page/landing-page.component';
 
 export const adminRoutes: Routes = [
   {
@@ -25,7 +26,7 @@ export const adminRoutes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: ':ticketNum/detail-ticket',
+        path: 'ticket-reports/:ticketNum/detail-ticket',
         component: DetailTicketComponent,
         pathMatch: 'full',
       },

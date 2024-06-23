@@ -1,4 +1,4 @@
-<label class="form-control w-full relative mb-4" [formGroup]="fGroup">
+<label class="form-control w-full relative" [formGroup]="fGroup">
   <div [class]="inputLabel ? 'label' : 'hidden'">
     <span class="label-text">{{ inputLabel | titlecase }}</span>
   </div>
@@ -32,12 +32,12 @@
   } @case ("iconsRight") {
   <label
     [class]="
-      'rounded-xl input input-bordered flex items-center gap-2 ' +
+      'w-full rounded-xl input input-bordered flex items-center gap-2 ' +
       inputSizeStyle
     "
     [ngClass]="errText !== '' ? 'border-redDanger' : ''"
     [ngClass]="
-      inputType === 'date' ? 'w-[206px]' : isDisabled ? 'bg-gray-200' : ''
+      inputType === 'date' ? 'w-[210px]' : isDisabled ? 'bg-gray-200' : ''
     "
     [ngClass]="isDisabled ? 'bg-gray-200' : ''"
   >

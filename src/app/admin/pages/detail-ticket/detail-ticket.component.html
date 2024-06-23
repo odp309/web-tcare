@@ -19,7 +19,7 @@
   }
 </div>
 
-<div class="flex gap-[16px] mt-[42px]">
+<div class="flex flex-col xl:flex-row gap-[16px] mt-[42px]">
   @if (isLoading$ | async) {
   <app-loading />
   } @else {
@@ -51,7 +51,7 @@
           Feedback Pelapor
         </p>
       </div>
-      @if (feedbackData.result) {
+      @if (feedbackData.result && !(isLoading$ |async)) {
 
       <div class="mb-[25px] mt-[25px]">
         <app-ratings [rating]="feedbackData.result.rating"></app-ratings>
@@ -60,7 +60,7 @@
         class="border border-slate-300 rounded-[12px] p-[15px] w-[586px] h-[160px] flex items-start overflow-auto"
       >
         <p class="text-[#858585]">
-          {{ feedbackData.result.comment }}
+          {{ !feedbackData.result.comment ? "" : feedbackData.result.comment }}
         </p>
       </div>
       }

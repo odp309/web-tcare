@@ -1,13 +1,5 @@
 .steps .step-custom + .step-custom:before {
   background-color: hsl(187, 100%, 36%);
-  /* custom background color */
-  //   --hsl-color: 194, 44%, 92%;
-  //   background: linear-gradient(
-  //     to bottom,
-  //     #006885,
-  //     #e5f0f3,
-  //     hsl(var(--hsl-color))
-  //   );
 }
 
 .steps .step-custom:after {
