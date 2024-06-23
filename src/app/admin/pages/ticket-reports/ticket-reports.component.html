@@ -20,7 +20,9 @@
       <app-loading />
     </div>
     } @else {
-    <div class="grid grid-cols-4 mt-6 gap-x-8 gap-y-3 w-fit">
+    <div
+      class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mt-6 gap-x-8 gap-y-3 w-fit"
+    >
       @for (item of dropdownComp; track $index) {
       <div class="w-[210px]">
         <app-dropdown
@@ -59,7 +61,7 @@
       />
       }
     </div>
-    <app-table customClass="lg:w-full">
+    <app-table customClass="lg:w-full mt-4">
       <thead>
         <tr class="bg-[#F7F7F7] h-[64px] text-center">
           <td></td>

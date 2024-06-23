@@ -279,9 +279,12 @@ export class TicketReportsComponent
   }
 
   navigateToDetail(ticketNum: string, id: number) {
-    this.router.navigate(['admin', ticketNum, 'detail-ticket'], {
-      queryParams: { ticketId: id },
-    });
+    this.router.navigate(
+      ['admin', 'ticket-reports', ticketNum, 'detail-ticket'],
+      {
+        queryParams: { ticketId: id },
+      }
+    );
   }
 
   ngOnInit(): void {
