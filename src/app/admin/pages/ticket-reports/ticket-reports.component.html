@@ -28,6 +28,7 @@
         <app-dropdown
           [placeholder]="item.pholder"
           [dropdownItems]="item.items"
+          [text]="item.chosen"
           (onDropdownClick)="
             onHandleFilter(item.pholder.split(' ')[2].toLowerCase(), $event)
           "

@@ -13,7 +13,7 @@ import { InputFieldComponent } from '../../../shared/components/input-field/inpu
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DropdownComponent } from '../../../shared/components/dropdown/dropdown.component';
 import { ClickOutsideDirective } from '../../../shared/directives/click-outside/click-outside.directive';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { EMPTY, Observable, Subscription, debounceTime } from 'rxjs';
 import toLowerSnakeCase from '../../../shared/utils/toLowerSnakeCase';
 import { ModalComponent } from '../../../shared/components/modal/modal.component';
@@ -65,8 +65,7 @@ export class TicketReportsComponent
   constructor(
     private ticketService: TicketReportsService,
     fb: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) {
     this.form = fb.group({
       search: [''],
@@ -133,18 +132,22 @@ export class TicketReportsComponent
     {
       pholder: 'Filter by Category',
       items: ['gagal transfer', 'gagal topup', 'gagal payment'],
+      chosen: '',
     },
     {
       pholder: 'Filter by Rating',
       items: ['1', '2', '3', '4', '5'],
+      chosen: '',
     },
     {
       pholder: 'Filter by Status',
       items: ['Diajukan', 'Dalam Proses', 'Selesai'],
+      chosen: '',
     },
     {
       pholder: 'Filter by Division',
       items: ['CXC', 'DGO', 'WPP'],
+      chosen: '',
     },
   ];
 
@@ -209,6 +212,9 @@ export class TicketReportsComponent
     }
     this.filterBy.push(modFilter);
     this.filterQuery.push(filterQ);
+    localStorage.setItem(filter, filterQ);
+    localStorage.setItem('filterBy', JSON.stringify(this.filterBy));
+    localStorage.setItem('filterQuery', JSON.stringify(this.filterQuery));
     this.pageToFetch = 1;
     this.numOfLoopsChanger = 1;
     this.getTicketData();
@@ -219,9 +225,13 @@ export class TicketReportsComponent
     if (modFilter === 'start_date') {
       this.dateFilter[1] = { ...this.dateFilter[1], isDisabled: true };
     }
+    localStorage.removeItem(modFilter);
     const idxItem = this.filterBy.indexOf(modFilter);
     this.filterBy.splice(idxItem, 1);
     this.filterQuery.splice(idxItem, 1);
+    localStorage.setItem('filterBy', JSON.stringify(this.filterBy));
+    localStorage.setItem('filterQuery', JSON.stringify(this.filterQuery));
+
     this.getTicketData();
   }
 
@@ -288,6 +298,38 @@ export class TicketReportsComponent
   }
 
   ngOnInit(): void {
+    const filterByLocal = localStorage.getItem('filterBy');
+    const filterQueryLocal = localStorage.getItem('filterQuery');
+
+    const categoryLocal = localStorage.getItem('category');
+    const ratingLocal = localStorage.getItem('rating');
+    const statusLocal = localStorage.getItem('status');
+    const divisionLocal = localStorage.getItem('division');
+    const startDateLocal = localStorage.getItem('start_date');
+    const endDateLocal = localStorage.getItem('end_date');
+
+    if (categoryLocal) {
+      this.dropdownComp[0].chosen = categoryLocal;
+    }
+    if (ratingLocal) {
+      this.dropdownComp[1].chosen = ratingLocal;
+    }
+    if (statusLocal) {
+      this.dropdownComp[2].chosen = statusLocal;
+    }
+    if (divisionLocal) {
+      this.dropdownComp[3].chosen = divisionLocal;
+    }
+    if (startDateLocal && this.startDate) {
+      this.startDate.setValue(startDateLocal);
+    }
+    if (endDateLocal && this.endDate) {
+      this.endDate.setValue(endDateLocal);
+    }
+    if (filterByLocal && filterQueryLocal) {
+      this.filterBy = JSON.parse(filterByLocal);
+      this.filterQuery = JSON.parse(filterQueryLocal);
+    }
     this.getTicketData();
   }
 
