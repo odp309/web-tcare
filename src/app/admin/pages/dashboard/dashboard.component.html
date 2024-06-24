@@ -259,8 +259,10 @@
   </div>
   } @if (graphWeekData.category && doughnutData.category && weekLabel.category)
   {
-  <div class="flex flex-col items-center xl:items-start xl:flex-row gap-[15px]">
-    <app-card customClass="lg:w-[812px] h-[420px] p-[25px]">
+  <div
+    class="flex flex-col items-center xl:items-start xl:flex-row gap-[15px] justify-between"
+  >
+    <app-card customClass="lg:w-[840px] h-[420px] p-[25px]">
       <h2 class="text-lg font-medium text-greenPrimary">
         Total Reports By Category
       </h2>
@@ -315,8 +317,10 @@
     </app-card>
   </div>
   } @if (doughnutData.status && graphWeekData.status && weekLabel.status) {
-  <div class="flex flex-col items-center xl:items-start xl:flex-row gap-[15px]">
-    <app-card customClass="lg:w-[812px] h-[420px] p-[25px]">
+  <div
+    class="flex flex-col items-center xl:items-start xl:flex-row gap-[15px] justify-between"
+  >
+    <app-card customClass="lg:w-[840px] h-[420px] p-[25px]">
       <h2 class="text-lg font-medium text-greenPrimary">
         Total Reports By Status
       </h2>
@@ -375,8 +379,10 @@
     </app-card>
   </div>
   } @if (doughnutData.rating && graphWeekData.rating && weekLabel.rating) {
-  <div class="flex flex-col items-center xl:items-start xl:flex-row gap-[15px]">
-    <app-card customClass="lg:w-[812px] h-[420px] p-[25px]">
+  <div
+    class="flex flex-col items-center xl:items-start xl:flex-row gap-[15px] justify-between"
+  >
+    <app-card customClass="lg:w-[840px] h-[420px] p-[25px]">
       <h2 class="text-lg font-medium text-greenPrimary">
         Total Reports By Rating
       </h2>
