@@ -9,12 +9,13 @@ import {
 } from '../../../shared/types/ticketReport';
 import { BehaviorSubject, Observable, catchError, finalize } from 'rxjs';
 import { toast } from 'ngx-sonner';
+import { TokenService } from '../../../shared/services/token.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DetailTicketService extends ApiServiceService {
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private tokenService: TokenService) {
     super(http);
   }
 
@@ -38,6 +39,7 @@ export class DetailTicketService extends ApiServiceService {
   private isLoading$: Observable<boolean> = this.isLoading;
 
   getDetailTicket(ticketNumber: string) {
+    this.tokenService.ifTokenExpired();
     this.isLoading.next(true);
     this.get<ITicketDetail>(
       `private/admin/ticket-reports/${ticketNumber}/reporter-detail`,
@@ -66,6 +68,7 @@ export class DetailTicketService extends ApiServiceService {
   }
 
   getTrackStatusData(id: number) {
+    this.tokenService.ifTokenExpired();
     this.isLoading.next(true);
     this.get<ITrackStatus>(
       `admin/ticket-reports/${id}/track-report-status`,
@@ -94,6 +97,7 @@ export class DetailTicketService extends ApiServiceService {
   }
 
   getFeedback(id: number) {
+    this.tokenService.ifTokenExpired();
     this.isLoading.next(true);
     this.get<IFeedbackTicket>(
       `private/admin/ticket-reports/${id}/feedback`,

@@ -8,12 +8,12 @@ import {
   debounceTime,
   finalize,
 } from 'rxjs';
-import { CookieService } from 'ngx-cookie-service';
 import { toast } from 'ngx-sonner';
 import { Router } from '@angular/router';
 import { IAuth, TLoginBody, TLoginResult } from '../../shared/types/auth';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
+import { TokenService } from '../../shared/services/token.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +21,8 @@ import { jwtDecode } from 'jwt-decode';
 export class AuthService extends ApiServiceService {
   constructor(
     http: HttpClient,
-    private cookieService: CookieService,
-    private router: Router
+    private router: Router,
+    private tokenService: TokenService
   ) {
     super(http);
   }
@@ -36,6 +36,7 @@ export class AuthService extends ApiServiceService {
   }
 
   login(body: TLoginBody) {
+    this.tokenService.ifTokenExpired();
     if (!this.isLoading) {
       this.isLoading = true;
       this.post<IAuth, TLoginBody>('public/auth/login', body)
@@ -77,6 +78,7 @@ export class AuthService extends ApiServiceService {
   }
 
   logout() {
+    this.tokenService.ifTokenExpired();
     const token = Cookies.get('token');
     this.post<IAuth, {}>('public/auth/logout', {}, token)
       .pipe(

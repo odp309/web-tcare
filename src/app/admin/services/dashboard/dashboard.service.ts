@@ -6,12 +6,13 @@ import { IReportReopened } from '../../../shared/types/dashboard';
 import moment from 'moment';
 import Cookies from 'js-cookie';
 import { toast } from 'ngx-sonner';
+import { TokenService } from '../../../shared/services/token.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DashboardService extends ApiServiceService {
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private tokenService: TokenService) {
     super(http);
   }
 
@@ -43,6 +44,7 @@ export class DashboardService extends ApiServiceService {
     filterQuery?: string[],
     monthParams?: string
   ) {
+    this.tokenService.ifTokenExpired();
     this.isLoading.next(true);
     if (this.token) {
       let month = monthParams;

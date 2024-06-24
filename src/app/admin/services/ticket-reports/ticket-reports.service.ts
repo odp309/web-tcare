@@ -6,15 +6,15 @@ import {
   IUpdateTicket,
 } from '../../../shared/types/ticketReport';
 import { BehaviorSubject, Observable, catchError, finalize } from 'rxjs';
-import { CookieService } from 'ngx-cookie-service';
 import Cookies from 'js-cookie';
 import { toast } from 'ngx-sonner';
+import { TokenService } from '../../../shared/services/token.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TicketReportsService extends ApiServiceService {
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private tokenService: TokenService) {
     super(http);
   }
 
@@ -47,6 +47,7 @@ export class TicketReportsService extends ApiServiceService {
     filterBy?: string[],
     filterQuery?: string[]
   ) {
+    this.tokenService.ifTokenExpired();
     this.isLoading.next(true);
     let queryParams = '';
     if (filterBy && filterQuery) {
@@ -83,6 +84,7 @@ export class TicketReportsService extends ApiServiceService {
   }
 
   updateStatus(id: number, order: 'asc' | 'desc', page: number) {
+    this.tokenService.ifTokenExpired();
     this.isLoading.next(true);
     this.patch<IUpdateTicket, { status: string } | {}>(
       `private/admin/ticket-reports/${id}/update-status`,
