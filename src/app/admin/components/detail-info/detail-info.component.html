@@ -7,7 +7,9 @@
     @for (detail of data.details; track $index) {
     <tr>
       <td class="w-[50%]">{{ detail.detailTitle }}</td>
-      <td class="text-[#858585]">{{ detail.detailDesc }}</td>
+      <td class="text-[#858585]">
+        {{ detail.detailDesc ? detail.detailDesc : "-" }}
+      </td>
     </tr>
     }
   </table>
