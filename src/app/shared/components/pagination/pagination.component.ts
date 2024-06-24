@@ -42,7 +42,7 @@ export class PaginationComponent {
   numOfLoops = 0;
   btnVariant: 'noStyle' = 'noStyle';
   arrPage: number[] = [];
-  isBtnDisabled = {
+  @Input() isBtnDisabled = {
     prev: true,
     next: false,
   };

@@ -93,6 +93,11 @@ export class TicketReportsComponent
   pageToFetch: number = 1;
   numOfLoopsChanger: number = 1;
 
+  isPageNextPrevDisabled = {
+    prev: true,
+    next: false,
+  };
+
   tHeads = [
     {
       title: 'ID Tiket',
@@ -287,6 +292,17 @@ export class TicketReportsComponent
     );
     this.ticketService.getData().subscribe((value) => {
       this.ticketReportsData = value;
+      if (value.total_page === 1) {
+        this.isPageNextPrevDisabled = {
+          prev: true,
+          next: true,
+        };
+        return;
+      }
+      this.isPageNextPrevDisabled = {
+        prev: true,
+        next: false,
+      };
     });
     this.isLoading$ = this.ticketService.getIsLoading();
   }
