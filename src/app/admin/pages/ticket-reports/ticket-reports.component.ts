@@ -207,6 +207,8 @@ export class TicketReportsComponent
       this.filterQuery[idxFilter] = filterQ;
       this.pageToFetch = 1;
       this.numOfLoopsChanger = 1;
+      localStorage.setItem('filterBy', JSON.stringify(this.filterBy));
+      localStorage.setItem('filterQuery', JSON.stringify(this.filterQuery));
       this.getTicketData();
       return;
     }
