@@ -278,6 +278,7 @@ export class TicketReportsComponent
   }
 
   getTicketData() {
+    localStorage.setItem('page', this.pageToFetch.toString());
     this.ticketService.getTicketReports(
       this.dataOrder,
       this.pageToFetch,
@@ -302,14 +303,18 @@ export class TicketReportsComponent
   ngOnInit(): void {
     const filterByLocal = localStorage.getItem('filterBy');
     const filterQueryLocal = localStorage.getItem('filterQuery');
-
     const categoryLocal = localStorage.getItem('category');
     const ratingLocal = localStorage.getItem('rating');
     const statusLocal = localStorage.getItem('status');
     const divisionLocal = localStorage.getItem('division');
     const startDateLocal = localStorage.getItem('start_date');
     const endDateLocal = localStorage.getItem('end_date');
+    const searchLocal = localStorage.getItem('ticket_number');
+    const pageLocal = localStorage.getItem('page');
 
+    if (pageLocal) {
+      this.pageToFetch = parseInt(pageLocal);
+    }
     if (categoryLocal) {
       this.dropdownComp[0].chosen = categoryLocal;
     }
@@ -327,6 +332,9 @@ export class TicketReportsComponent
     }
     if (endDateLocal && this.endDate) {
       this.endDate.setValue(endDateLocal);
+    }
+    if (searchLocal && this.search) {
+      this.search.setValue(searchLocal);
     }
     if (filterByLocal && filterQueryLocal) {
       this.filterBy = JSON.parse(filterByLocal);
