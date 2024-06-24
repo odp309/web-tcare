@@ -23,7 +23,7 @@
     </div>
     } @else {
     <div
-      class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mt-6 gap-x-8 gap-y-3 w-fit"
+      class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 mt-6 gap-x-8 gap-y-3 w-fit"
     >
       @for (item of dropdownComp; track $index) {
       <div class="w-[210px]">
@@ -64,6 +64,7 @@
       />
       }
     </div>
+
     <app-table customClass="lg:w-full mt-4 min-h-[487px]">
       <thead>
         <tr class="bg-[#F7F7F7] h-[64px] text-center">
@@ -88,6 +89,15 @@
           } }
         </tr>
       </thead>
+      @if (!ticketReportsData.result) {
+      <div class="absolute w-full">
+        <img
+          src="../../../../assets/no-data.jpg"
+          alt="No data image"
+          class="w-96 aspect-square relative right-0 mx-auto"
+        />
+      </div>
+      } @else {
       <tbody>
         @for (data of ticketReportsData.result; ; let idx = $index; track
         data.id) {
@@ -170,6 +180,7 @@
         </tr>
         }
       </tbody>
+      }
     </app-table>
     @if (ticketReportsData.current_page) {
     <div class="w-full flex justify-center mt-3">
