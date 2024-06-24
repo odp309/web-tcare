@@ -1,17 +1,19 @@
 <div>
   <app-page-header text="Laporan Tiket">
-    <app-input-field
-      inputType="text"
-      inputName="search"
-      inputId="search"
-      placeholder="Search By Ticket ID"
-      errText=""
-      inputVariants="iconsRight"
-      inputSize="small"
-      [fGroup]="form"
-      fcName="search"
-    />
-    <button type="submit" class="hidden"></button>
+    <div class="w-[300px] md:w-fit">
+      <app-input-field
+        inputType="text"
+        inputName="search"
+        inputId="search"
+        placeholder="Search By Ticket ID"
+        errText=""
+        inputVariants="iconsRight"
+        inputSize="small"
+        [fGroup]="form"
+        fcName="search"
+      />
+      <button type="submit" class="hidden"></button>
+    </div>
   </app-page-header>
 
   <div class="mt-1">
@@ -62,7 +64,7 @@
       />
       }
     </div>
-    <app-table customClass="lg:w-full mt-4">
+    <app-table customClass="lg:w-full mt-4 min-h-[487px]">
       <thead>
         <tr class="bg-[#F7F7F7] h-[64px] text-center">
           <td></td>
@@ -174,6 +176,7 @@
       <app-pagination
         [totalPage]="ticketReportsData.total_page"
         [activePage]="ticketReportsData.current_page"
+        [isBtnDisabled]="isPageNextPrevDisabled"
         (pageBtn)="onClickButtonPage($event)"
       />
     </div>
