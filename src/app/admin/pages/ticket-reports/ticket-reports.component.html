@@ -118,6 +118,8 @@
           </td>
           <td>
             <div class="flex justify-center items-center gap-[16px]">
+              @if (data.status.toLowerCase() === "diajukan" ||
+              data.status.toLowerCase() === "dalam proses" ) {
               <div
                 class="tooltip"
                 [attr.data-tip]="
@@ -154,14 +156,17 @@
                     >?
                   </p>
                   <div class="w-20" modalAction>
-                    <app-button
-                      variants="primary"
-                      (onClick)="onHandleUpdateStatus(data.id)"
-                      >Ya</app-button
-                    >
+                    <form method="dialog">
+                      <app-button
+                        variants="primary"
+                        (onClick)="onHandleUpdateStatus(data.id)"
+                        >Ya</app-button
+                      >
+                    </form>
                   </div>
                 </app-modal>
               </div>
+              }
               <div class="tooltip" data-tip="Detail">
                 <app-button
                   variants="noStyle"
