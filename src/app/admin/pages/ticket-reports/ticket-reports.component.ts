@@ -20,6 +20,8 @@ import { ModalComponent } from '../../../shared/components/modal/modal.component
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 
 type TDateFilter = {
   type: 'text' | 'date';
@@ -92,6 +94,8 @@ export class TicketReportsComponent
 
   pageToFetch: number = 1;
   numOfLoopsChanger: number = 1;
+
+  tokenDivision: string = '';
 
   isPageNextPrevDisabled = {
     prev: true,
@@ -327,7 +331,11 @@ export class TicketReportsComponent
     const endDateLocal = localStorage.getItem('end_date');
     const searchLocal = localStorage.getItem('ticket_number');
     const pageLocal = localStorage.getItem('page');
+    const token = Cookies.get('token');
 
+    if (token) {
+      this.tokenDivision = jwtDecode<{ division: string }>(token).division;
+    }
     if (pageLocal) {
       this.pageToFetch = parseInt(pageLocal);
     }
