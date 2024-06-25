@@ -11,8 +11,14 @@
     </div>
     }
   </app-page-header>
-  <div>
-    <div class="flex justify-end mt-[15px]">
+  <div class="flex justify-between items-center mt-[15px]">
+    <button
+      class="text-green500Primary font-medium border border-bluePrimary px-4 rounded-xl text-sm"
+      (click)="onHandleFilterBtn(filterEntity)"
+    >
+      Refresh Data
+    </button>
+    <div class="flex justify-end">
       @for (item of arrFilterBy;let idx = $index; track idx) {
       <button
         [class]="

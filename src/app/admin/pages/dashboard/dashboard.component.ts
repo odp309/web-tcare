@@ -22,6 +22,7 @@ import { LineChartComponent } from '../../components/chart/line-chart/line-chart
 import { DropdownComponent } from '../../../shared/components/dropdown/dropdown.component';
 import moment from 'moment';
 import toTitleCase from '../../../shared/utils/toTitleCase';
+import { ButtonComponent } from '../../../shared/components/button/button.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -38,6 +39,7 @@ import toTitleCase from '../../../shared/utils/toTitleCase';
     DoughnutChartComponent,
     LineChartComponent,
     DropdownComponent,
+    ButtonComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
