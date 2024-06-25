@@ -65,7 +65,7 @@
       }
     </div>
 
-    <app-table customClass="lg:w-full mt-4 min-h-[487px]">
+    <app-table customClass="lg:w-full mt-4 min-h-[482px]">
       <thead>
         <tr class="bg-[#F7F7F7] h-[64px] text-center">
           <td></td>
@@ -187,6 +187,11 @@
       </tbody>
       }
     </app-table>
+    <div class="w-full flex justify-center">
+      <app-button variants="noStyle" (onClick)="getTicketData()">
+        <lucide-icon name="refresh-cw" color="grey" size="18"></lucide-icon>
+      </app-button>
+    </div>
     @if (ticketReportsData.current_page) {
     <div class="w-full flex justify-center mt-3">
       <app-pagination
