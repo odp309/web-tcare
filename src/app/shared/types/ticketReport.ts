@@ -41,6 +41,9 @@ export interface ITicketDetail extends IResponse {
       report_date: string;
       ticket_number: string;
       status: 'Diajukan' | 'Dalam Proses' | 'Selesai';
+      next_reference_num: string | null;
+      pic: string;
+      reopened: boolean;
     };
   };
 }

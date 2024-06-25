@@ -162,9 +162,21 @@ export class DetailTicketComponent implements OnInit {
                 : this.ticketDetailData.result.report_detail.reference_num,
             },
             {
+              detailTitle: 'Nomor Referensi Lanjutan',
+              detailDesc: !this.ticketDetailData.result.report_detail
+                .reference_num
+                ? '-'
+                : this.ticketDetailData.result.report_status_detail
+                    .next_reference_num,
+            },
+            {
               detailTitle: 'Status Tiket',
               detailDesc:
                 this.ticketDetailData.result.report_status_detail.status,
+            },
+            {
+              detailTitle: 'PIC',
+              detailDesc: this.ticketDetailData.result.report_status_detail.pic,
             },
           ],
         },
