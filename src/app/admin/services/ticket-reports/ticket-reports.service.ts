@@ -27,8 +27,6 @@ export class TicketReportsService extends ApiServiceService {
   private errMess: BehaviorSubject<string> = new BehaviorSubject<string>('');
   private errMess$: Observable<string> = this.errMess;
 
-  private token = Cookies.get('token');
-
   getErrMess() {
     return this.errMess$;
   }
@@ -47,6 +45,7 @@ export class TicketReportsService extends ApiServiceService {
     filterBy?: string[],
     filterQuery?: string[]
   ) {
+    const token = Cookies.get('token');
     this.tokenService.ifTokenExpired();
     this.isLoading.next(true);
     let queryParams = '';
@@ -57,7 +56,7 @@ export class TicketReportsService extends ApiServiceService {
     }
     this.get<ITicketReports>(
       `private/admin/ticket-reports?sort_by=createdAt&order=${order}&page=${page}&limit=8${queryParams}`,
-      this.token
+      token
     )
       .pipe(
         catchError((e) => {
@@ -84,12 +83,14 @@ export class TicketReportsService extends ApiServiceService {
   }
 
   updateStatus(id: number, order: 'asc' | 'desc', page: number) {
+    const token = Cookies.get('token');
+
     this.tokenService.ifTokenExpired();
     this.isLoading.next(true);
     this.patch<IUpdateTicket, { status: string } | {}>(
       `private/admin/ticket-reports/${id}/update-status`,
       {},
-      this.token
+      token
     )
       .pipe(
         catchError((e) => {

@@ -14,6 +14,7 @@ import { IAuth, TLoginBody, TLoginResult } from '../../shared/types/auth';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import { TokenService } from '../../shared/services/token.service';
+import path from 'path';
 
 @Injectable({
   providedIn: 'root',
@@ -78,8 +79,8 @@ export class AuthService extends ApiServiceService {
   }
 
   logout() {
-    this.tokenService.ifTokenExpired();
     const token = Cookies.get('token');
+    this.tokenService.ifTokenExpired();
     this.post<IAuth, {}>('public/auth/logout', {}, token)
       .pipe(
         catchError((e) => {
@@ -94,8 +95,8 @@ export class AuthService extends ApiServiceService {
       .subscribe({
         next: (value) => {
           this.message.next(value.message);
-          Cookies.remove('refreshToken');
           Cookies.remove('token');
+          Cookies.remove('refreshToken');
           Cookies.remove('role');
           toast.success('Logout successfull');
           this.router.navigate(['/auth/login'], {

@@ -8,11 +8,11 @@ import { jwtDecode } from 'jwt-decode';
 export class TokenService {
   constructor() {}
 
-  token = Cookies.get('token');
-
   isTokenExpired() {
-    if (this.token) {
-      const expiredDate = jwtDecode<{ exp: number }>(this.token).exp;
+    const token = Cookies.get('token');
+
+    if (token) {
+      const expiredDate = jwtDecode<{ exp: number }>(token).exp;
 
       return expiredDate < Date.now() / 1000;
     }

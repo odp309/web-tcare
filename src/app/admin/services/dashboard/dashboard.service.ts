@@ -23,8 +23,6 @@ export class DashboardService extends ApiServiceService {
   private errMess: BehaviorSubject<string> = new BehaviorSubject<string>('');
   private errMess$: Observable<string> = this.errMess;
 
-  private token = Cookies.get('token');
-
   getErrMess() {
     return this.errMess$;
   }
@@ -44,9 +42,12 @@ export class DashboardService extends ApiServiceService {
     filterQuery?: string[],
     monthParams?: string
   ) {
-    this.tokenService.ifTokenExpired();
     this.isLoading.next(true);
-    if (this.token) {
+    const token = Cookies.get('token');
+
+    if (token) {
+      console.log(token);
+      this.tokenService.ifTokenExpired();
       let month = monthParams;
       if (!month) {
         month = moment(new Date()).locale('en').format('MMMM');
@@ -61,7 +62,7 @@ export class DashboardService extends ApiServiceService {
 
       this.get<any>(
         `private/admin/reports-stats/${endpoint}?filter=${entity}&month=${month}${queryParams}`,
-        this.token
+        token
       )
         .pipe(
           catchError((e) => {
@@ -82,6 +83,7 @@ export class DashboardService extends ApiServiceService {
           },
           error: (err: any) => {
             if (err !== null) {
+              console.log(err.message);
               toast.error(err.message);
               this.errMess.next(err.message);
               console.error('Something went wrong', err);

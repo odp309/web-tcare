@@ -19,8 +19,6 @@ export class DetailTicketService extends ApiServiceService {
     super(http);
   }
 
-  private token = Cookies.get('token');
-
   private detailTicketData: BehaviorSubject<ITicketDetail> =
     new BehaviorSubject({} as ITicketDetail);
   private detailTicketData$: Observable<ITicketDetail> = this.detailTicketData;
@@ -39,11 +37,12 @@ export class DetailTicketService extends ApiServiceService {
   private isLoading$: Observable<boolean> = this.isLoading;
 
   getDetailTicket(ticketNumber: string) {
+    const token = Cookies.get('token');
     this.tokenService.ifTokenExpired();
     this.isLoading.next(true);
     this.get<ITicketDetail>(
       `private/admin/ticket-reports/${ticketNumber}/reporter-detail`,
-      this.token
+      token
     )
       .pipe(
         catchError((e) => {
@@ -68,11 +67,13 @@ export class DetailTicketService extends ApiServiceService {
   }
 
   getTrackStatusData(id: number) {
+    const token = Cookies.get('token');
     this.tokenService.ifTokenExpired();
     this.isLoading.next(true);
+
     this.get<ITrackStatus>(
       `admin/ticket-reports/${id}/track-report-status`,
-      this.token
+      token
     )
       .pipe(
         catchError((e) => {
@@ -97,11 +98,12 @@ export class DetailTicketService extends ApiServiceService {
   }
 
   getFeedback(id: number) {
+    const token = Cookies.get('token');
     this.tokenService.ifTokenExpired();
     this.isLoading.next(true);
     this.get<IFeedbackTicket>(
       `private/admin/ticket-reports/${id}/feedback`,
-      this.token
+      token
     )
       .pipe(
         catchError((e) => {
